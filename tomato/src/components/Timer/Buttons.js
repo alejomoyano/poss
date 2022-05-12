@@ -8,7 +8,7 @@ function Buttons(props) {
   return (
     <div className='Buttons'> 
 
-      {(props.status === 0) ?
+      {(props.status === 0 || props.status === 3) ?
           <Button variant="contained" onClick={props.start}>Start</Button> : ""
       }
 
@@ -29,11 +29,6 @@ function Buttons(props) {
           <Button variant="contained" onClick={props.resume}>Resume</Button>
           <Button variant="contained" onClick={props.reset}>Reset</Button> 
           <Button variant="contained" onClick={props.goToBreak}>Go to Break</Button> 
-      </Fragment> : "" }
-
-      {(props.status === 3) ?
-      <Fragment>
-          <Button variant="contained" onClick={props.breakTime}>Set Break</Button>
       </Fragment> : "" }
 
       {(props.status === 4) ?

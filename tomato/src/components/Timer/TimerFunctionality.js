@@ -2,6 +2,7 @@ import React, {useState} from 'react'
 import TimerView from './TimerView'
 import Buttons from './Buttons'
 import Message from './Message'
+import Swal from 'sweetalert2'
 
 function TimerFunctionality() {
 
@@ -13,12 +14,13 @@ function TimerFunctionality() {
     let studyMsg = 'Study Time';
     let configMsg = 'Study Timer Configuration'
     let configBreakMsg = 'Break Timer Configuration'
+    let welcomeMsg = 'Pomodoro Study Sesion'
   
     const [minutes, setMinutes] = useState(initialMinutes);
     const [seconds, setSeconds] = useState(initialSeconds);
     const [breakMin, setBreakMinutes] = useState(breakMinutes);
     const [breakSec, setBreakSeconds] = useState(breakSeconds);
-    const [msg, setMsg] = useState(studyMsg);
+    const [msg, setMsg] = useState(welcomeMsg);
     const [interv, setInterv] = useState();
     const [status, setStatus] = useState(0);
 
@@ -37,10 +39,12 @@ function TimerFunctionality() {
           Cuando se pulsa STOP y se pausa el Timer, se pasa a este estado 2 donde se muestran
           los botones de RESUME, RESET y Go to Break como el anterior, pero ahora si permite
           cambiar a Break Time.
-      BREAK = 3
+
+      BREAK = 3 (ELIMINADO)
           Si pulsamos Go to Break, pasamos al estado 3 y nos aparece el botón SET BREAK, este
           setea el contador en el tiempo de descanso predeterminado (esto hay que cambiarlo cuando
-          el tiempo sea configurable).
+          el tiempo sea configurable). (ELIMINADO)
+
       BACK TO STUDY = 6
           Al setear el timer en Break, nos aparece el START y el BACK TO STUDY. Si iniciamos
           arranca el Timer, si clickeamos BACK TO STUDY nos lleva al inicio del Timer.
@@ -67,7 +71,13 @@ function TimerFunctionality() {
   
     const start = () => {
       if(minutes === 0 && seconds === 0){
-        alert('Debe configurar el Timer antes de comenzar');
+       Swal.fire({
+          title: 'Debe configurar el Timer antes de comenzar.',
+          icon: 'info',
+          button: 'Ok',
+          allowEscapeKey: true,
+          allowOutsideClick: false
+        })
       } else {
         run();
         setStatus(1);
@@ -97,12 +107,37 @@ function TimerFunctionality() {
     }
   
     const reset = () => {
-      clearInterval(interv);
-      setStatus(0);
-      setMinutes(initialMinutes);
-      setSeconds(initialSeconds);
-      setBreakMinutes(breakMinutes);
-      setBreakSeconds(breakSeconds);
+      if(status === 2 || status === 1){
+        stop();
+        Swal.fire({
+          title: '¡Cuidado!',
+          text: 'Esta acción reiniciará los valores y volverá al inicio.',
+          icon: 'warning',
+          confirmButtonText: 'Si',
+          confirmButtonColor: 'red',
+          cancelButtonColor: 'green',
+          showCancelButton: true,
+          cancelButtonText: 'Seguir aquí',
+          closeOnClickOutside: false
+        }).then((resultado) => {
+          if (resultado.isConfirmed){
+            clearInterval(interv);
+            setStatus(0);
+            setMinutes(initialMinutes);
+            setSeconds(initialSeconds);
+            setBreakMinutes(breakMinutes);
+            setBreakSeconds(breakSeconds);
+            setMsg(welcomeMsg);
+            Swal.fire({
+              icon: 'success',
+              closeOnClickOutside: false,
+              showConfirmButton: false,
+              timer: 1500,
+              timerProgressBar: true
+            })
+          }
+        })
+      }
     }
   
     const resume = () => start();
@@ -142,14 +177,7 @@ function TimerFunctionality() {
       setBreakMinutes(updateBreakMin);
       setBreakSeconds(updateBreakSecs);
     }
-  
-    const breakTime = () =>{
-      clearInterval(interv);
-      setMinutes(breakMinutes);
-      setSeconds(breakSeconds);
-      setStatus(6);
-    }
-  
+
     const stopBreak = () => {
       clearInterval(interv);
       setStatus(8);
@@ -163,7 +191,12 @@ function TimerFunctionality() {
   
     const goToBreak = () => {
       if(status !== 2){
-        alert('Debe parar el timer');
+        Swal.fire({
+          text: 'Debe parar el timer para realizar esta acción.',
+          icon: 'info',
+          button: 'Ok',
+          closeOnClickOutside: false
+        })
       }else{
         setMsg(breakMsg);
         setMinutes(initialMinutes);
@@ -184,7 +217,13 @@ function TimerFunctionality() {
       if(breakMin >= 0 && breakMin < 60){
         setBreakMinutes(breakMin + 5);
       } else {
-        alert('Límite de tiempo de ciclo alcanzado');
+        Swal.fire({
+          title: 'Límite de tiempo de ciclo alcanzado.',
+          text: 'El tiempo máximo para un ciclo de descanso es de 60 minutos.',
+          icon: 'error',
+          button: 'Ok',
+          closeOnClickOutside: false
+        })
       }
   
     }
@@ -193,16 +232,35 @@ function TimerFunctionality() {
       if(breakMin > 0){
         setBreakMinutes(breakMin - 5);
       } else {
-        alert('Mínimo de tiempo alcanzado')
+        Swal.fire({
+          title: '¡Cuidado!',
+          text: 'No puede configurar tiempos negativos para el ciclo de descanso.',
+          icon: 'error',
+          button: 'Ok',
+          closeOnClickOutside: false
+        })
       }
     }
 
     const backFromConfig = () => {
       if(breakMin === 0){
-        alert('Debe configurar el tiempo para el ciclo de descanso')
+        Swal.fire({
+          text: 'Debe configurar el tiempo para el ciclo de descanso.',
+          icon: 'error',
+          button: 'Ok',
+          closeOnClickOutside: false
+        })
       } else {
         setMsg(studyMsg);
-        setStatus(0);
+        setStatus(3);
+        Swal.fire({
+          text: 'Ciclo de descanso configurado en ' + breakMin + ' minutos.',
+          icon: 'success',
+          timer: 2500,
+          showConfirmButton: false,
+          timerProgressBar: true,
+          closeOnClickOutside: false
+        })
       }
 
     }
@@ -212,23 +270,64 @@ function TimerFunctionality() {
   
     const backToStudy = () => {
       if (status === 7){
-        alert('Debe parar el timer');
+        Swal.fire({
+          text: 'Debe parar el timer para realizar esta acción.',
+          icon: 'info',
+          button: 'Ok',
+          closeOnClickOutside: false
+        })
       }else {
-        clearInterval(interv);
-        setBreakMinutes(breakMinutes);
-        setBreakSeconds(breakSeconds);
-        setMsg(studyMsg);
-        reset();
+        Swal.fire({
+          title: '¿Seguro de continuar?',
+          text: 'Esta acción reiniciará los valores y volverá al inicio.',
+          confirmButtonText: 'Si',
+          confirmButtonColor: 'red',
+          showCancelButton: true,
+          cancelButtonColor: 'green',
+          cancelButtonText: 'Seguir aquí',
+          icon: 'warning',
+          closeOnClickOutside: false
+        }).then((respuesta) =>{
+          if(respuesta.isConfirmed){
+            clearInterval(interv);
+            setStatus(0);
+            setMinutes(initialMinutes);
+            setSeconds(initialSeconds);
+            setBreakMinutes(breakMinutes);
+            setBreakSeconds(breakSeconds);
+            setMsg(welcomeMsg);
+            Swal.fire({
+              icon: 'success',
+              closeOnClickOutside: false,
+              showConfirmButton: false,
+              timer: 1500,
+              timerProgressBar: true
+            })
+          }
+        })
       }
   
     }
 
     const goToConfigBreak = () => {
       if(minutes === 0){
-        alert('Debe configurar el tiempo para el ciclo de estudio')
+        Swal.fire({
+          text: 'Debe configurar el tiempo para el ciclo de estudio.',
+          icon: 'error',
+          button: 'Ok',
+          closeOnClickOutside: false
+        })
       } else {
         setMsg(configBreakMsg);
         setStatus(9);
+        Swal.fire({
+          text: 'Su ciclo de estudio fue configurado en ' + minutes + ' minutos.',
+          icon: 'success',
+          timer: 2500,
+          showConfirmButton: false,
+          timerProgressBar: true,
+          closeOnClickOutside: false
+        })
       }
     }
   
@@ -244,7 +343,13 @@ function TimerFunctionality() {
       if(minutes >= 0 && minutes < 60){
         setMinutes(minutes + 5);
       } else {
-        alert('Límite de tiempo de ciclo alcanzado');
+        Swal.fire({
+          title: 'Límite de tiempo de ciclo alcanzado.',
+          text: 'El tiempo máximo para un ciclo de estudio es 60 minutos.',
+          icon: 'error',
+          button: 'Ok',
+          closeOnClickOutside: false
+        })
       }
   
     }
@@ -253,17 +358,22 @@ function TimerFunctionality() {
       if(minutes > 0){
         setMinutes(minutes - 5);
       } else {
-        alert('Mínimo de tiempo alcanzado')
+        Swal.fire({
+          title: '¡Cuidado!',
+          text: 'No puede configurar tiempos negativos para el ciclo de estudio.',
+          icon: 'error',
+          button: 'Ok',
+          closeOnClickOutside: false
+        })
       }
     }
     
   return (
         <div className='TimerFunctionality'>
-
           <Message msg={msg}/>
           <TimerView minutes={minutes} seconds={seconds} breakMin={breakMin} breakSec={breakSec} status={status}/>
           <Buttons status={status} stop={stop} reset={reset} resume={resume} start={start} 
-                  breakTime={breakTime} breakRun={breakRun} goToBreak={goToBreak} backToStudy={backToStudy} 
+                  breakRun={breakRun} goToBreak={goToBreak} backToStudy={backToStudy} 
                   configTimer={configTimer} addTimer={addTimer} subTimer={subTimer} goToConfigBreak={goToConfigBreak}
                   stopBreak={stopBreak} resumeBreak={resumeBreak} configBreakTimer={configBreakTimer}
                   addBreak= {addBreak} subBreak={subBreak} backFromConfig={backFromConfig}/>
