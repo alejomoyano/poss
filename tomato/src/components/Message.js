@@ -14,5 +14,3 @@ function Message(props) {
 
 
 export default Message
-
-//<span>{(props.time.m === 0 && props.time.s === 0) ? 'Break Time' : 'Study Time'}</span>

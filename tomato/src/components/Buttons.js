@@ -1,4 +1,4 @@
-import React, {useState, Fragment} from 'react'
+import React, {Fragment} from 'react'
 import { Button } from '@mui/material';
 import SettingsIcon from '@mui/icons-material/Settings';
 
@@ -6,10 +6,17 @@ function StartButton(props) {
 
 
   return (
-    <Fragment>      
+    <Fragment> 
+
       {(props.status === 0) ?
       <Button variant="contained" onClick={props.start}>Start</Button> : ""
       }
+
+      {(props.status === 0) ?
+      <Fragment>
+      <Button onClick={props.configTimer}><SettingsIcon color="primary" fontSize="large" aria-label="add an alarm"></SettingsIcon></Button>
+      </Fragment> : "" }
+
 
       {(props.status === 1) ?
       <Fragment>
@@ -30,6 +37,18 @@ function StartButton(props) {
         <Button variant="contained" onClick={props.breakTime}>Set Break</Button>
       </Fragment> : "" }
 
+      {(props.status === 4) ?
+      <Fragment>
+        {<Button variant="contained" onClick={props.backToStudy}>Back to Study</Button>}
+      </Fragment> : "" }
+
+      {(props.status === 5) ?
+      <Fragment>
+        {<Button variant="contained" onClick={props.addTimer}>+</Button>}
+        {<Button variant="contained" onClick={props.subTimer}>-</Button>}
+        {<Button variant="contained" onClick={props.backFromConfig}>Save</Button>}
+      </Fragment> : "" }
+
       {(props.status === 6) ?
       <Fragment>
         <Button variant="contained" onClick={props.breakRun}>Start</Button>
@@ -38,27 +57,15 @@ function StartButton(props) {
 
       {(props.status === 7) ?
       <Fragment>
-      <Button variant="contained" onClick={props.stop}>Stop</Button>
+      <Button variant="contained" onClick={props.stopBreak}>Stop</Button>
       <Button variant="contained" onClick={props.backToStudy}>Back to Study</Button>
       </Fragment> : "" }
 
-      {(props.status === 4) ?
+      {(props.status === 8) ?
       <Fragment>
-        {<Button variant="contained" onClick={props.backToStudy}>Back to Study</Button>}
+        <Button variant="contained" onClick={props.resumeBreak}>Resume</Button>
+        <Button variant="contained" onClick={props.backToStudy}>Back to Study</Button>
       </Fragment> : "" }
-
-      {(props.status === 0) ?
-      <Fragment>
-      <Button onClick={props.configTimer}><SettingsIcon color="primary" fontSize="large" aria-label="add an alarm"></SettingsIcon></Button>
-      </Fragment> : "" }
-
-      {(props.status === 5) ?
-      <Fragment>
-        {<Button variant="contained" onClick={props.addTimer}>+</Button>}
-        {<Button variant="contained" onClick={props.subTimer}>-</Button>}
-        {<Button variant="contained" onClick={props.backFromConfig}>Back</Button>}
-      </Fragment> : "" }
-
 
     </Fragment>
   )
@@ -66,19 +73,3 @@ function StartButton(props) {
 
 
 export default StartButton
-
-/*
-    const [startPause, setStartPause] = useState('Start');
-    const handleClick = () => {
-        if(startPause === 'Start'){
-            setStartPause('Pause');
-        }else{
-            setStartPause('Start');
-        }
-    };
-*/
-/*
-{(props.status === 3) ?
-  <Fragment>
-    <Button variant="contained" onClick={props.breakTime}>BREAK</Button>
-  </Fragment> : "" }*/

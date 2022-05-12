@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import Pomodoro from './components/Pomodoro'
+import TimerView from './components/TimerView'
 import Buttons from './components/Buttons'
 import Message from './components/Message'
 //import ResetButton from './components/ResetButton'
@@ -92,6 +92,7 @@ function App() {
 
   const breakRun = () =>{
     setInterv(setInterval(run2, 1000));
+    setStatus(7);
     if(updateS === 0){
       if(updateM !== 0){
         updateS = 59;
@@ -110,14 +111,23 @@ function App() {
     setMinutes(0);
     setSeconds(8);
     //setTime({m:0 ,s:8});
-    setMsg(breakMsg);
     setStatus(6);
   }
 
-  const backToStudy = () => {
+  const stopBreak = () => {
     clearInterval(interv);
-    setMsg(studyMsg);
-    reset();
+    setStatus(8);
+  }
+
+  const backToStudy = () => {
+    if (status === 7){
+      alert('Debe parar el timer');
+    }else {
+      clearInterval(interv);
+      setMsg(studyMsg);
+      reset();
+    }
+
   }
 
   const configTimer = () => {
@@ -150,11 +160,18 @@ function App() {
     setMsg(studyMsg);
     setStatus(0);
   }
+  
+  const resumeBreak = () => {
+    run();
+    setStatus(7);
+    setInterv(setInterval(run, 1000));
+  }
 
   const goToBreak = () => {
     if(status !== 2){
       alert('Debe parar el timer');
     }else{
+      setMsg(breakMsg);
       setMinutes(initialMinutes);
       setSeconds(initialSeconds);
       setStatus(3);
@@ -165,10 +182,11 @@ function App() {
   return (
     <div className='App'>
       <Message msg={msg}/>
-      <Pomodoro minutes={minutes} seconds={seconds} status={status}/>
+      <TimerView minutes={minutes} seconds={seconds} status={status}/>
       <Buttons status={status} stop={stop} reset={reset} resume={resume} start={start} 
       breakTime={breakTime} breakRun={breakRun} goToBreak={goToBreak} backToStudy={backToStudy} 
-      configTimer={configTimer} addTimer={addTimer} subTimer={subTimer} backFromConfig={backFromConfig}/>
+      configTimer={configTimer} addTimer={addTimer} subTimer={subTimer} backFromConfig={backFromConfig}
+      stopBreak={stopBreak} resumeBreak={resumeBreak}/>
     </div>
   )
 }
