@@ -8,13 +8,16 @@ function TimerFunctionality() {
     const initialMinutes = 0;
     const initialSeconds = 0;
     const breakMinutes = 0;
-    const breakSeconds = 6;
+    const breakSeconds = 0;
     let breakMsg = 'Break Time';
     let studyMsg = 'Study Time';
-    let configMsg = 'Timer Configuration'
+    let configMsg = 'Study Timer Configuration'
+    let configBreakMsg = 'Break Timer Configuration'
   
     const [minutes, setMinutes] = useState(initialMinutes);
     const [seconds, setSeconds] = useState(initialSeconds);
+    const [breakMin, setBreakMinutes] = useState(breakMinutes);
+    const [breakSec, setBreakSeconds] = useState(breakSeconds);
     const [msg, setMsg] = useState(studyMsg);
     const [interv, setInterv] = useState();
     const [status, setStatus] = useState(0);
@@ -47,16 +50,20 @@ function TimerFunctionality() {
       STOP y BACK TO STUDY = 8
           Al parar el timer (STOP) en el Break Time, podemos seguir con el tiempo (RESUME) o
           podemos volver al inicio con el BACK TO STUDY, que al estar STOP el timer, te lo permite.
-      CONFIG = 5
+      CONFIG STUDY = 5
           Si clickeamos el engranaje de configuración, nos aparecen los botones para sumar 5 minutos (+),
           substraer 5 minutos (-) y guardar y volver con ese valor modificado (SAVE).
       BACK TO STUDY FINAL = 4
             Cuando termina el break, aparece el botón BACK TO STUDY para volver al inicio
+      CONFIG BREAK = 9
+            Cuando clickeamos el engranaje para configurar el Study Time y guardamos (SAVE), nos lleva a la
+            pantalla de configuración del Break Time con los mismos botones pero referenciado a las variables
+            correspondientes a Break.
       */
 
   
-    var updateM = minutes,
-        updateS = seconds;
+    var updateStudyMin = minutes,
+        updateStudySecs = seconds;
   
     const start = () => {
       if(minutes === 0 && seconds === 0){
@@ -69,19 +76,19 @@ function TimerFunctionality() {
     }
         
     const run = () => {
-      if(updateS === 0){
-        if(updateM !== 0){
-          updateS = 59;
-          updateM--;
+      if(updateStudySecs === 0){
+        if(updateStudyMin !== 0){
+          updateStudySecs = 59;
+          updateStudyMin--;
         } else{
           setStatus(3);
         }
         
       } else {
-        updateS--;
+        updateStudySecs--;
       }
-      setMinutes(updateM);
-      setSeconds(updateS);
+      setMinutes(updateStudyMin);
+      setSeconds(updateStudySecs);
     }
   
     const stop = () => {
@@ -94,41 +101,46 @@ function TimerFunctionality() {
       setStatus(0);
       setMinutes(initialMinutes);
       setSeconds(initialSeconds);
+      setBreakMinutes(breakMinutes);
+      setBreakSeconds(breakSeconds);
     }
   
     const resume = () => start();
   
     //      ----------------------------------------- BREAK FUNCTIONALITY´S -----------------------------------------
 
+    var updateBreakMin = breakMin,
+        updateBreakSecs = breakSec;
+
     const runBreak = () => {
-      if(updateS === 0){
-        if(updateM !== 0){
-          updateS = 59;
-          updateM--;
+      if(updateBreakSecs === 0){
+        if(updateBreakMin !== 0){
+          updateBreakSecs = 59;
+          updateBreakMin--;
         } else{
           setStatus(4);
         }
         
       } else {
-        updateS--;
+        updateBreakSecs--;
       }
-      setMinutes(updateM);
-      setSeconds(updateS);
+      setBreakMinutes(updateBreakMin);
+      setBreakSeconds(updateBreakSecs);
     }
   
     const breakRun = () =>{
       setInterv(setInterval(runBreak, 1000));
       setStatus(7);
-      if(updateS === 0){
-        if(updateM !== 0){
-          updateS = 59;
-          updateM--;
+      if(updateBreakSecs === 0){
+        if(updateBreakMin !== 0){
+          updateBreakSecs = 59;
+          updateBreakMin--;
         }
       } else {
-        updateS--;
+        updateBreakSecs--;
       }
-      setMinutes(updateM);
-      setSeconds(updateS);
+      setBreakMinutes(updateBreakMin);
+      setBreakSeconds(updateBreakSecs);
     }
   
     const breakTime = () =>{
@@ -146,7 +158,7 @@ function TimerFunctionality() {
     const resumeBreak = () => {
       run();
       setStatus(7);
-      setInterv(setInterval(run, 1000));
+      setInterv(setInterval(runBreak, 1000));
     }
   
     const goToBreak = () => {
@@ -156,27 +168,68 @@ function TimerFunctionality() {
         setMsg(breakMsg);
         setMinutes(initialMinutes);
         setSeconds(initialSeconds);
-        setStatus(3);
+        setStatus(6);
       }
   
     }
+    //      ----------------------------------------- CONFIG BREAK TIMER -----------------------------------------  
 
-    //      ----------------------------------------- CONFIG FUNCTIONALITY´S -----------------------------------------  
+    const configBreakTimer = () => {
+      if(status === 9){
+        setStatus(0);
+      }
+    }
+  
+    const addBreak = () => {
+      if(breakMin >= 0 && breakMin < 60){
+        setBreakMinutes(breakMin + 5);
+      } else {
+        alert('Límite de tiempo de ciclo alcanzado');
+      }
+  
+    }
+  
+    const subBreak = () => {
+      if(breakMin > 0){
+        setBreakMinutes(breakMin - 5);
+      } else {
+        alert('Mínimo de tiempo alcanzado')
+      }
+    }
+
+    const backFromConfig = () => {
+      if(breakMin === 0){
+        alert('Debe configurar el tiempo para el ciclo de descanso')
+      } else {
+        setMsg(studyMsg);
+        setStatus(0);
+      }
+
+    }
+
+
+    //      ----------------------------------------- CONFIG STUDY TIMER -----------------------------------------  
   
     const backToStudy = () => {
       if (status === 7){
         alert('Debe parar el timer');
       }else {
         clearInterval(interv);
+        setBreakMinutes(breakMinutes);
+        setBreakSeconds(breakSeconds);
         setMsg(studyMsg);
         reset();
       }
   
     }
 
-    const backFromConfig = () => {
-      setMsg(studyMsg);
-      setStatus(0);
+    const goToConfigBreak = () => {
+      if(minutes === 0){
+        alert('Debe configurar el tiempo para el ciclo de estudio')
+      } else {
+        setMsg(configBreakMsg);
+        setStatus(9);
+      }
     }
   
     const configTimer = () => {
@@ -208,11 +261,12 @@ function TimerFunctionality() {
         <div className='TimerFunctionality'>
 
           <Message msg={msg}/>
-          <TimerView minutes={minutes} seconds={seconds} status={status}/>
+          <TimerView minutes={minutes} seconds={seconds} breakMin={breakMin} breakSec={breakSec} status={status}/>
           <Buttons status={status} stop={stop} reset={reset} resume={resume} start={start} 
                   breakTime={breakTime} breakRun={breakRun} goToBreak={goToBreak} backToStudy={backToStudy} 
-                  configTimer={configTimer} addTimer={addTimer} subTimer={subTimer} backFromConfig={backFromConfig}
-                  stopBreak={stopBreak} resumeBreak={resumeBreak}/>
+                  configTimer={configTimer} addTimer={addTimer} subTimer={subTimer} goToConfigBreak={goToConfigBreak}
+                  stopBreak={stopBreak} resumeBreak={resumeBreak} configBreakTimer={configBreakTimer}
+                  addBreak= {addBreak} subBreak={subBreak} backFromConfig={backFromConfig}/>
 
         </div>
   )

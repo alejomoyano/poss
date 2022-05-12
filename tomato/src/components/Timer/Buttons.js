@@ -45,7 +45,7 @@ function Buttons(props) {
       <Fragment>
           <Button variant="contained" onClick={props.addTimer}>+</Button>
           <Button variant="contained" onClick={props.subTimer}>-</Button>
-          <Button variant="contained" onClick={props.backFromConfig}>Save</Button>
+          <Button variant="contained" onClick={props.goToConfigBreak}>Save</Button>
       </Fragment> : "" }
 
       {(props.status === 6) ?
@@ -64,6 +64,13 @@ function Buttons(props) {
       <Fragment>
           <Button variant="contained" onClick={props.resumeBreak}>Resume</Button>
           <Button variant="contained" onClick={props.backToStudy}>Back to Study</Button>
+      </Fragment> : "" }
+
+      {(props.status === 9) ?
+      <Fragment>
+          <Button variant="contained" onClick={props.addBreak}>+</Button>
+          <Button variant="contained" onClick={props.subBreak}>-</Button>
+          <Button variant="contained" onClick={props.backFromConfig}>Save</Button>
       </Fragment> : "" }
 
     </div>
