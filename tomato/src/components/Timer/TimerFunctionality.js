@@ -72,9 +72,12 @@ function TimerFunctionality() {
     const start = () => {
       if(minutes === 0 && seconds === 0){
        Swal.fire({
-          title: 'Debe configurar el Timer antes de comenzar.',
+          title: 'You must set the Timer before you start.',
           icon: 'info',
-          button: 'Ok',
+          button: 'OK',
+          customClass: 'background-swal',
+          iconColor: '#07C2DF',
+          confirmButtonColor: '#07C2DF',
           allowEscapeKey: true,
           allowOutsideClick: false
         })
@@ -110,14 +113,18 @@ function TimerFunctionality() {
       if(status === 2 || status === 1){
         stop();
         Swal.fire({
-          title: '¡Cuidado!',
-          text: 'Esta acción reiniciará los valores y volverá al inicio.',
+          title: 'Are you sure?',
+          text: 'This action will reset the values and return to the start.',
           icon: 'warning',
-          confirmButtonText: 'Si',
+          customClass: 'background-swal',
+          confirmButtonText: 'Continue',
           confirmButtonColor: 'red',
           cancelButtonColor: 'green',
           showCancelButton: true,
-          cancelButtonText: 'Seguir aquí',
+          focusCancel: true,
+          reverseButtons: true,
+          allowEscapeKey: false,
+          cancelButtonText: 'Stay here',
           closeOnClickOutside: false
         }).then((resultado) => {
           if (resultado.isConfirmed){
@@ -192,10 +199,14 @@ function TimerFunctionality() {
     const goToBreak = () => {
       if(status !== 2){
         Swal.fire({
-          text: 'Debe parar el timer para realizar esta acción.',
+          text: 'You must stop the timer to perform this action.',
           icon: 'info',
-          button: 'Ok',
-          closeOnClickOutside: false
+          button: 'OK',
+          customClass: 'background-swal',
+          iconColor: '#07C2DF',
+          confirmButtonColor: '#07C2DF',
+          allowEscapeKey: true,
+          allowOutsideClick: false
         })
       }else{
         setMsg(breakMsg);
@@ -218,11 +229,15 @@ function TimerFunctionality() {
         setBreakMinutes(breakMin + 5);
       } else {
         Swal.fire({
-          title: 'Límite de tiempo de ciclo alcanzado.',
-          text: 'El tiempo máximo para un ciclo de descanso es de 60 minutos.',
+          title: 'Cycle time limit reached!',
+          text: 'The maximum time for a break cycle is 60 minutes.',
           icon: 'error',
+          customClass: 'background-swal',
+          iconColor: '#E34343',
+          confirmButtonColor: '#07C2DF',
           button: 'Ok',
-          closeOnClickOutside: false
+          allowEscapeKey: true,
+          allowOutsideClick: false
         })
       }
   
@@ -233,11 +248,15 @@ function TimerFunctionality() {
         setBreakMinutes(breakMin - 5);
       } else {
         Swal.fire({
-          title: '¡Cuidado!',
-          text: 'No puede configurar tiempos negativos para el ciclo de descanso.',
+          title: 'Be careful!',
+          text: 'You cannot set negative times for the break cycle.',
           icon: 'error',
+          customClass: 'background-swal',
+          iconColor: '#E34343',
+          confirmButtonColor: '#07C2DF',
           button: 'Ok',
-          closeOnClickOutside: false
+          allowEscapeKey: true,
+          allowOutsideClick: false
         })
       }
     }
@@ -245,21 +264,27 @@ function TimerFunctionality() {
     const backFromConfig = () => {
       if(breakMin === 0){
         Swal.fire({
-          text: 'Debe configurar el tiempo para el ciclo de descanso.',
+          text: 'You must set the time for the break cycle.',
           icon: 'error',
+          customClass: 'background-swal',
+          iconColor: '#E34343',
+          confirmButtonColor: '#07C2DF',
           button: 'Ok',
-          closeOnClickOutside: false
+          allowEscapeKey: true,
+          allowOutsideClick: false
         })
       } else {
         setMsg(studyMsg);
         setStatus(3);
         Swal.fire({
-          text: 'Ciclo de descanso configurado en ' + breakMin + ' minutos.',
+          text: 'Break cycle set to ' + breakMin + ' minutes.',
           icon: 'success',
           timer: 2500,
+          customClass: 'success-swal',
           showConfirmButton: false,
           timerProgressBar: true,
-          closeOnClickOutside: false
+          allowEscapeKey: true,
+          allowOutsideClick: false
         })
       }
 
@@ -271,20 +296,28 @@ function TimerFunctionality() {
     const backToStudy = () => {
       if (status === 7){
         Swal.fire({
-          text: 'Debe parar el timer para realizar esta acción.',
+          text: 'You must stop the timer to perform this action.',
           icon: 'info',
-          button: 'Ok',
-          closeOnClickOutside: false
+          button: 'OK',
+          customClass: 'background-swal',
+          iconColor: '#07C2DF',
+          confirmButtonColor: '#07C2DF',
+          allowEscapeKey: true,
+          allowOutsideClick: false
         })
       }else {
         Swal.fire({
-          title: '¿Seguro de continuar?',
-          text: 'Esta acción reiniciará los valores y volverá al inicio.',
-          confirmButtonText: 'Si',
+          title: 'Are you sure?',
+          text: 'This action will reset the values and return to the start.',
+          confirmButtonText: 'Continue',
           confirmButtonColor: 'red',
+          customClass: 'background-swal',
           showCancelButton: true,
+          allowEscapeKey: false,
           cancelButtonColor: 'green',
-          cancelButtonText: 'Seguir aquí',
+          cancelButtonText: 'Stay here',
+          focusCancel: true,
+          reverseButtons: true,
           icon: 'warning',
           closeOnClickOutside: false
         }).then((respuesta) =>{
@@ -312,21 +345,27 @@ function TimerFunctionality() {
     const goToConfigBreak = () => {
       if(minutes === 0){
         Swal.fire({
-          text: 'Debe configurar el tiempo para el ciclo de estudio.',
+          text: 'You must set the time for the study cycle.',
           icon: 'error',
+          customClass: 'background-swal',
+          iconColor: '#E34343',
+          confirmButtonColor: '#07C2DF',
           button: 'Ok',
-          closeOnClickOutside: false
+          allowEscapeKey: true,
+          allowOutsideClick: false
         })
       } else {
         setMsg(configBreakMsg);
         setStatus(9);
         Swal.fire({
-          text: 'Su ciclo de estudio fue configurado en ' + minutes + ' minutos.',
+          text: 'Study cycle was set to ' + minutes + ' minutes.',
           icon: 'success',
           timer: 2500,
+          customClass: 'success-swal',
           showConfirmButton: false,
           timerProgressBar: true,
-          closeOnClickOutside: false
+          allowEscapeKey: true,
+          allowOutsideClick: false
         })
       }
     }
@@ -344,11 +383,15 @@ function TimerFunctionality() {
         setMinutes(minutes + 5);
       } else {
         Swal.fire({
-          title: 'Límite de tiempo de ciclo alcanzado.',
-          text: 'El tiempo máximo para un ciclo de estudio es 60 minutos.',
+          title: 'Cycle time limit reached!',
+          text: 'The maximum time for a study cycle is 60 minutes.',
           icon: 'error',
+          customClass: 'background-swal',
+          iconColor: '#E34343',
+          confirmButtonColor: '#07C2DF',
           button: 'Ok',
-          closeOnClickOutside: false
+          allowEscapeKey: true,
+          allowOutsideClick: false
         })
       }
   
@@ -359,11 +402,15 @@ function TimerFunctionality() {
         setMinutes(minutes - 5);
       } else {
         Swal.fire({
-          title: '¡Cuidado!',
-          text: 'No puede configurar tiempos negativos para el ciclo de estudio.',
+          title: 'Be careful!',
+          text: 'You cannot set negative times for the study cycle.',
           icon: 'error',
+          customClass: 'background-swal',
+          iconColor: '#E34343',
+          confirmButtonColor: '#07C2DF',
           button: 'Ok',
-          closeOnClickOutside: false
+          allowEscapeKey: true,
+          allowOutsideClick: false
         })
       }
     }

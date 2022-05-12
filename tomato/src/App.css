@@ -20,5 +20,18 @@ body{
 
 .Buttons > Button{
   font-size: 2rem;
+  margin: 1rem;
 }
 
+
+/* ------------- ALERTS  STYLES ------------- */
+
+.background-swal {
+  color: #DCE5F0;
+  background-color: #354352;
+  width: 40%;
+}
+
+.success-swal {
+  width: 30%;
+}
