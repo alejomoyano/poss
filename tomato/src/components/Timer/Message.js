@@ -1,12 +1,12 @@
-import React, {Fragment} from 'react'
+import React from 'react'
 
 function Message(props) {
 
   return (
 
-    <Fragment>
+    <div className='Message'>
         <span>{props.msg}</span>
-    </Fragment> 
+    </div> 
 
   )
 
