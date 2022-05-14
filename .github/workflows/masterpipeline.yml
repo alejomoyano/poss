@@ -1,0 +1,39 @@
+name: Deployment Pipeline 
+
+
+# este pipeline se va a ejecutar cuando hagamos un push a master
+# y cuando hagamos un pull_request a master
+on: 
+  push:
+    branches: 
+      - master
+  pull_request:
+    branches:
+      - master
+    types: [opened]
+
+jobs: 
+  deploy:
+    runs-on: ubuntu-18.04
+    steps:
+      # con este paso vamos a traer la ultima version del master
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      # tenemos que instalar las dependencias
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 14
+      # instalamos las dependiencias de node. Sacamos comprobaciones
+      # que no nos interesan
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund --no-optional
+      # checkeamos el codigo con el linter
+      - name: Linter
+        run: npm run eslint
+      # buildiamos
+      - name: Build
+        run: npm run build
+      # aca correriamos los test, segun el video los pone despues
+      # del build pero me hace ruido
+      - name: Test

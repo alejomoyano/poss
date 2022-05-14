@@ -1,13 +1,18 @@
-import React from 'react';
-import { Box, TextField, Button } from '@mui/material';
+import React, {useState } from 'react';
+import { Box, TextField, Button, Grid } from '@mui/material';
 
 function Auth(){
+
+    const [name, setName] = useState(''); //Hook para guardar el name
+
+    const handleSubmit = (event) => { // obtenemos el valor del texfield
+        console.log(name);
+    }
+
     return(
-        <Box onSubmit={() => {
-            console.log("anda");
-        }}>
-            <TextField variant="outlined" defaultValue="Ingrese un nombre de usuario" required/>
-            <Button type="submit" variant="contained">Submit</Button>
+        <Box>
+            <TextField variant="outlined" label="Nombre" size="small" onChange={e => setName(e.target.value)} required noValidate/>
+            <Button type="submit" variant="contained" onClick={handleSubmit}>Submit</Button>
         </Box>
     );
 }
