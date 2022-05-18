@@ -33,7 +33,38 @@ return(
             <Fragment>
                 <Button onClick={props.backToStart}>Volver al inicio</Button>
                 <Button onClick={props.configTimes}><SettingsIcon color="primary" fontSize="large"></SettingsIcon></Button>
-            </Fragment> : "" }    
+            </Fragment> : "" }
+
+        {(props.status === 5) ? 
+        <Fragment>
+            <Button onClick={props.stopStudy}>Stop Study</Button>
+        </Fragment> : "" }
+
+        {(props.status === 6) ? 
+        <Fragment>
+            <Button onClick={props.resumeStudy}>Resume Study</Button>
+        </Fragment> : "" }
+
+        {(props.status === 7) ? 
+        <Fragment>
+            <Button onClick={props.stopShortBreak}>Stop Short Break</Button>
+        </Fragment> : "" }
+        
+        {(props.status === 8) ? 
+        <Fragment>
+            <Button onClick={props.resumeShortBreak}>Resume Short Break</Button>
+        </Fragment> : "" }
+
+        {(props.status === 9) ? 
+        <Fragment>
+            <Button onClick={props.stopLongBreak}>Stop Long Break</Button>
+        </Fragment> : "" }
+
+        {(props.status === 10) ? 
+        <Fragment>
+            <Button onClick={props.resumeLongBreak}>Stop Long Break</Button>
+        </Fragment> : "" }
+
 
     </div>
 )

@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {startTransition, useState} from 'react'
 import TimerView from './TimerView';
 //import TimerView from './TimerView'
 import Buttons from './Buttons'
@@ -9,6 +9,7 @@ function TimerFunctionality() {
 const initialMinutes = 0;
 const initialSeconds = 0;
 const [subCycleCount, setSubCycleCount] = useState(0);
+const [cycleCount, setCycleCount] = useState(0);
 const [studyMinutes, setStudyMinutes] = useState(initialMinutes);
 const [studySeconds, setStudySeconds] = useState(initialSeconds);
 const [shortBreakMinutes, setShortBreakMinutes] = useState(initialMinutes);
@@ -23,6 +24,7 @@ const [userShortBreak, setUserShortBreak] = useState();
 const [userLongBreak, setUserLongBreak] = useState();
 
 let updateSubCycleCount = subCycleCount;
+let updateCycleCount = cycleCount;
 
 const studyStart = () => {
 clearInterval(interv);
@@ -30,9 +32,8 @@ if(studyMinutes === 0 && studySeconds === 0){
   alert("Setear tiempo de estudio");
 } else{
   studyRun();
-  setInterv(setInterval(studyRun, 25));
-  updateSubCycleCount += 1;
-  setSubCycleCount(updateSubCycleCount);
+  setStatus(5);
+  setInterv(setInterval(studyRun, 1000));
 }
 }
 
@@ -57,10 +58,29 @@ setStudyMinutes(updateStudyMin);
 setStudySeconds(updateStudySecs);
 }
 
-const shortBreakStart = () =>{
+const stopStudy = () => {
   clearInterval(interv);
+  setStatus(6);
+}
+
+const resumeStudy = () => {
+    studyStart();
+    setStatus(5);
+}
+
+const shortBreakStart = () =>{
+  if(status === 2){
+    updateSubCycleCount += 1;
+    setSubCycleCount(updateSubCycleCount);
+    if(updateSubCycleCount === 4){
+      updateCycleCount += 1;
+      setCycleCount(updateCycleCount);
+    }
+  }
+  clearInterval(interv);
+  setStatus(7);
   shortBreakRun();
-  setInterv(setInterval(shortBreakRun, 25));
+  setInterv(setInterval(shortBreakRun, 1000));
 }
 
 let updateShortBreakMin = shortBreakMinutes;
@@ -72,8 +92,7 @@ const shortBreakRun = () => {
       updateShortBreakMin--;
       updateShortBreakSecs = 59;
     } else{
-      if(subCycleCount === 4){
-        setSubCycleCount(0);
+      if(subCycleCount === 3){
         setStatus(3);
         clearInterval(interv);
       } else{
@@ -88,10 +107,21 @@ const shortBreakRun = () => {
   setShortBreakSeconds(updateShortBreakSecs);
 }
 
+const stopShortBreak = () => {
+  clearInterval(interv);
+  setStatus(8);
+}
+
+const resumeShortBreak = () => {
+  shortBreakStart();
+  setStatus(7);
+}
+
 const longBreakStart = () =>{
   clearInterval(interv);
+  setStatus(9);
   longBreakRun();
-  setInterv(setInterval(longBreakRun, 0.5));
+  setInterv(setInterval(longBreakRun, 1000));
 }
 
 let updateLongBreakSecs = longBreakSeconds;
@@ -113,7 +143,18 @@ const longBreakRun = () => {
   setLongBreakSeconds(updateLongBreakSecs);
 }
 
+const stopLongBreak = () => {
+  clearInterval(interv);
+  setStatus(10);
+}
+
+const resumeLongBreak = () => {
+  longBreakStart();
+  setStatus(9);
+}
+
 const backToStart = () => {
+  setSubCycleCount(0);
   setStudyMinutes(userStudyTime);
   setShortBreakMinutes(userShortBreak);
   setLongBreakMinutes(userLongBreak);
@@ -153,6 +194,7 @@ const configTimes = () => {
     setLongBreakMinutes(5);
     setUserLongBreak(5);
   }
+  setSubCycleCount(0);
   setStatus(1);
 }
 
@@ -161,10 +203,12 @@ return (
 
       <TimerView studyMinutes={studyMinutes} studySeconds={studySeconds} status={status} 
       shortBreakMinutes={shortBreakMinutes} shortBreakSeconds={shortBreakSeconds} longBreakMinutes={longBreakMinutes} 
-      longBreakSeconds={longBreakSeconds} subCycleCount={subCycleCount}/>
+      longBreakSeconds={longBreakSeconds} subCycleCount={subCycleCount} cycleCount={cycleCount}/>
 
       <Buttons status={status} studyStart={studyStart} configTimes={configTimes} studyMinutes={studyMinutes} 
-      shortBreakStart={shortBreakStart} longBreakStart={longBreakStart} backToStart={backToStart} />
+      shortBreakStart={shortBreakStart} longBreakStart={longBreakStart} backToStart={backToStart} stopStudy={stopStudy} 
+      resumeStudy={resumeStudy} stopShortBreak={stopShortBreak} resumeShortBreak={resumeShortBreak} stopLongBreak={stopLongBreak}
+      resumeLongBreak={resumeLongBreak}/>
 
   </div>
 )
