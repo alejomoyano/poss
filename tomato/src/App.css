@@ -23,15 +23,36 @@ body{
   margin: 1rem;
 }
 
-
-/* ------------- ALERTS  STYLES ------------- */
-
-.background-swal {
-  color: #DCE5F0;
-  background-color: #354352;
-  width: 40%;
+.short-break,
+.study-time,
+.long-break {
+  width: 15rem;
+  text-align: center;
+  letter-spacing: 1px;
+  font-size: 17px;
+  height: 1.25rem;
 }
 
-.success-swal {
-  width: 30%;
+.short-break,
+.study-time{
+  margin-bottom: 9px;
+}
+
+.general-cycle {
+  font-size: 25px;
+  margin-bottom: 9px;
+}
+
+.sub-cycle {
+  font-size: 20px;
+  margin-bottom: 9px;
+}
+
+.config-text {
+  font-size: 30px;
+  margin-bottom: 9px;
+}
+
+.timer {
+  font-size: 50px;
 }

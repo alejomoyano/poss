@@ -15,54 +15,54 @@ return(
             
             {(props.status === 1) ?
             <Fragment>
-                <Button onClick={props.studyStart}>Start Study</Button>
+                <Button variant="contained" onClick={props.studyStart}>Start Study</Button>
             </Fragment> : "" }
 
         
         {(props.status === 2) ?             
             <Fragment>
-                <Button onClick={props.shortBreakStart}>Start Short Break</Button>
+                <Button variant="contained" onClick={props.shortBreakStart}>Start Short Break</Button>
             </Fragment> : "" }
 
         {(props.status === 3) ?
             <Fragment>
-                <Button onClick={props.longBreakStart}>Start Long Break</Button>
+                <Button variant="contained" onClick={props.longBreakStart}>Start Long Break</Button>
             </Fragment> : "" }
 
         {(props.status === 4) ?
             <Fragment>
-                <Button onClick={props.backToStart}>Volver al inicio</Button>
-                <Button onClick={props.configTimes}><SettingsIcon color="primary" fontSize="large"></SettingsIcon></Button>
+                <Button variant="contained" onClick={props.backToStart}>Volver al inicio</Button>
+                <Button variant="contained" onClick={props.configTimes}><SettingsIcon color="primary" fontSize="large"></SettingsIcon></Button>
             </Fragment> : "" }
 
         {(props.status === 5) ? 
         <Fragment>
-            <Button onClick={props.stopStudy}>Stop Study</Button>
+            <Button variant="contained" onClick={props.stopStudy}>Stop Study</Button>
         </Fragment> : "" }
 
         {(props.status === 6) ? 
         <Fragment>
-            <Button onClick={props.resumeStudy}>Resume Study</Button>
+            <Button variant="contained" onClick={props.resumeStudy}>Resume Study</Button>
         </Fragment> : "" }
 
         {(props.status === 7) ? 
         <Fragment>
-            <Button onClick={props.stopShortBreak}>Stop Short Break</Button>
+            <Button variant="contained" onClick={props.stopShortBreak}>Stop Short Break</Button>
         </Fragment> : "" }
         
         {(props.status === 8) ? 
         <Fragment>
-            <Button onClick={props.resumeShortBreak}>Resume Short Break</Button>
+            <Button variant="contained" onClick={props.resumeShortBreak}>Resume Short Break</Button>
         </Fragment> : "" }
 
         {(props.status === 9) ? 
         <Fragment>
-            <Button onClick={props.stopLongBreak}>Stop Long Break</Button>
+            <Button variant="contained" onClick={props.stopLongBreak}>Stop Long Break</Button>
         </Fragment> : "" }
 
         {(props.status === 10) ? 
         <Fragment>
-            <Button onClick={props.resumeLongBreak}>Stop Long Break</Button>
+            <Button variant="contained" onClick={props.resumeLongBreak}>Resume Long Break</Button>
         </Fragment> : "" }
 
 

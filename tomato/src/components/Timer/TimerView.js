@@ -1,50 +1,48 @@
-import React, {Fragment} from 'react'
+import React from 'react'
 
 function TimerView(props) {
 
 return(
   <div>
 
-    <Fragment>
+    {(props.status !== 0) ?
+    <div className='general-cycle'>
       <span>{'General Cycles: ' + props.cycleCount}</span>&nbsp;&nbsp;
-    </Fragment>
+    </div> : "" }
 
     {!(props.status === 0 || props.status === 9 || props.status === 10 || props.status === 4) ?
-    <Fragment>
+    <div className='sub-cycle'>
       <span>{'Sub Cycles: ' + props.subCycleCount}</span>&nbsp;&nbsp;
-    </Fragment> : "" }
+    </div> : "" }
 
     {(props.status === 0) ?
-    <Fragment>
+    <div className='config-text'>
       <span>{'Configure los timers para comenzar'}</span>
-    </Fragment> : ""}
+    </div> : ""}
 
     {(props.status === 1 || props.status === 5 || props.status === 6) ?
-    <Fragment>
+    <div className='timer'>
       <span>{(props.studyMinutes) >= 10 ? props.studyMinutes : '0' + props.studyMinutes}</span>&nbsp;:&nbsp;
       <span>{(props.studySeconds) >= 10 ? props.studySeconds : '0' + props.studySeconds}</span>&nbsp;
-    </Fragment> : ""}
+    </div> : ""}
 
     {(props.status === 2 || props.status === 7 || props.status === 8) ?
-    <Fragment>
+    <div className='timer'>
       <span>{(props.shortBreakMinutes) >= 10 ? props.shortBreakMinutes : '0' + props.shortBreakMinutes}</span>&nbsp;:&nbsp;
       <span>{(props.shortBreakSeconds) >= 10 ? props.shortBreakSeconds : '0' + props.shortBreakSeconds}</span>&nbsp;
-    </Fragment> : ""}
+    </div> : ""}
 
     {(props.status === 3 || props.status === 9 || props.status === 10) ?
-    <Fragment>
+    <div className='timer'>
       <span>{(props.longBreakMinutes) >= 10 ? props.longBreakMinutes : '0' + props.longBreakMinutes}</span>&nbsp;:&nbsp;
       <span>{(props.longBreakSeconds) >= 10 ? props.longBreakSeconds : '0' + props.longBreakSeconds}</span>&nbsp;
-    </Fragment> : ""}
+    </div> : ""}
 
     {(props.status === 4) ?
-    <Fragment>
+    <div className='timer'>
       <span>{(props.studyMinutes) >= 10 ? props.studyMinutes : '0' + props.studyMinutes}</span>&nbsp;:&nbsp;
       <span>{(props.studySeconds) >= 10 ? props.studySeconds : '0' + props.studySeconds}</span>&nbsp;
-    </Fragment> : ""}
-
-
-    
+    </div> : ""}
 
   </div>
 )

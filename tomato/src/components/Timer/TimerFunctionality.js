@@ -1,7 +1,7 @@
-import React, {startTransition, useState} from 'react'
+import React, {useState} from 'react'
 import TimerView from './TimerView';
-//import TimerView from './TimerView'
 import Buttons from './Buttons'
+import Swal from 'sweetalert2'
 //import Message from './Message'
 
 function TimerFunctionality() {
@@ -33,7 +33,7 @@ if(studyMinutes === 0 && studySeconds === 0){
 } else{
   studyRun();
   setStatus(5);
-  setInterv(setInterval(studyRun, 1000));
+  setInterv(setInterval(studyRun, 5));
 }
 }
 
@@ -80,7 +80,7 @@ const shortBreakStart = () =>{
   clearInterval(interv);
   setStatus(7);
   shortBreakRun();
-  setInterv(setInterval(shortBreakRun, 1000));
+  setInterv(setInterval(shortBreakRun, 5));
 }
 
 let updateShortBreakMin = shortBreakMinutes;
@@ -121,7 +121,7 @@ const longBreakStart = () =>{
   clearInterval(interv);
   setStatus(9);
   longBreakRun();
-  setInterv(setInterval(longBreakRun, 1000));
+  setInterv(setInterval(longBreakRun, 5));
 }
 
 let updateLongBreakSecs = longBreakSeconds;
@@ -165,6 +165,51 @@ const backToStart = () => {
 }
 
 const configTimes = () => {
+  Swal.fire({
+    title: 'Timer Configuration',
+    html: `<input type="number" id="study-time" class="study-time" min="0" max="60" placeholder="Study Time"><br>
+    <input type="number" id="short-break" class="short-break" min="0" max="60" placeholder="Short Break Time"><br>
+    <input type="number" id="long-break" class="long-break" min="0" max="60" placeholder="Long Break Time">`,
+    confirmButtonText: 'Confirm',
+    allowOutsideClick: false,
+    allowEscapeKey: false,
+    focusConfirm: false,
+    preConfirm: () => {
+      const configStudyTime = Swal.getPopup().querySelector('#study-time').value
+      const configShortBreak = Swal.getPopup().querySelector('#short-break').value
+      const configLongBreak = Swal.getPopup().querySelector('#long-break').value
+      if (!configStudyTime || !configShortBreak || !configLongBreak) {
+        Swal.showValidationMessage(`Please configure the timer`)
+      }
+      return { configStudyTime: configStudyTime, configShortBreak: configShortBreak, configLongBreak: configLongBreak }
+    }
+  }).then((result) => {
+    Swal.fire({
+      confirmButtonText: 'Ok',
+      allowOutsideClick: false,
+      allowEscapeKey: false,
+      focusConfirm: false,
+      title:
+      `Study Time: ${result.value.configStudyTime} minutes
+      Short Break Time: ${result.value.configShortBreak} minutes
+      Long Break Time: ${result.value.configLongBreak} minutes`.trim() 
+    })
+    setSubCycleCount(0);
+    setStatus(1);
+    if(status === 4){
+      backToStart();
+    }
+    setStudyMinutes(result.value.configStudyTime);
+    setUserStudyTime(result.value.configStudyTime);
+    setShortBreakMinutes(result.value.configShortBreak);
+    setUserShortBreak(result.value.configShortBreak);
+    setLongBreakMinutes(result.value.configLongBreak);
+    setUserLongBreak(result.value.configLongBreak);
+  })
+
+
+
+  /*
   let number = prompt('Ingrese minutos de estudio');
   if(Number(number) && Number(number) <=60 && Number(number) > 0){
     setStudyMinutes(number);
@@ -193,9 +238,7 @@ const configTimes = () => {
     alert('Numero inválido, asignado predeterminado 5 minutos');
     setLongBreakMinutes(5);
     setUserLongBreak(5);
-  }
-  setSubCycleCount(0);
-  setStatus(1);
+  }*/
 }
 
 return (
