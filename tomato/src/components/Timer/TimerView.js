@@ -1,6 +1,53 @@
 import React, {Fragment} from 'react'
 
 function TimerView(props) {
+
+return(
+  <div>
+
+    <Fragment>
+      <span>{'Sub Cycles:' + props.subCycleCount}</span>&nbsp;&nbsp;
+    </Fragment>
+
+    {(props.status === 0) ?
+    <Fragment>
+      <span>{'Configure los timers para comenzar'}</span>
+    </Fragment> : ""}
+
+    {(props.status === 1) ?
+    <Fragment>
+      <span>{(props.studyMinutes) >= 10 ? props.studyMinutes : '0' + props.studyMinutes}</span>&nbsp;:&nbsp;
+      <span>{(props.studySeconds) >= 10 ? props.studySeconds : '0' + props.studySeconds}</span>&nbsp;
+    </Fragment> : ""}
+
+    {(props.status === 2) ?
+    <Fragment>
+      <span>{(props.shortBreakMinutes) >= 10 ? props.shortBreakMinutes : '0' + props.shortBreakMinutes}</span>&nbsp;:&nbsp;
+      <span>{(props.shortBreakSeconds) >= 10 ? props.shortBreakSeconds : '0' + props.shortBreakSeconds}</span>&nbsp;
+    </Fragment> : ""}
+
+    {(props.status === 3) ?
+    <Fragment>
+      <span>{(props.longBreakMinutes) >= 10 ? props.longBreakMinutes : '0' + props.longBreakMinutes}</span>&nbsp;:&nbsp;
+      <span>{(props.longBreakSeconds) >= 10 ? props.longBreakSeconds : '0' + props.longBreakSeconds}</span>&nbsp;
+    </Fragment> : ""}
+
+    {(props.status === 4) ?
+    <Fragment>
+      <span>{(props.studyMinutes) >= 10 ? props.studyMinutes : '0' + props.studyMinutes}</span>&nbsp;:&nbsp;
+      <span>{(props.studySeconds) >= 10 ? props.studySeconds : '0' + props.studySeconds}</span>&nbsp;
+    </Fragment> : ""}
+
+
+    
+
+  </div>
+)
+
+}
+
+export default TimerView
+  /*
   return (
 
     <div className='TimerView'>
@@ -16,7 +63,5 @@ function TimerView(props) {
         }
     </div>
 
-  )
-}
+  )*/
 
-export default TimerView

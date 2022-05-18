@@ -1,11 +1,190 @@
 import React, {useState} from 'react'
-import TimerView from './TimerView'
+import TimerView from './TimerView';
+//import TimerView from './TimerView'
 import Buttons from './Buttons'
-import Message from './Message'
-import Swal from 'sweetalert2'
+//import Message from './Message'
 
 function TimerFunctionality() {
 
+const initialMinutes = 0;
+const initialSeconds = 0;
+const [subCycleCount, setSubCycleCount] = useState(0);
+const [studyMinutes, setStudyMinutes] = useState(initialMinutes);
+const [studySeconds, setStudySeconds] = useState(initialSeconds);
+const [shortBreakMinutes, setShortBreakMinutes] = useState(initialMinutes);
+const [shortBreakSeconds, setShortBreakSeconds] = useState(initialSeconds);
+const [longBreakMinutes, setLongBreakMinutes] = useState(initialMinutes);
+const [longBreakSeconds, setLongBreakSeconds] = useState(initialSeconds);
+const [interv, setInterv] = useState();
+const [status, setStatus] = useState(0);
+
+const [userStudyTime, setUserStudyTime] = useState();
+const [userShortBreak, setUserShortBreak] = useState();
+const [userLongBreak, setUserLongBreak] = useState();
+
+let updateSubCycleCount = subCycleCount;
+
+const studyStart = () => {
+clearInterval(interv);
+if(studyMinutes === 0 && studySeconds === 0){
+  alert("Setear tiempo de estudio");
+} else{
+  studyRun();
+  setInterv(setInterval(studyRun, 25));
+  updateSubCycleCount += 1;
+  setSubCycleCount(updateSubCycleCount);
+}
+}
+
+let updateStudyMin = studyMinutes;
+let updateStudySecs = studySeconds;
+
+const studyRun = () => {
+if(updateStudySecs === 0){
+  if(updateStudyMin !== 0){
+    updateStudyMin--;
+    updateStudySecs = 59;
+  } else{
+    if(updateStudySecs === 0){
+      setShortBreakMinutes(userShortBreak);
+      setStatus(2);
+    }
+  }
+} else {
+  updateStudySecs--;
+}
+setStudyMinutes(updateStudyMin);
+setStudySeconds(updateStudySecs);
+}
+
+const shortBreakStart = () =>{
+  clearInterval(interv);
+  shortBreakRun();
+  setInterv(setInterval(shortBreakRun, 25));
+}
+
+let updateShortBreakMin = shortBreakMinutes;
+let updateShortBreakSecs = shortBreakSeconds;
+
+const shortBreakRun = () => {
+  if(updateShortBreakSecs === 0){
+    if(updateShortBreakMin !== 0){
+      updateShortBreakMin--;
+      updateShortBreakSecs = 59;
+    } else{
+      if(subCycleCount === 4){
+        setSubCycleCount(0);
+        setStatus(3);
+        clearInterval(interv);
+      } else{
+        setStudyMinutes(userStudyTime);
+        setStatus(1);
+      }
+    }
+  } else {
+    updateShortBreakSecs--;
+  }
+  setShortBreakMinutes(updateShortBreakMin);
+  setShortBreakSeconds(updateShortBreakSecs);
+}
+
+const longBreakStart = () =>{
+  clearInterval(interv);
+  longBreakRun();
+  setInterv(setInterval(longBreakRun, 0.5));
+}
+
+let updateLongBreakSecs = longBreakSeconds;
+let updateLongBreakMin = longBreakMinutes;
+
+
+const longBreakRun = () => {
+  if(updateLongBreakSecs === 0){
+    if(updateLongBreakMin !== 0){
+      updateLongBreakMin--;
+      updateLongBreakSecs = 59;
+    } else {
+      setStatus(4);
+    }
+  } else {
+    updateLongBreakSecs--;
+  }
+  setLongBreakMinutes(updateLongBreakMin);
+  setLongBreakSeconds(updateLongBreakSecs);
+}
+
+const backToStart = () => {
+  setStudyMinutes(userStudyTime);
+  setShortBreakMinutes(userShortBreak);
+  setLongBreakMinutes(userLongBreak);
+  clearInterval(interv);
+  if(status === 4){
+    setStatus(1);
+  }
+}
+
+const configTimes = () => {
+  let number = prompt('Ingrese minutos de estudio');
+  if(Number(number) && Number(number) <=60 && Number(number) > 0){
+    setStudyMinutes(number);
+    setUserStudyTime(number);
+  } else {
+    alert('Numero inválido, asignado predeterminado 5 minutos');
+    setStudyMinutes(5);
+    setUserStudyTime(5);
+  }
+
+  let number1 = prompt('Ingrese minutos de short break');
+  if(Number(number1) && Number(number1) <=60 && Number(number1) > 0){
+    setShortBreakMinutes(number1);
+    setUserShortBreak(number1);
+  } else{
+    alert('Numero inválido, asignado predeterminado 5 minutos');
+    setShortBreakMinutes(5);
+    setUserShortBreak(5);
+  }
+
+  let number3 = prompt('Ingrese minutos de long break');
+  if(Number(number3) && Number(number3) <=60 && Number(number3) > 0){
+    setLongBreakMinutes(number3);
+    setUserLongBreak(number3);
+  } else{
+    alert('Numero inválido, asignado predeterminado 5 minutos');
+    setLongBreakMinutes(5);
+    setUserLongBreak(5);
+  }
+  setStatus(1);
+}
+
+return (
+  <div>
+
+      <TimerView studyMinutes={studyMinutes} studySeconds={studySeconds} status={status} 
+      shortBreakMinutes={shortBreakMinutes} shortBreakSeconds={shortBreakSeconds} longBreakMinutes={longBreakMinutes} 
+      longBreakSeconds={longBreakSeconds} subCycleCount={subCycleCount}/>
+
+      <Buttons status={status} studyStart={studyStart} configTimes={configTimes} studyMinutes={studyMinutes} 
+      shortBreakStart={shortBreakStart} longBreakStart={longBreakStart} backToStart={backToStart} />
+
+  </div>
+)
+}
+
+export default TimerFunctionality
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
     const initialMinutes = 0;
     const initialSeconds = 0;
     const breakMinutes = 0;
@@ -24,7 +203,7 @@ function TimerFunctionality() {
     const [interv, setInterv] = useState();
     const [status, setStatus] = useState(0);
 
-    /*
+    
     --------------------- EXPLICACIÓN DE ESTADOS (STATUS), LO QUE SE MUESTRA Y FUNCIONALIDADES --------------------- 
     Están de forma desordenada dado que a medida que avanzaba en el programa tuve que ir agregando
     funcionalidades dependiendo las vistas y las acciones que se tomen.
@@ -63,7 +242,7 @@ function TimerFunctionality() {
             Cuando clickeamos el engranaje para configurar el Study Time y guardamos (SAVE), nos lleva a la
             pantalla de configuración del Break Time con los mismos botones pero referenciado a las variables
             correspondientes a Break.
-      */
+      
 
   
     var updateStudyMin = minutes,
@@ -71,6 +250,7 @@ function TimerFunctionality() {
   
     const start = () => {
       if(minutes === 0 && seconds === 0){
+        alert("setear timer")
        Swal.fire({
           title: 'You must set the Timer before you start.',
           icon: 'info',
@@ -198,6 +378,7 @@ function TimerFunctionality() {
   
     const goToBreak = () => {
       if(status !== 2){
+        alert("parar reloj")
         Swal.fire({
           text: 'You must stop the timer to perform this action.',
           icon: 'info',
@@ -228,6 +409,8 @@ function TimerFunctionality() {
       if(breakMin >= 0 && breakMin < 60){
         setBreakMinutes(breakMin + 5);
       } else {
+        alert("maximo alcanzado")
+        
         Swal.fire({
           title: 'Cycle time limit reached!',
           text: 'The maximum time for a break cycle is 60 minutes.',
@@ -247,6 +430,8 @@ function TimerFunctionality() {
       if(breakMin > 0){
         setBreakMinutes(breakMin - 5);
       } else {
+        alert("tiempos negativos")
+        
         Swal.fire({
           title: 'Be careful!',
           text: 'You cannot set negative times for the break cycle.',
@@ -263,6 +448,8 @@ function TimerFunctionality() {
 
     const backFromConfig = () => {
       if(breakMin === 0){
+        alert("setear tiempo de descanso")
+        
         Swal.fire({
           text: 'You must set the time for the break cycle.',
           icon: 'error',
@@ -295,6 +482,7 @@ function TimerFunctionality() {
   
     const backToStudy = () => {
       if (status === 7){
+        
         Swal.fire({
           text: 'You must stop the timer to perform this action.',
           icon: 'info',
@@ -344,6 +532,8 @@ function TimerFunctionality() {
 
     const goToConfigBreak = () => {
       if(minutes === 0){
+        alert("setee tiempo de estudio")
+        
         Swal.fire({
           text: 'You must set the time for the study cycle.',
           icon: 'error',
@@ -357,6 +547,7 @@ function TimerFunctionality() {
       } else {
         setMsg(configBreakMsg);
         setStatus(9);
+        
         Swal.fire({
           text: 'Study cycle was set to ' + minutes + ' minutes.',
           icon: 'success',
@@ -371,6 +562,7 @@ function TimerFunctionality() {
     }
   
     const configTimer = () => {
+      alert("timer")
       setStatus(5);
       setMsg(configMsg);
       if(status === 5){
@@ -382,6 +574,8 @@ function TimerFunctionality() {
       if(minutes >= 0 && minutes < 60){
         setMinutes(minutes + 5);
       } else {
+        alert("maximo alcanzado")
+        
         Swal.fire({
           title: 'Cycle time limit reached!',
           text: 'The maximum time for a study cycle is 60 minutes.',
@@ -401,6 +595,8 @@ function TimerFunctionality() {
       if(minutes > 0){
         setMinutes(minutes - 5);
       } else {
+        alert("tiempos negativos")
+        
         Swal.fire({
           title: 'Be careful!',
           text: 'You cannot set negative times for the study cycle.',
@@ -424,10 +620,5 @@ function TimerFunctionality() {
                   configTimer={configTimer} addTimer={addTimer} subTimer={subTimer} goToConfigBreak={goToConfigBreak}
                   stopBreak={stopBreak} resumeBreak={resumeBreak} configBreakTimer={configBreakTimer}
                   addBreak= {addBreak} subBreak={subBreak} backFromConfig={backFromConfig}/>
-
         </div>
-  )
-
-}
-
-export default TimerFunctionality
+  )*/

@@ -1,10 +1,47 @@
 import React, {Fragment} from 'react'
 import { Button } from '@mui/material';
-import SettingsIcon from '@mui/icons-material/Settings';
+import SettingsIcon from '@mui/icons-material/Settings'
+
 
 function Buttons(props) {
 
+return(
+    <div>
 
+        {(props.status === 0) ?
+            <Fragment>
+                <Button onClick={props.configTimes}><SettingsIcon color="primary" fontSize="large"></SettingsIcon></Button>
+            </Fragment> : "" }
+            
+            {(props.status === 1) ?
+            <Fragment>
+                <Button onClick={props.studyStart}>Start Study</Button>
+            </Fragment> : "" }
+
+        
+        {(props.status === 2) ?             
+            <Fragment>
+                <Button onClick={props.shortBreakStart}>Start Short Break</Button>
+            </Fragment> : "" }
+
+        {(props.status === 3) ?
+            <Fragment>
+                <Button onClick={props.longBreakStart}>Start Long Break</Button>
+            </Fragment> : "" }
+
+        {(props.status === 4) ?
+            <Fragment>
+                <Button onClick={props.backToStart}>Volver al inicio</Button>
+                <Button onClick={props.configTimes}><SettingsIcon color="primary" fontSize="large"></SettingsIcon></Button>
+            </Fragment> : "" }    
+
+    </div>
+)
+}
+export default Buttons
+
+
+/*
   return (
     <div className='Buttons'> 
 
@@ -70,7 +107,5 @@ function Buttons(props) {
 
     </div>
   )
-}
+*/
 
-
-export default Buttons
