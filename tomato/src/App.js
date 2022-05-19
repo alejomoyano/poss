@@ -1,12 +1,24 @@
 import React from 'react';
-import logo from './logo.svg';
+
 import './App.css';
 import Auth from '../src/components/Auth';
+import ChatScreen from '../src/components/Chat';
+import { useState } from 'react';
+import { useEffect } from 'react';
+
+
 
 
 function App() {
+
+
   return (
-    <Auth />
+    <div>
+      <Auth />
+      <ChatScreen  />
+
+    </div>
+    
   );
 }
 
