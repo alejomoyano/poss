@@ -1,6 +1,6 @@
 POSS
 
-# Pomodoro-Study-Sesion
+# Pomodoro-Study-Session
 Pomodoro Study Sesion - Levi´s Group
 
 Integrantes:
