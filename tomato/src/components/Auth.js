@@ -1,5 +1,5 @@
 import React, {useState } from 'react';
-import { Box, TextField, Button, Grid } from '@mui/material';
+import { Box, TextField, Button } from '@mui/material';
 
 function Auth(){
 

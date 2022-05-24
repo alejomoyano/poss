@@ -1,18 +1,23 @@
 import React from "react";
 import "./App.css";
-import Auth from "../src/components/Auth";
-import Tasks from "../src/components/Tasks";
-import { Grid } from "@mui/material";
+import TasksComponent from "./components/Tasks/TasksComponent";
+import { taskReducer } from "./reducers/taskReducer";
+import { applyMiddleware, configureStore } from "@reduxjs/toolkit";
+import { Provider } from "react-redux";
+import thunk from "redux-thunk";
 
-function App() {
+const store = configureStore(
+  {
+    reducer: { taskReducer },
+  },
+  applyMiddleware(thunk),
+  +window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+);
+// console.log(store.getState().taskReducer)
+export default function App() {
   return (
-    <Grid container spacing={1} justifyContent="center">
-      <Grid item lg={3}></Grid>
-      <Grid item lg={7}>
-        <Tasks />
-      </Grid>
-    </Grid>
+    <Provider store={store}>
+      <TasksComponent />
+    </Provider>
   );
 }
-
-export default App;
