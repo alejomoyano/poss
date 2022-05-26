@@ -15,10 +15,6 @@ return(
       <span>{'Sub Cycles: ' + props.subCycleCount}</span>&nbsp;&nbsp;
     </div> : "" }
 
-    {(props.status === 0) ?
-    <div className='config-text'>
-      <span>{'Configure los timers para comenzar'}</span>
-    </div> : ""}
 
     {(props.status === 1 || props.status === 5 || props.status === 6) ?
     <div className='timer'>

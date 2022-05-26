@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import TimerView from './TimerView';
 import Buttons from './Buttons'
 import Swal from 'sweetalert2'
-//import Message from './Message'
+import Message from './Message'
 
 function TimerFunctionality() {
 
@@ -18,6 +18,7 @@ const [longBreakMinutes, setLongBreakMinutes] = useState(initialMinutes);
 const [longBreakSeconds, setLongBreakSeconds] = useState(initialSeconds);
 const [interv, setInterv] = useState();
 const [status, setStatus] = useState(0);
+const [msg, setMsg] = useState('Configure los timers para comenzar');
 
 const [userStudyTime, setUserStudyTime] = useState();
 const [userShortBreak, setUserShortBreak] = useState();
@@ -48,6 +49,7 @@ if(updateStudySecs === 0){
   } else{
     if(updateStudySecs === 0){
       setShortBreakMinutes(userShortBreak);
+      setMsg('Short Break Time');
       setStatus(2);
     }
   }
@@ -93,10 +95,12 @@ const shortBreakRun = () => {
       updateShortBreakSecs = 59;
     } else{
       if(subCycleCount === 3){
+        setMsg('Long Break Time');
         setStatus(3);
         clearInterval(interv);
       } else{
         setStudyMinutes(userStudyTime);
+        setMsg('Study Time');
         setStatus(1);
       }
     }
@@ -195,6 +199,7 @@ const configTimes = () => {
       Long Break Time: ${result.value.configLongBreak} minutes`.trim() 
     })
     setSubCycleCount(0);
+    setMsg('Study Time');
     setStatus(1);
     if(status === 4){
       backToStart();
@@ -208,47 +213,19 @@ const configTimes = () => {
   })
 
 
-
-  /*
-  let number = prompt('Ingrese minutos de estudio');
-  if(Number(number) && Number(number) <=60 && Number(number) > 0){
-    setStudyMinutes(number);
-    setUserStudyTime(number);
-  } else {
-    alert('Numero inválido, asignado predeterminado 5 minutos');
-    setStudyMinutes(5);
-    setUserStudyTime(5);
-  }
-
-  let number1 = prompt('Ingrese minutos de short break');
-  if(Number(number1) && Number(number1) <=60 && Number(number1) > 0){
-    setShortBreakMinutes(number1);
-    setUserShortBreak(number1);
-  } else{
-    alert('Numero inválido, asignado predeterminado 5 minutos');
-    setShortBreakMinutes(5);
-    setUserShortBreak(5);
-  }
-
-  let number3 = prompt('Ingrese minutos de long break');
-  if(Number(number3) && Number(number3) <=60 && Number(number3) > 0){
-    setLongBreakMinutes(number3);
-    setUserLongBreak(number3);
-  } else{
-    alert('Numero inválido, asignado predeterminado 5 minutos');
-    setLongBreakMinutes(5);
-    setUserLongBreak(5);
-  }*/
 }
 
 return (
   <div>
 
-      <TimerView studyMinutes={studyMinutes} studySeconds={studySeconds} status={status} 
+    <Message status={status} msg={msg}/>
+
+
+    <TimerView studyMinutes={studyMinutes} studySeconds={studySeconds} status={status} 
       shortBreakMinutes={shortBreakMinutes} shortBreakSeconds={shortBreakSeconds} longBreakMinutes={longBreakMinutes} 
       longBreakSeconds={longBreakSeconds} subCycleCount={subCycleCount} cycleCount={cycleCount}/>
 
-      <Buttons status={status} studyStart={studyStart} configTimes={configTimes} studyMinutes={studyMinutes} 
+    <Buttons status={status} studyStart={studyStart} configTimes={configTimes} studyMinutes={studyMinutes} 
       shortBreakStart={shortBreakStart} longBreakStart={longBreakStart} backToStart={backToStart} stopStudy={stopStudy} 
       resumeStudy={resumeStudy} stopShortBreak={stopShortBreak} resumeShortBreak={resumeShortBreak} stopLongBreak={stopLongBreak}
       resumeLongBreak={resumeLongBreak}/>
@@ -260,6 +237,36 @@ return (
 export default TimerFunctionality
 
 
+/*
+let number = prompt('Ingrese minutos de estudio');
+if(Number(number) && Number(number) <=60 && Number(number) > 0){
+  setStudyMinutes(number);
+  setUserStudyTime(number);
+} else {
+  alert('Numero inválido, asignado predeterminado 5 minutos');
+  setStudyMinutes(5);
+  setUserStudyTime(5);
+}
+
+let number1 = prompt('Ingrese minutos de short break');
+if(Number(number1) && Number(number1) <=60 && Number(number1) > 0){
+  setShortBreakMinutes(number1);
+  setUserShortBreak(number1);
+} else{
+  alert('Numero inválido, asignado predeterminado 5 minutos');
+  setShortBreakMinutes(5);
+  setUserShortBreak(5);
+}
+
+let number3 = prompt('Ingrese minutos de long break');
+if(Number(number3) && Number(number3) <=60 && Number(number3) > 0){
+  setLongBreakMinutes(number3);
+  setUserLongBreak(number3);
+} else{
+  alert('Numero inválido, asignado predeterminado 5 minutos');
+  setLongBreakMinutes(5);
+  setUserLongBreak(5);
+}*/
 
 
 

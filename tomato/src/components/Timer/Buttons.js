@@ -32,7 +32,7 @@ return(
         {(props.status === 4) ?
             <Fragment>
                 <Button variant="contained" onClick={props.backToStart}>Volver al inicio</Button>
-                <Button variant="contained" onClick={props.configTimes}><SettingsIcon color="primary" fontSize="large"></SettingsIcon></Button>
+                <Button onClick={props.configTimes}><SettingsIcon color="primary" fontSize="large"></SettingsIcon></Button>
             </Fragment> : "" }
 
         {(props.status === 5) ? 
