@@ -15,7 +15,7 @@ function App() {
 
   return (
     <div>
-      {rooms.map((room) => <>{room.name}</>)}
+      {rooms.map((room) => <div key={room.name}>{room.name}</div>)}
     </div>
   );
 }

@@ -1,22 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { getApp } from 'firebase/app';
-import { getFirestore, collection, getDocs } from "firebase/firestore";
-
-const fetchAllRooms = createAsyncThunk(
-    'fetchAllRooms',
-    async (_, thunkAPI) => {
-        try {
-            const app = getApp();
-            const db = getFirestore(app);
-            const roomSnapshot = await getDocs(collection(db, "room"));
-            const rooms = roomSnapshot.docs.map((doc) => doc.data());
-            return { rooms };
-        } catch (error) {
-            console.log(error);
-            return thunkAPI.rejectWithValue({ error: error.message });
-        }
-    }
-)
+import { getFirestore, collection, onSnapshot } from "firebase/firestore";
 
 const initialState = {
     rooms: [],
@@ -26,27 +10,45 @@ const initialState = {
 export const roomSlice = createSlice({
     name: 'room',
     initialState,
-    reducers: {},
-    extraReducers: (builder) => {
-        builder.addCase(fetchAllRooms.fulfilled, (state, action) => {
+    reducers: {
+        setRooms: (state, action) => {
             state.rooms = action.payload.rooms;
-            state.error = initialState.error;
-        });
-        builder.addCase(fetchAllRooms.rejected, (state, action) => {
-            state.rooms = initialState.rooms;
-            state.error = action.error;
-        })
+        },
     },
 })
 
-// const { 
-//     // Add reducers here and export them
-// } = roomSlice.actions
+const { 
+    setRooms,
+} = roomSlice.actions
+
+const fetchAllRooms = createAsyncThunk(
+    'fetchAllRooms',
+    async (_, thunkAPI) => {
+        try {
+            const app = getApp();
+            const db = getFirestore(app);
+            onSnapshot(collection(db, "room"),
+            (snapshot) => {
+                const rooms = snapshot.docs.map((doc) => doc.data());
+                return thunkAPI.dispatch(setRooms({ rooms }));
+            },
+            (error) => {
+                console.log(error);
+                return thunkAPI.dispatch(setRooms({ error: error.message, rooms: [] }));
+            });
+            return thunkAPI.dispatch(setRooms(initialState));
+        } catch (error) {
+            console.log(error);
+            return thunkAPI.dispatch(setRooms({ error: error.message, rooms: [] }));
+        }
+    }
+)
 
 export {
     // Thunks
-    fetchAllRooms
+    fetchAllRooms,
     // Reducers
+    setRooms,
 };
 
 export default roomSlice.reducer
