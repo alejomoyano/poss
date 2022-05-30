@@ -1,14 +1,23 @@
-import React from 'react'
-import TimerFunctionality from './components/Timer/TimerFunctionality'
-import './App.css'
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux'
+
+import { fetchAllRooms } from './redux/slices/room';
 
 function App() {
+  const rooms = useSelector((state) => state.room.rooms)
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(fetchAllRooms());
+  }, [
+    dispatch,
+  ]);
 
   return (
-    <div className='App'>
-      <TimerFunctionality />
+    <div>
+      {rooms.map((room) => <div key={room.name}>{room.name}</div>)}
     </div>
-  )
-
+  );
 }
-export default App
+
+export default App;
