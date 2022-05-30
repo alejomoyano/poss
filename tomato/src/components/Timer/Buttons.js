@@ -1,6 +1,7 @@
 import React, {Fragment} from 'react'
 import { Button } from '@mui/material';
 import SettingsIcon from '@mui/icons-material/Settings'
+import '../../App.css'
 
 
 function Buttons(props) {

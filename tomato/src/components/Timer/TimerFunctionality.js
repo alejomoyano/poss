@@ -3,6 +3,7 @@ import TimerView from './TimerView';
 import Buttons from './Buttons'
 import Swal from 'sweetalert2'
 import Message from './Message'
+import '../../App.css'
 
 function TimerFunctionality() {
 
