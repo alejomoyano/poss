@@ -29,11 +29,19 @@ jobs:
       - name: Install dependencies
         run: npm install --no-audit --no-fund --no-optional
       # checkeamos el codigo con el linter
-      - name: Linter
-        run: npm run eslint
+      # - name: Linter
+      #   run: npm run eslint
       # buildiamos
       - name: Build
         run: npm run build
       # aca correriamos los test, segun el video los pone despues
       # del build pero me hace ruido
-      - name: Test
+      # - name: Test
+      #   run: npm run test
+      # hacemos el deploy en heroku
+      - name: Heroku deploy
+        uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: ${{secrets.HEROKU_APP_NAME}}
+          heroku_email: "alejomoyano16@gmail.com"

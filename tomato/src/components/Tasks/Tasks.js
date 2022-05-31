@@ -1,9 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import TaskItem from "./TaskItem";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchTasks } from "../../redux/slices/tasks";
 
 export default function Tasks() {
-  const tasks = useSelector((tasks) => tasks.taskReducer);
+  const tasks = useSelector((state) => state.task.tasks);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchTasks())
+  },[dispatch])
 
   return (
     <>

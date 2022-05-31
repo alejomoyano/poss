@@ -8,20 +8,19 @@ import {
 } from "@mui/material";
 import Tasks from "./Tasks";
 import TaskCreator from "./TaskCreator";
-import { useDispatch } from "react-redux";
-import { init } from "../../reducers/taskReducer";
+// import { useDispatch } from "react-redux";
+// import { init } from "../../reducers/taskReducer";
 
 // Funcion del componente de tareas
 export default function TasksComponent() {
-
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   // al iniciar la aplicacion se ejecuta
   // o sea inicializa las tareas con lo que hay guardado en la db
-  useEffect(() => {
-    dispatch(init());
-    console.log('nose')
-  },[dispatch]);
+  // useEffect(() => {
+  //   dispatch(init());
+  //   console.log('nose')
+  // },[dispatch]);
 
   return (
     <TableContainer
