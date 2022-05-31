@@ -36,11 +36,3 @@ jobs:
       # del build pero me hace ruido
       # - name: Test
       #   run: npm run test
-      # hacemos el deploy en heroku
-      - name: Heroku deploy
-        if: ${{github.event_name == 'push'}}
-        uses: akhileshns/heroku-deploy@v3.12.12 
-        with:
-          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-          heroku_app_name: ${{secrets.HEROKU_APP_NAME}}
-          heroku_email: "alejomoyano16@gmail.com"
