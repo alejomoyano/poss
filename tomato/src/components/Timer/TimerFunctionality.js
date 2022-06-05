@@ -2,7 +2,6 @@ import React, {useState} from 'react'
 import TimerView from './TimerView';
 import Buttons from './Buttons'
 import Swal from 'sweetalert2'
-import Message from './Message'
 import '../../App.css'
 
 function TimerFunctionality() {
@@ -219,8 +218,7 @@ const configTimes = () => {
 return (
   <div>
 
-    <Message status={status} msg={msg}/>
-
+    <span className='msg-text'>{msg}</span>
 
     <TimerView studyMinutes={studyMinutes} studySeconds={studySeconds} status={status} 
       shortBreakMinutes={shortBreakMinutes} shortBreakSeconds={shortBreakSeconds} longBreakMinutes={longBreakMinutes} 
