@@ -1,20 +1,24 @@
-import React, { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React from "react";
 
-import { fetchAllRooms } from "./redux/slices/room";
+import {
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 
-import  TasksComponent  from "./components/Tasks/TasksComponent";
+import Home from "./pages/Home";
+import CreateRoom from "./pages/CreateRoom";
+import JoinRoom from "./pages/JoinRoom";
 
 function App() {
-  const rooms = useSelector((state) => state.room.rooms);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(fetchAllRooms());
-  }, [dispatch]);
-
   return (
-    <TasksComponent/>
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/create" element={<CreateRoom />} />
+      <Route path="/join" element={<JoinRoom />} />
+      {/* <Route path="/room/:room_id" element={<MainPage />} /> */}
+      <Route path="*" element={<Navigate to="/" replace />} />
+    </Routes>
   );
 }
 

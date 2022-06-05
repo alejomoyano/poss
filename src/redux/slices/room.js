@@ -1,54 +1,58 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { getApp } from 'firebase/app';
-import { getFirestore, collection, onSnapshot } from "firebase/firestore";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+
+import Room from '../../models/Room';
 
 const initialState = {
-    rooms: [],
-    error: null,
+  value: {},
+  error: null,
 };
 
-export const roomSlice = createSlice({
-    name: 'room',
-    initialState,
-    reducers: {
-        setRooms: (state, action) => {
-            state.rooms = action.payload.rooms;
-        },
-    },
+const createRoom = createAsyncThunk("createRoom", async ({ username, roomname, maxUsers }, thunkAPI) => {
+  try {
+    //TODO agregar creacion de taskbord, chat y timer (los reducers)
+    //TODO controlar la sala y el user no existan y q el maxusers sea mayor a 1
+    const roomDoc = await Room.create({ username, roomname, maxUsers });
+    return thunkAPI.fulfillWithValue({ room: roomDoc });
+  } catch (error) {
+    return thunkAPI.rejectWithValue({ error });
+  }
+});
+
+const joinRoom = createAsyncThunk("joinRoom" , async({username, roomname},thunkAPI) =>{
+  try {
+    
+  } catch (error) {
+    
+  }
 })
 
-const { 
-    setRooms,
-} = roomSlice.actions
+export const roomSlice = createSlice({
+  name: "room",
+  initialState,
+  reducers: {
+    setRoom: (state, action) => {
+      state.value = action.payload.room;
+    },
+  },
+  extraReducers: (builder) => {
+      builder.addCase(createRoom.fulfilled, (state, action) => {
+        state.value = action.payload.room;
+        state.error = initialState.error;
+      });
+      builder.addCase(createRoom.rejected, (state, action) => {
+        state.value = initialState.value;
+        state.error = action.payload.error.message;
+      });
+  }
+});
 
-const fetchAllRooms = createAsyncThunk(
-    'fetchAllRooms',
-    async (_, thunkAPI) => {
-        try {
-            const app = getApp();
-            const db = getFirestore(app);
-            onSnapshot(collection(db, "room"),
-            (snapshot) => {
-                const rooms = snapshot.docs.map((doc) => doc.data());
-                return thunkAPI.dispatch(setRooms({ rooms }));
-            },
-            (error) => {
-                console.log(error);
-                return thunkAPI.dispatch(setRooms({ error: error.message, rooms: [] }));
-            });
-            return thunkAPI.dispatch(setRooms(initialState));
-        } catch (error) {
-            console.log(error);
-            return thunkAPI.dispatch(setRooms({ error: error.message, rooms: [] }));
-        }
-    }
-)
+const { setRoom } = roomSlice.actions;
 
 export {
-    // Thunks
-    fetchAllRooms,
-    // Reducers
-    setRooms,
+  // Thunks
+  createRoom,
+  // Reducers
+  setRoom,
 };
 
-export default roomSlice.reducer
+export default roomSlice.reducer;

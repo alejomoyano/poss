@@ -8,6 +8,9 @@ const store = configureStore({
     room: roomReducer,
     task: tasksReducer,
   },
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware({
+    serializableCheck: false,
+  }),
 });
 
 export default store;
