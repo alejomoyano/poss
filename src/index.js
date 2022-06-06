@@ -12,20 +12,20 @@ import {getFirestore} from 'firebase/firestore'
 import firebaseConfig from "./firebase";
 import makeWebContext from 'firestorter/web';
 
+import { BrowserRouter as Router } from 'react-router-dom';
+
 firebase.initializeApp(firebaseConfig);
 const firebaseApp = firebase.getApp();
 const fireStore = getFirestore(firebaseApp)
 initFirestorter(makeWebContext({ firebase: firebaseApp, firestore: fireStore }));
 
-import TasksList from "./documents/TasksList";
-
-const tasks = new TasksList("1");
-
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <Router>
+        <App />
+      </Router>
     </Provider>
   </React.StrictMode>
 );

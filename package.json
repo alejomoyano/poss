@@ -13,13 +13,15 @@
     "express": "^4.18.1",
     "firebase": "^9.8.2",
     "firestorter": "^4.0.0",
-    "mobx": "^6.6.0",
     "mobx-react": "^7.5.0",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "react-redux": "^8.0.2",
+    "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
     "redux": "^4.2.0",
+    "serve": "^13.0.2",
+    "styled-components": "^5.3.5",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

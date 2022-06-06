@@ -1,22 +1,19 @@
 import React, { useState } from "react";
 import { Grid, TableCell, TableRow, Button, TextField } from "@mui/material";
-// import {useDispatch} from 'react-redux';
+import { useDispatch } from "react-redux";
 // import {newTask} from '../../reducers/taskReducer';
 import { addTask } from "../../redux/slices/tasks";
 import SortSelector from "./TaskSorting";
 
 export default function TaskCreator(props) {
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
   // hook para obtener el contenido
   const [content, setContent] = useState("");
 
   // creamos la tarea usando un dispatcher
   const handleSubmitTask = () => {
-    addTask({
-      content,
-      state: 'activo'
-    });
+    dispatch(addTask(content));
     // if (content !== "") dispatch(newTask(content));
     // solo se puede crear una tarea si se ingreso un text
     console.log("add task");
@@ -53,7 +50,7 @@ export default function TaskCreator(props) {
             </Button>
           </Grid>
           <Grid item xs={2}>
-              <SortSelector/>
+            <SortSelector />
           </Grid>
         </Grid>
       </TableCell>
