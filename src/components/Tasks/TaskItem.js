@@ -1,21 +1,13 @@
 import React from "react";
-import {
-  Button,
-  Grid,
-  Typography,
-  TableCell,
-  TableRow,
-} from "@mui/material";
+import { Button, Grid, Typography, TableCell, TableRow } from "@mui/material";
 import TaskStatesController from "./TaskStatesController";
-import { useDispatch } from "react-redux";
-import { deleteTask } from "../../reducers/taskReducer";
+import { deleteTask } from "../../redux/slices/tasks";
 
-export default function TaskItem({task}) {
-  const dispatch = useDispatch();
-
+export default function TaskItem({ task }) {
   // callback para eliminar tareas
-  const handleDeleteTask = () => dispatch(deleteTask(task.id));
-
+  const handleDeleteTask = () => {
+    deleteTask(task);
+  };
 
   return (
     <TableRow key={task.content}>
@@ -27,7 +19,10 @@ export default function TaskItem({task}) {
             </Typography>
           </Grid>
           <Grid item sm={3}>
-            <TaskStatesController data-testid="states-buttons" taskId={task.id}/>
+            <TaskStatesController
+              data-testid="states-buttons"
+              taskId={task.id}
+            />
           </Grid>
           {/* POR AHORA NO SE PUED EDITAR LA TAREA */}
           {/* <Grid item sm={1}>

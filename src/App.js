@@ -3,7 +3,8 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { fetchAllRooms } from "./redux/slices/room";
 
-import  TasksComponent  from "./components/Tasks/TasksComponent";
+import TaskBoard from "./components/Tasks/TaskBoardIndex";
+import MainPage from "./components/Auth/MainPage";
 
 function App() {
   const rooms = useSelector((state) => state.room.rooms);
@@ -14,7 +15,9 @@ function App() {
   }, [dispatch]);
 
   return (
-    <TasksComponent/>
+    <>
+      <TaskBoard />
+    </>
   );
 }
 
