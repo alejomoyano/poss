@@ -220,12 +220,13 @@ function TimerFunctionality() {
   };
 
   const skip = () => {
-    if (status === 1 || status === 5 || (status === 6 && subCycleCount <= 3)) {
+    clearInterval(interv);
+    if (status === 5 || (status === 6 && subCycleCount <= 3)) {
       setStatus(2);
       setMsg("Short Break Time");
       setActualMinutes(userShortBreak);
       setActualSeconds(0);
-    } else if (status === 2 || status === 8 || (status === 6 && subCycleCount > 3)) {
+    } else if (status === 7 || status === 8 || (status === 6 && subCycleCount > 3)) {
       setStatus(3);
       setMsg("Long Break Time");
       setActualMinutes(userLongBreak);

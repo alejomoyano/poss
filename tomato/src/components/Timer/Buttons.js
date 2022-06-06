@@ -1,8 +1,7 @@
 import React, {Fragment} from 'react'
-import { Button } from '@mui/material';
+import { Button} from '@mui/material';
 import SettingsIcon from '@mui/icons-material/Settings'
 import '../../App.css'
-
 
 function Buttons(props) {
 
@@ -17,14 +16,12 @@ return(
             {(props.status === 1) ?
             <Fragment>
                 <Button variant="contained" onClick={props.studyStart}>Start Study</Button>
-                <Button variant="contained" onClick={props.skip}>Skip to Short Break</Button>
             </Fragment> : "" }
 
         
         {(props.status === 2) ?             
             <Fragment>
                 <Button variant="contained" onClick={props.shortBreakStart}>Start Short Break</Button>
-                <Button variant="contained" onClick={props.skip}>Skip to Long Break</Button>
             </Fragment> : "" }
 
         {(props.status === 3) ?
@@ -41,6 +38,7 @@ return(
         {(props.status === 5) ? 
         <Fragment>
             <Button variant="contained" onClick={props.stop}>Stop Study</Button>
+            <Button variant="contained" onClick={props.skip}>Skip to Short Break</Button>
         </Fragment> : "" }
 
         {(props.status === 6 && props.subCycleCount < 4) ? 
@@ -56,6 +54,7 @@ return(
         {(props.status === 7) ? 
         <Fragment>
             <Button variant="contained" onClick={props.stop}>Stop Short Break</Button>
+            <Button variant="contained" onClick={props.skip}>Skip to Long Break</Button>
         </Fragment> : "" }
         
         {(props.status === 8) ? 

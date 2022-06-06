@@ -1,8 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Kameron&display=swap');
+
 body{
   background-color: #1e212d;
   color: #eabf9f;
   height: 100vh;
-  font-family: "Roboto mono", monospace;
+  font-family: 'Kameron', serif;
 }
 
 #root {
