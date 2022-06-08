@@ -4,16 +4,16 @@ import { useSelector, useDispatch } from "react-redux";
 // import { fetchTasks } from "../../redux/slices/tasks";
 
 export default function Tasks() {
-  const tasks = useSelector((state) => state.task.value );
+  const { value: tasks } = useSelector((state) => state.task);
   // const dispatch = useDispatch();
-  
+
   // useEffect(() => {
-    //   dispatch(fetchTasks())
-    // },[dispatch])
-    
-    return (
-      <>
-      {console.log(tasks)}
+  //   dispatch(fetchTasks())
+  // },[dispatch])
+
+  return (
+    <>
+      {console.log(tasks.fetchTasks)}
       {/* {tasks.map((task) => (
         <TaskItem task={task} key={task.id} />
       ))} */}

@@ -18,10 +18,11 @@ const createRoom = createAsyncThunk(
       //TODO agregar creacion de taskbord, chat y timer (los reducers)
       //TODO controlar la sala y el user no existan y q el maxusers sea mayor a 1
 
-      // creamos la taskboard [ funciona ]
-      thunkAPI.dispatch(createTaskBoard(roomname));
       // creamos la room
       const roomDoc = await Room.create({ username, roomname, maxUsers });
+      console.log(roomDoc.users);
+      // creamos la taskboard [ funciona ]
+      thunkAPI.dispatch(createTaskBoard(roomname));
       return thunkAPI.fulfillWithValue({ room: roomDoc });
     } catch (error) {
       return thunkAPI.rejectWithValue({ error });

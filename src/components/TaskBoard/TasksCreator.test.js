@@ -2,23 +2,29 @@ import React from "react";
 import "@testing-library/jest-dom/extend-expect";
 import { render, fireEvent } from "@testing-library/react";
 import TaskCreator from "./TaskCreator";
+import { Provider } from "react-redux";
+import store from '../../redux'
 
 // conjunto de test del TaskCreator
 describe("TaskCreator tests", () => {
   // componente
   let creator;
- 
+
   // componentes hijos
   let textField;
   let button;
 
-  // mocks
-  let handleSubmit;
-
   beforeEach(() => {
-    handleSubmit = jest.fn(); // mockeamos una funcion
 
-    creator = render(<TaskCreator handleSubmit={handleSubmit} />);
+    const renderWithRedux = (component,{store}) => {
+      return{
+        ...render(<Provider store={store}>{component}</Provider>)
+      }
+    }
+
+
+    const render = (component) => rltRender();
+    creator = renderWithRedux(<TaskCreator />);
     textField = creator.queryByPlaceholderText(
       "Ingrese el contenido de la tarea"
     );
@@ -29,13 +35,12 @@ describe("TaskCreator tests", () => {
   test("it renders both elements", () => {
     expect(textField).toBeTruthy();
     expect(button).toBeTruthy();
-    //   debug(); //  muestra lo que renderiza
+    // debug(); //  muestra lo que renderiza
     //   creator.getByText("add");
   });
 
   //lo que vamos ingresando en el text field se guarda
   test("update on change the textfield content", () => {
-
     // le ponemos un valor al textfield
     fireEvent.change(textField, { target: { value: "hola" } });
     // verificamos que se haya ingresador el valor
@@ -51,7 +56,6 @@ describe("TaskCreator tests", () => {
 
   // ingresamos contenido en el textfield y damos click
   test("clicking add task with content", () => {
-   
     fireEvent.change(textField, { target: { value: "hola" } });
     fireEvent.click(button);
     // verifica que la funcion se llamo una vez

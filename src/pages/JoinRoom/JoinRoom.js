@@ -21,7 +21,7 @@ const JoinRoom = () => {
                 value= {roomname}
             />
             <Button
-                onClick={()=>{}}
+                onClick={()=>{navigate('/room')}}
             >
                 Join Room
             </Button>

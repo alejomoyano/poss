@@ -5,11 +5,9 @@ name: Deployment Pipeline
 # y cuando hagamos un pull_request a master
 on: 
   push:
-    branches: 
-      - master
+    branches: [master,Develop]
   pull_request:
-    branches:
-      - master
+    branches: [master,Develop]
     types: [opened]
 
 jobs: 
@@ -32,7 +30,6 @@ jobs:
       # buildeamos
       - name: Build
         run: npm run build --if-present
-      # aca correriamos los test, segun el video los pone despues
-      # del build pero me hace ruido
-      # - name: Test
-      #   run: npm run test
+      # corremos los tests
+      - name: Test
+        run: npm run test

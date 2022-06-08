@@ -5,7 +5,7 @@ import TaskItem from "./TaskItem";
 import TaskStatesController from "./TaskStatesController";
 
 // TaskItem test
-describe("", () => {
+describe("TaskItems test", () => {
   // componente
   let item;
 
@@ -15,14 +15,14 @@ describe("", () => {
   let content;
 
   //mocks
-  let deleteTask;
-  let stateCallback;
+  // let deleteTask;
+  // let stateCallback;
   let task;
   let key;
 
   beforeEach(() => {
-    deleteTask = jest.fn();
-    stateCallback = jest.fn();
+    // deleteTask = jest.fn();
+    // stateCallback = jest.fn();
     task = jest.fn();
     key = jest.fn();
 
@@ -30,8 +30,6 @@ describe("", () => {
       <TaskItem
         task={task}
         key={key}
-        delete={deleteTask}
-        stateCallback={stateCallback}
       />
     );
 

@@ -22,26 +22,28 @@ const initialState = {
 /**
  * Metodo para crear una taskboard
  */
-const createTaskBoard = createAsyncThunk("createTaskBoard", async (id, thunkAPI) => {
-  try {
-    // guaramos a la taskboard con el mismo id que la room
-    const taskboard = await TaskBoard.create(id);
-    return thunkAPI.fulfillWithValue({ taskboard: taskboard });
-  } catch (error) {
-    return thunkAPI.rejectWithValue({ error });
+const createTaskBoard = createAsyncThunk(
+  "createTaskBoard",
+  async (id, thunkAPI) => {
+    try {
+      //TODO -> creamos la taskboard con el mismo id que la room
+      return thunkAPI.fulfillWithValue({ taskboard: taskboard });
+    } catch (error) {
+      return thunkAPI.rejectWithValue({ error });
+    }
   }
+);
+
+const addTask = createAsyncThunk("addTask", async (content, thunkAPI) => {
+  try {
+    // TODO -> crear la tarea
+  } catch (error) {}
 });
 
-// eliminamos una task borrandola directamente de la base de datos
-const addTask = createAsyncThunk("addTask", async (content, thunkAPI) => {
-  try{
-    const state = thunkAPI.getState();
-    console.log(state)
-    const taskboard = state.task.value;
-    console.log(taskboard)
-  } catch (error){
-    return thunkAPI.rejectWithValue({ error });
-  }
+const deleteTask = createAsyncThunk("deleteTask", async (content, thunkAPI) => {
+  try {
+    // TODO -> crear la tarea
+  } catch (error) {}
 });
 
 export const tasksSlice = createSlice({
@@ -53,38 +55,39 @@ export const tasksSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(createTaskBoard.fulfilled, (state, { payload }) => {
-      state.value = payload.taskboard;
-    });
-    builder.addCase(createTaskBoard.rejected, () => {
-      state.error = payload.error.message;
-    });
-    // builder.addCase(addTask.fulfilled, (state, { payload }) => {
-    //   state.value = payload.taskboard;
+    // builder.addCase(createTaskBoard.fulfilled, (state, action) => {
+    //   state.value = action.payload.taskboard;
+    //   state.error = initialState.error;
     // });
-    builder.addCase(addTask.rejected, () => {
-      state.error = payload.error.message;
-    });
+    // builder.addCase(createTaskBoard.rejected, (state, action) => {
+    //   state.value = initialState.value;
+    //   state.error = action.payload.error.message;
+    // });
+    // builder.addCase(addTask.fulfilled, (state, action) => {
+    // //   state.value = action.payload.taskboard;
+    // // });
+    // builder.addCase(addTask.rejected, (state, action) => {
+    //   state.error = action.payload.error.message;
+    // });
   },
 });
 
 const { setTasks } = tasksSlice.actions;
 
+// export const deleteTask = async (task) => {
+//   try {
+//     const app = getApp();
+//     const db = getFirestore(app);
+//     const tasksboard = doc(db, "tasksboards/1");
+//     console.log(task);
 
-export const deleteTask = async (task) => {
-  try {
-    const app = getApp();
-    const db = getFirestore(app);
-    const tasksboard = doc(db, "tasksboards/1");
-    console.log(task);
-
-    await updateDoc(tasksboard, {
-      tasks: arrayRemove(task),
-    });
-  } catch (error) {
-    console.log(error);
-  }
-};
+//     await updateDoc(tasksboard, {
+//       tasks: arrayRemove(task),
+//     });
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
 
 // agregamos una task añadiendola directamente de la base de datos
 // export const addTask = async (task) => {

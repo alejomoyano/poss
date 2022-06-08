@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import { addTask } from "../../redux/slices/tasks";
 import SortSelector from "./TaskSorting";
 
-export default function TaskCreator(props) {
+export default function TaskCreator() {
   const dispatch = useDispatch();
 
   // hook para obtener el contenido
