@@ -15,7 +15,10 @@ import {
 import TaskBoard from "../../models/TaskBoard";
 
 const initialState = {
-  value: {},
+  value: {
+    document: {},
+    tasks: [],
+  },
   error: null,
 };
 
@@ -26,49 +29,101 @@ const createTaskBoard = createAsyncThunk(
   "createTaskBoard",
   async (id, thunkAPI) => {
     try {
-      //TODO -> creamos la taskboard con el mismo id que la room
-      return thunkAPI.fulfillWithValue({ taskboard: taskboard });
+      const date = new Date(); // para obtener cuando fue creada
+      const app = getApp();
+      const db = getFirestore(app);
+
+      // creamos el documento
+      const document = doc(db, "tasksboards", id);
+      await setDoc(document, {
+        tasks: [
+          {
+            content: "Add tasks as you want and give them a state",
+            date: date.getDate(),
+          },
+        ],
+      });
+
+      // nos suscribimos al documento
+      onSnapshot(
+        document,
+        (snapshot) => {
+          const taskboard = snapshot.data().tasks;
+          console.log(taskboard);
+          return thunkAPI.dispatch(
+            setTasks({ document:document,tasks:taskboard })
+          );
+        },
+        (error) => {
+          return thunkAPI.rejectWithValue({ error });
+        }
+      );
+      return thunkAPI.fulfillWithValue({ document });
     } catch (error) {
       return thunkAPI.rejectWithValue({ error });
     }
   }
 );
 
-const addTask = createAsyncThunk("addTask", async (content, thunkAPI) => {
+const addTask = createAsyncThunk("addTask", async (task, thunkAPI) => {
   try {
+    const app = getApp();
+    const db = getFirestore(app);
     // TODO -> crear la tarea
-  } catch (error) {}
+    const tasksboard = thunkAPI.getState().task.value.document; // obtenemos el documento
+    console.log(tasksboard);
+
+    await updateDoc(tasksboard, {
+      tasks: arrayUnion(task),
+    });
+  } catch (error) {
+    console.log(error);
+  }
 });
 
-const deleteTask = createAsyncThunk("deleteTask", async (content, thunkAPI) => {
+const deleteTask = createAsyncThunk("deleteTask", async (task, thunkAPI) => {
   try {
+    const app = getApp();
+    const db = getFirestore(app);
     // TODO -> crear la tarea
-  } catch (error) {}
+    const tasksboard = thunkAPI.getState().task.value.document; // obtenemos el documento
+    console.log(tasksboard);
+
+    await updateDoc(tasksboard, {
+      tasks: arrayRemove(task),
+    });
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 export const tasksSlice = createSlice({
   name: "tasks",
   initialState,
   reducers: {
-    setTaskBoard: (state, action) => {
-      state.tasks = action.payload.tasks;
+    setTasks: (state, action) => {
+      state.value = action.payload;
     },
   },
   extraReducers: (builder) => {
-    // builder.addCase(createTaskBoard.fulfilled, (state, action) => {
-    //   state.value = action.payload.taskboard;
+    builder.addCase(createTaskBoard.fulfilled, (state, action) => {
+      console.log(action.payload)
+      state.value.document = action.payload.document;
+      state.error = initialState.error;
+    });
+    // builder.addCase(fetchTaskBoard.fulfilled, (state, action) => {
+    //   state.value.document = action.payload.document;
     //   state.error = initialState.error;
     // });
-    // builder.addCase(createTaskBoard.rejected, (state, action) => {
-    //   state.value = initialState.value;
+    // builder.addCase(fetchTasks.rejected, (state, action) => {
     //   state.error = action.payload.error.message;
     // });
     // builder.addCase(addTask.fulfilled, (state, action) => {
     // //   state.value = action.payload.taskboard;
     // // });
-    // builder.addCase(addTask.rejected, (state, action) => {
-    //   state.error = action.payload.error.message;
-    // });
+    builder.addCase(createTaskBoard.rejected, (state, action) => {
+      state.error = action.payload.error.message;
+    });
   },
 });
 
@@ -109,6 +164,8 @@ export {
   // Thunks
   createTaskBoard,
   addTask,
+  deleteTask,
+  // fetchTasks,
   // Reducers
   // setTasks,
 };

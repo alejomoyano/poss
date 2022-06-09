@@ -2,7 +2,6 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { createTaskBoard } from "./tasks";
 
 import Room from "../../models/Room";
-import { useDispatch } from "react-redux";
 
 const initialState = {
   value: {},
@@ -20,7 +19,6 @@ const createRoom = createAsyncThunk(
 
       // creamos la room
       const roomDoc = await Room.create({ username, roomname, maxUsers });
-      console.log(roomDoc.users);
       // creamos la taskboard [ funciona ]
       thunkAPI.dispatch(createTaskBoard(roomname));
       return thunkAPI.fulfillWithValue({ room: roomDoc });

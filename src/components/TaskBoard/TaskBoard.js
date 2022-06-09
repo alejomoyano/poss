@@ -9,7 +9,7 @@ import {
 import Tasks from "./Tasks";
 import TaskCreator from "./TaskCreator";
 import { useDispatch } from "react-redux";
-import { observer } from 'mobx-react';
+
 
 // Funcion del componente de tareas
 function TaskBoard() {
@@ -31,4 +31,4 @@ function TaskBoard() {
   );
 }
 
-export default observer(TaskBoard);
+export default TaskBoard;

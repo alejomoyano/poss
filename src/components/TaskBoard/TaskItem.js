@@ -2,11 +2,13 @@ import React from "react";
 import { Button, Grid, Typography, TableCell, TableRow } from "@mui/material";
 import TaskStatesController from "./TaskStatesController";
 import { deleteTask } from "../../redux/slices/tasks";
+import { useDispatch } from "react-redux";
 
 export default function TaskItem({ task }) {
+  const dispatch = useDispatch();
   // callback para eliminar tareas
   const handleDeleteTask = () => {
-    deleteTask(task);
+    dispatch(deleteTask(task));
   };
 
   return (

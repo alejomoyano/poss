@@ -13,9 +13,9 @@ export default function TaskCreator() {
 
   // creamos la tarea usando un dispatcher
   const handleSubmitTask = () => {
-    dispatch(addTask(content));
-    // if (content !== "") dispatch(newTask(content));
-    // solo se puede crear una tarea si se ingreso un text
+    // solo se puede crear una tarea si content no es null
+    if (content !== "")
+      dispatch(addTask({ content, date: new Date().getDate() }));
     console.log("add task");
   };
 
