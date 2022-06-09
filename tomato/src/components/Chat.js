@@ -1,5 +1,24 @@
 import React, {useState, useEffect, useRef} from "react";
-import AddReactionIcon from '@mui/icons-material/AddReaction';
+import {useDispatch, useSelector} from 'react-redux'
+import { FirebaseError, getApp } from "firebase/app";
+import {
+  getFirestore,
+  collection,
+  onSnapshot,
+  deleteField,
+  updateDoc,
+  doc,
+  setDoc,
+  getDoc,
+  arrayUnion,
+  arrayRemove,
+} from "firebase/firestore";
+import Message  from './Mensaje';
+import { addMessage } from "../redux/slices/ChatSlice";
+
+
+
+
 import './Chat.css';
 import ChatHeader from "./ChatHeader";
 
@@ -7,46 +26,42 @@ import ChatHeader from "./ChatHeader";
 
 function ChatScreen(){
     
-    let messages = []
-    const [inputMensaje, setInputMensaje] = useState("");
-    const [MessageList, setMessageList] = useState([]);
+    
+    const [inputMensaje, setInputMensaje] = useState(""); //para setear mensajes
+    const [MessageList, setMessageList] = useState([]); //array con la collecion de mensajes
+    const dispatch = useDispatch();
+    const app = getApp()
+    const db = getFirestore(app)
+    //maneja el envio de mensajes guardandolos en MessageList
+
+  
 
     function sendMessage(e){
         e.preventDefault();
-        let message ={
-            id: Date.getTime,
-            user: "Ignacio",
-            body: inputMensaje
+        let message = {
+            body: inputMensaje,
+            user: "Ignacio"
         }
+        addMessage(message)
         
-        setMessageList([...MessageList,message])
+        
+        
         
         setInputMensaje(" ")
         //console.log(message)
     }
 
-   
 
-    useEffect(()=>{
-        localStorage.setItem("localMsg",JSON.stringify(MessageList))
-    },[setMessageList])
+   
+    
     
     return( <div className="chat">
 
         <ChatHeader />
-        
+        <Message />
         
             
-            {MessageList.map((inputMensaje)=>(
-                <React.Fragment key={inputMensaje.id}>
-                    <div className="chat_messages">
-                        <span className="form-control bg-black btn mt-2" 
-                        style={{textAlign: "left",fontWeight: "bold"}}>
-                            {inputMensaje.user}: {inputMensaje.body}
-                        </span>
-                    </div>
-                </React.Fragment>
-            ))}
+           
         
         
         <div className="chat__input">
@@ -68,7 +83,7 @@ function ChatScreen(){
             
 
             <div className="chat__inputIcons">
-                <AddReactionIcon fontSize="large"/>
+               
                 
             </div>
             <link href="Chat.css"></link>
