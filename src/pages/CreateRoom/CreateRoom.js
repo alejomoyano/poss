@@ -1,6 +1,5 @@
 import React, { useState, useCallback } from "react";
 import { useSelector, useDispatch } from 'react-redux'
-import { observer } from 'mobx-react';
 import { useNavigate } from "react-router-dom";
 
 import { createRoom } from "../../redux/slices/room";
@@ -69,6 +68,4 @@ const CreateRoom = () => {
   );
 }
 
-// Envolver el componente en observer nos permite mostrar cambios en tiempo real
-// para los documentos/colecciones instanciados con firestorter
-export default observer(CreateRoom);
+export default CreateRoom;

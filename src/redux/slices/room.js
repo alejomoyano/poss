@@ -5,6 +5,7 @@ import Room from '../../models/Room';
 const initialState = {
   value: {},
   error: null,
+  isLoaded: false,
 };
 
 const createRoom = createAsyncThunk("createRoom", async ({ username, roomname, maxUsers }, thunkAPI) => {
@@ -43,18 +44,22 @@ export const roomSlice = createSlice({
       builder.addCase(createRoom.fulfilled, (state, action) => {
         state.value = action.payload.room;
         state.error = initialState.error;
+        state.isLoaded = true;
       });
       builder.addCase(createRoom.rejected, (state, action) => {
         state.value = initialState.value;
         state.error = action.payload.error.message;
+        state.isLoaded = false;
       });
       builder.addCase(joinRoom.fulfilled, (state, action) => {
         state.value = action.payload.room;
         state.error = initialState.error;
+        state.isLoaded = true;
       });
       builder.addCase(joinRoom.rejected, (state, action) => {
         state.value = initialState.value;
         state.error = action.payload.error.message;
+        state.isLoaded = false;
       });
   }
 });

@@ -13,6 +13,11 @@ class Room extends BaseDocument {
         return this.data.maxUsers
     }
 
+    get name() {
+        // The room name is the document id
+        return this.id;
+    }
+
     async join(username) {
         const { users, maxUsers } = this;
         if (users.length == maxUsers) {
