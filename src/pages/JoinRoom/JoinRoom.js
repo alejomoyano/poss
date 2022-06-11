@@ -8,6 +8,7 @@ const JoinRoom = () => {
     const [username, setUsername] = useState("");
     const [roomname, setRoomname] = useState("");
 
+    // TODO: add a query param to get the room name from the URL
     return (
         <Container>
             <TextField 
