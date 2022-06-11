@@ -1,16 +1,51 @@
-import React, { useState } from "react";
+import React, {
+    useState,
+    useCallback,
+} from "react";
+import { useSearchParams } from "react-router-dom";
+import { useSelector, useDispatch } from 'react-redux'
+import { useNavigate } from "react-router-dom";
 
-import Button from "../../components/Button";
-import TextField from "../../components/TextField";
-import { Container } from "./styles";
+import { joinRoom } from "../../redux/slices/room";
+
+import {
+    TextField,
+    Button,
+} from "../../components";
+import {
+    Container,
+    ErrorMessage,
+    Title,
+} from "./styles";
 
 const JoinRoom = () => {
-    const [username, setUsername] = useState("");
-    const [roomname, setRoomname] = useState("");
+    const [searchParams] = useSearchParams();
 
-    // TODO: add a query param to get the room name from the URL
+    const [username, setUsername] = useState("");
+    const [roomname, setRoomname] = useState(searchParams.get("roomId") || "");
+
+    const {
+        error: roomError,
+    } = useSelector((state) => state.room);
+
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const join = useCallback(async () => {
+        const dispatchResult = await dispatch(joinRoom({ username, roomname }));
+        if (dispatchResult.type === 'joinRoom/fulfilled') {
+            navigate(`/room/${roomname}`);
+        }
+    }, [
+        dispatch,
+        navigate,
+        username,
+        roomname,
+    ]);
+
     return (
         <Container>
+            <Title variant="h3">Join a Room</Title>
             <TextField 
                 label= 'username'
                 onChange={(event) => setUsername(event.target.value)}
@@ -22,10 +57,11 @@ const JoinRoom = () => {
                 value= {roomname}
             />
             <Button
-                onClick={()=>{}}
+                onClick={join}
             >
                 Join Room
             </Button>
+            {roomError && (<ErrorMessage>{roomError}</ErrorMessage>)}
         </Container>
     )
 }

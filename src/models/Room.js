@@ -13,6 +13,20 @@ class Room extends BaseDocument {
         return this.data.maxUsers
     }
 
+    async join(username) {
+        const { users, maxUsers } = this;
+        if (users.length == maxUsers) {
+            throw new Error('There is no space left in this room');
+        }
+        if (users.includes(username)) {
+            throw new Error(`There is a user with username ${username} in this room already`);
+        }
+        users.push(username);
+        await this.updateFields({
+            users,
+        })
+    }
+
     static async create(roomData) {
         const { roomname, username, maxUsers } = roomData;
         // Referencia al documento con id roomname, puede o no existir

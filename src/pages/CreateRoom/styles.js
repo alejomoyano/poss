@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { Typography } from '@mui/material';
 
 import { colors } from '../../utils/colors';
 
@@ -13,6 +14,19 @@ const Container = styled.div`
     background-color: ${colors.base.primary};
 `;
 
+const ErrorMessage = styled.div`
+    font-family: 'Roboto', sans-serif;
+    text-align: center;
+`;
+
+const Title = styled(Typography)`
+    &.MuiTypography-root {
+        font-family: 'Montserrat', sans-serif;
+    }
+`;
+
 export{
     Container,
+    ErrorMessage,
+    Title,
 }

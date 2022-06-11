@@ -1,36 +1,48 @@
 import React, { useState, useCallback } from "react";
 import { useSelector, useDispatch } from 'react-redux'
 import { observer } from 'mobx-react';
+import { useNavigate } from "react-router-dom";
 
 import { createRoom } from "../../redux/slices/room";
 
-import TextField from '../../components/TextField'
-import Button from "../../components/Button";
-import { Container } from "./styles";
+import {
+  TextField,
+  Button,
+} from "../../components";
+import {
+  Container,
+  ErrorMessage,
+  Title,
+} from "./styles";
 
 const CreateRoom = () => {
   const [username, setUsername] = useState("");
   const [roomname, setRoomname] = useState("");
   const [maxUsers, setMaxUsers] = useState("");
 
+  const navigate = useNavigate();
+
   const {
-    value: roomDoc,
     error: roomError,
   } = useSelector((state) => state.room);
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-  // debemos crear una room nueva
-  const newRoom = useCallback(() => {
-    dispatch(createRoom({ username, roomname, maxUsers }));
+  const newRoom = useCallback(async () => {
+    const dispatchResult = await dispatch(createRoom({ username, roomname, maxUsers }));
+    if (dispatchResult.type === 'createRoom/fulfilled') {
+      navigate(`/room/${roomname}`);
+    }
   }, [
     username,
     roomname,
     maxUsers,
     dispatch,
+    navigate,
   ]);
 
   return (
     <Container>
+      <Title variant="h3">Create a Room</Title>
       <TextField
         label='username'
         onChange={(event) => setUsername(event.target.value)}
@@ -52,8 +64,7 @@ const CreateRoom = () => {
       >
         Create Room
       </Button>
-      {roomError && (<div>{roomError}</div>)}
-      {roomDoc.admin && (<div>{roomDoc.admin}</div>)}
+      {roomError && (<ErrorMessage>{roomError}</ErrorMessage>)}
     </Container>
   );
 }

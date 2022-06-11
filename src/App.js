@@ -9,6 +9,7 @@ import {
 import Home from "./pages/Home";
 import CreateRoom from "./pages/CreateRoom";
 import JoinRoom from "./pages/JoinRoom";
+import RoomView from "./pages/RoomView";
 
 function App() {
   return (
@@ -16,7 +17,7 @@ function App() {
       <Route path="/" element={<Home />} />
       <Route path="/create" element={<CreateRoom />} />
       <Route path="/join" element={<JoinRoom />} />
-      {/* <Route path="/room/:room_id" element={<MainPage />} /> */}
+      <Route path="/room/:room_id" element={<RoomView />} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );

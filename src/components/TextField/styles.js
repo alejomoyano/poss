@@ -5,7 +5,7 @@ import { colors } from '../../utils/colors';
 
 const StyledTextField = styled(TextField)`
     &.MuiTextField-root {
-        background-color: ${colors.base.gamma};
+        background-color: ${colors.base.alpha};
         border-radius: 5px;
         padding: 5px;
     }
