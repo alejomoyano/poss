@@ -1,13 +1,26 @@
 import styled from 'styled-components';
 import {TextField } from '@mui/material';
 
+import { colors } from '../../utils/colors';
+
 const StyledTextField = styled(TextField)`
-    background-color: white;
+    &.MuiTextField-root {
+        background-color: ${colors.base.gamma};
+        border-radius: 5px;
+        padding: 5px;
+    }
+    & label {
+        font-family: 'Montserrat', sans-serif;
+        padding: 5px;
+    }
+    & input {
+        font-family: 'Roboto', sans-serif;
+    }
     & label.Mui-focused {
-        color: purple;
+        color: ${colors.base.secondary};
     }
     & .MuiInput-underline:after {
-        border-bottom-color: purple;
+        border-bottom-color: ${colors.base.secondary};
     }
 `;
 
