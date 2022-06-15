@@ -18,35 +18,18 @@ import { useState } from "react";
 
 const  Message = () => {
     
-    const [messages, setMessages] = useState([])
-    const app = getApp()
-    const db = getFirestore(app)
-
-    const Fetchdata = ()=>{
-        db.collection("Mensajes").get().then((querySnapshot) => {
-             
-            // Loop through the data and store
-            // it in array to display
-            querySnapshot.forEach(element => {
-                var data = element.data();
-                setMessages(arr => [...arr , data]);
-                  
-            });
-        })
-    }
+    
+    const { value: chatDoc } = useSelector((state) => state.chat);
+    
 
     return (
-        <div>
-            
+        <>
           
-        {
-            messages.map((data) => (
-            <span>{data.mensajes.user}:{data.mensajes.body}</span>
-            ))
-        }
-        </div>
-  
-    );
+          {chatDoc.mensajes?.map((mensaje) => (
+            <span>{mensaje.user}:{mensaje.body}</span> 
+          ))}
+        </>
+      );
 }
 
 

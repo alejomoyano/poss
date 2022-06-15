@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 import Room from '../../models/Room';
+import { createChat } from "./ChatSlice";
 
 const initialState = {
   value: {},
@@ -12,6 +13,7 @@ const createRoom = createAsyncThunk("createRoom", async ({ username, roomname, m
     //TODO agregar creacion de taskbord, chat y timer (los reducers)
     //TODO controlar la sala y el user no existan y q el maxusers sea mayor a 1
     const roomDoc = await Room.create({ username, roomname, maxUsers });
+    thunkAPI.dispatch(createChat(roomname));
     return thunkAPI.fulfillWithValue({ room: roomDoc });
   } catch (error) {
     return thunkAPI.rejectWithValue({ error });

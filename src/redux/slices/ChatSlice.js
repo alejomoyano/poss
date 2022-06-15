@@ -69,21 +69,28 @@ import ChatScreen from "../../components/Chat";
     initialState,
     reducers: {
         setMessages: (state, action) => {
-            state.mensajes = action.payload.mensajes
+            state.value = action.payload
         } 
-    }
+    },
+    extraReducers: (builder) => {
+      builder.addCase(createChat.fulfilled, (state, action) => {
+        console.log(action.payload)
+        state.value.document = action.payload.document;
+        state.error = initialState.error;
+      });
+      builder.addCase(createChat.rejected, (state, action) => {
+        state.error = action.payload.error.message;
+      });
 
-
+    },
   })
 
   const { setMensajes } = messagesSlice.actions
 
-  const addMessage = async (message) => {
+  const addMessage = createAsyncThunk ("addMessage", async(message,thunkAPI) => {
        try {
-        const date = new Date(); 
-        const app = getApp();
-        const db = getFirestore(app);
-        const chat = doc(db, "chat/H2iPRKX2JORZMOWO99Kj");
+        
+        const chat = thunkAPI.getState().chat.value.document;
         console.log(chat);
 
          await updateDoc(chat, {
@@ -92,15 +99,16 @@ import ChatScreen from "../../components/Chat";
        } catch (error) {
          console.log(error);
        }
-     };
+     });
 
   
 
 
-  export const {setMenssages} = messagesSlice.actions
+  
 
   export{
-    addMessage
+    addMessage,
+    createChat
   } 
   
 
