@@ -1,13 +1,18 @@
 import React, { useState, useCallback } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { observer } from "mobx-react";
+import { useSelector, useDispatch } from 'react-redux'
+import { useNavigate } from "react-router-dom";
 
 import { createRoom } from "../../redux/slices/room";
 
-import TextField from "../../components/TextField";
-import Button from "../../components/Button";
-import { Container } from "./styles";
-import { useNavigate } from "react-router-dom";
+import {
+  TextField,
+  Button,
+} from "../../components";
+import {
+  Container,
+  ErrorMessage,
+  Title,
+} from "./styles";
 
 const CreateRoom = () => {
   const [username, setUsername] = useState("");
@@ -16,17 +21,27 @@ const CreateRoom = () => {
 
   const navigate = useNavigate();
 
-  const { value: roomDoc, error: roomError } = useSelector(
-    (state) => state.room
-  );
+  const {
+    error: roomError,
+  } = useSelector((state) => state.room);
   const dispatch = useDispatch();
-  // debemos crear una room nueva
-  const newRoom = useCallback(() => {
-    dispatch(createRoom({ username, roomname, maxUsers }));
-  }, [username, roomname, maxUsers, dispatch]);
+
+  const newRoom = useCallback(async () => {
+    const dispatchResult = await dispatch(createRoom({ username, roomname, maxUsers }));
+    if (dispatchResult.type === 'createRoom/fulfilled') {
+      navigate(`/room/${roomname}`);
+    }
+  }, [
+    username,
+    roomname,
+    maxUsers,
+    dispatch,
+    navigate,
+  ]);
 
   return (
     <Container>
+      <Title variant="h3">Create a Room</Title>
       <TextField
         label="username"
         onChange={(event) => setUsername(event.target.value)}
@@ -46,17 +61,14 @@ const CreateRoom = () => {
       <Button
         onClick={() => {
           newRoom();
-          navigate("/room");
+          navigate("/create");
         }}
       >
         Create Room
       </Button>
-      {roomError && <div>{roomError}</div>}
-      {roomDoc.admin && <div>{roomDoc.admin}</div>}
+      {roomError && (<ErrorMessage>{roomError}</ErrorMessage>)}
     </Container>
   );
 };
 
-// Envolver el componente en observer nos permite mostrar cambios en tiempo real
-// para los documentos/colecciones instanciados con firestorter
-export default observer(CreateRoom);
+export default CreateRoom;

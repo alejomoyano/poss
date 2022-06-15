@@ -1,29 +1,49 @@
 import React, { useState } from "react";
 import { ToggleButtonGroup, ToggleButton } from "@mui/material";
+import { useDispatch } from "react-redux";
+import { changeState } from "../../redux/slices/tasks";
 
 export default function TaskStatesController({ taskId }) {
+  const dispatch = useDispatch();
+
   const [state, setState] = useState("active");
+  // const handleChangeState = (s) => {
+  //   setState(s);
+  //   console.log(state);
+  //   console.log(taskId);
+  //   const pack = {
+  //     taskId,
+  //     state,
+  //   };
+  //   dispatch(changeState(pack));
+  // };
+
   // const dispatch = useDispatch();
 
-  // const stateSuspended = () => {
-  //   dispatch(changeState("suspended", taskId));
-  // };
-  // const statePending = () => {
-  //   dispatch(changeState("pending", taskId));
-  // };
-  // const stateActive = () => {
-  //   dispatch(changeState("active", taskId));
-  // };
-  // const stateTerminated = () => {
-  //   dispatch(dispatch("terminated", taskId));
-  // };
+  const stateSuspended = () => {
+    dispatch(changeState("suspended", taskId));
+  };
+  const statePending = () => {
+    dispatch(changeState("pending", taskId));
+  };
+  const stateActive = () => {
+    dispatch(changeState("active", taskId));
+  };
+  const stateTerminated = () => {
+    dispatch(changeState("terminated", taskId));
+  };
   return (
-    <ToggleButtonGroup exclusive value={state} variant="outlined" color="primary" size="small">
+    <ToggleButtonGroup
+      exclusive
+      value={state}
+      variant="outlined"
+      color="primary"
+      size="small"
+    >
       <ToggleButton
         value="suspended"
         onClick={() => {
-          setState("suspended");
-          console.log(state);
+          stateSuspended
         }}
       >
         S
@@ -31,8 +51,7 @@ export default function TaskStatesController({ taskId }) {
       <ToggleButton
         value="pending"
         onClick={() => {
-          setState("pending");
-          console.log(state);
+          statePending
         }}
       >
         P
@@ -40,8 +59,7 @@ export default function TaskStatesController({ taskId }) {
       <ToggleButton
         value="active"
         onClick={() => {
-          setState("active");
-          console.log(state);
+          stateActive
         }}
       >
         A
@@ -49,8 +67,7 @@ export default function TaskStatesController({ taskId }) {
       <ToggleButton
         value="terminated"
         onClick={() => {
-          setState("terminated");
-          console.log(state);
+          stateTerminated
         }}
       >
         T

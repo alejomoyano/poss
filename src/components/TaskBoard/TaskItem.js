@@ -3,7 +3,6 @@ import { Button, Grid, Typography, TableCell, TableRow } from "@mui/material";
 import TaskStatesController from "./TaskStatesController";
 import { deleteTask } from "../../redux/slices/tasks";
 import { useDispatch } from "react-redux";
-
 export default function TaskItem({ task }) {
   const dispatch = useDispatch();
   // callback para eliminar tareas
@@ -23,7 +22,7 @@ export default function TaskItem({ task }) {
           <Grid item sm={3}>
             <TaskStatesController
               data-testid="states-buttons"
-              taskId={task.id}
+              taskId={task.date}
             />
           </Grid>
           {/* POR AHORA NO SE PUED EDITAR LA TAREA */}

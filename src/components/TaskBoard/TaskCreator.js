@@ -15,7 +15,7 @@ export default function TaskCreator() {
   const handleSubmitTask = () => {
     // solo se puede crear una tarea si content no es null
     if (content !== "")
-      dispatch(addTask({ content, date: new Date().getDate() }));
+      dispatch(addTask({ content, date: Date.now(),state:'active' }));
     console.log("add task");
   };
 

@@ -11,8 +11,10 @@ import {
   getDoc,
   arrayUnion,
   arrayRemove,
+  query,
+  where,
 } from "firebase/firestore";
-import TaskBoard from "../../models/TaskBoard";
+// import TaskBoard from "../../models/TaskBoard";
 import sortTasks from "../../Strategy/context";
 
 const initialState = {
@@ -30,7 +32,7 @@ const createTaskBoard = createAsyncThunk(
   "createTaskBoard",
   async (id, thunkAPI) => {
     try {
-      const date = new Date(); // para obtener cuando fue creada
+      // const date = new Date(); // para obtener cuando fue creada
       const app = getApp();
       const db = getFirestore(app);
 
@@ -40,7 +42,8 @@ const createTaskBoard = createAsyncThunk(
         tasks: [
           {
             content: "Add tasks as you want and give them a state",
-            date: date.getDate(),
+            date: Date.now(),
+            state: "active",
           },
         ],
       });
@@ -50,7 +53,40 @@ const createTaskBoard = createAsyncThunk(
         document,
         (snapshot) => {
           const taskboard = snapshot.data().tasks;
-          console.log(taskboard);
+
+          return thunkAPI.dispatch(
+            setTasks({ document: document, tasks: taskboard })
+          );
+        },
+        (error) => {
+          return thunkAPI.rejectWithValue({ error });
+        }
+      );
+      return thunkAPI.fulfillWithValue({ document });
+    } catch (error) {
+      return thunkAPI.rejectWithValue({ error });
+    }
+  }
+);
+
+const joinTaskBoard = createAsyncThunk(
+  "joinTaskBoard",
+  async (id, thunkAPI) => {
+    try {
+      const date = new Date(); // para obtener cuando fue creada
+      const app = getApp();
+      const db = getFirestore(app);
+
+      // creamos el documento
+      const document = doc(db, "tasksboards", id);
+      //await getDoc(document);
+
+      // nos suscribimos al documento
+      onSnapshot(
+        document,
+        (snapshot) => {
+          const taskboard = snapshot.data().tasks;
+
           return thunkAPI.dispatch(
             setTasks({ document: document, tasks: taskboard })
           );
@@ -72,7 +108,6 @@ const addTask = createAsyncThunk("addTask", async (task, thunkAPI) => {
     // const db = getFirestore(app);
     // TODO -> crear la tarea
     const tasksboard = thunkAPI.getState().task.value.document; // obtenemos el documento
-    console.log(tasksboard);
 
     await updateDoc(tasksboard, {
       tasks: arrayUnion(task),
@@ -86,10 +121,10 @@ const deleteTask = createAsyncThunk("deleteTask", async (task, thunkAPI) => {
   try {
     // const app = getApp();
     // const db = getFirestore(app);
-    
-    const tasksboard = thunkAPI.getState().task.value.document; // obtenemos el documento
-    console.log(tasksboard);
 
+    const tasksboard = thunkAPI.getState().task.value.document; // obtenemos el documento
+
+    // eliminamos la tarea en concreto
     await updateDoc(tasksboard, {
       tasks: arrayRemove(task),
     });
@@ -98,19 +133,51 @@ const deleteTask = createAsyncThunk("deleteTask", async (task, thunkAPI) => {
   }
 });
 
+const changeState = createAsyncThunk(
+  "changeState",
+  async ({taskId, state }, thunkAPI) => {
+    try {
+      const tasksboard = thunkAPI.getState().task.value.document; // obtenemos el documento
+      const tasks = thunkAPI.getState().task.value.tasks;
+
+
+      const tasksToMod = tasks.filter((task) => {
+        if (task.date == taskId) {
+          console.log("encontro -> ")
+          console.log(task)
+          return {
+            ...task,
+            state:state
+          }
+        }
+        console.log("quedo -> ")
+        console.log(task)
+        return task;
+      });
+      console.log(tasksToMod);
+
+      await updateDoc(tasksboard, {
+        tasks: tasksToMod,
+      });
+
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
+
 const sort = createAsyncThunk("sort", (type, thunkAPI) => {
-  try{
-  const tasks = thunkAPI.getState().task.value.tasks; // obtenemos las tareas actuales
-  const document = thunkAPI.getState().task.value.document; // obtenemos las tareas actuales
-  const sortedTasks = sortTasks(type,tasks); // las ordenamos 
-  // actualizamos la base de datos con las tareas ordenadas
-   updateDoc(document,{
-    tasks:sortedTasks
-  })
-}
-catch (error){
-  console.log(error);
-}
+  try {
+    const tasks = thunkAPI.getState().task.value.tasks; // obtenemos las tareas actuales
+    const document = thunkAPI.getState().task.value.document; // obtenemos las tareas actuales
+    const sortedTasks = sortTasks(type, tasks); // las ordenamos
+    // actualizamos la base de datos con las tareas ordenadas
+    updateDoc(document, {
+      tasks: sortedTasks,
+    });
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 export const tasksSlice = createSlice({
@@ -147,12 +214,13 @@ export const tasksSlice = createSlice({
 
 const { setTasks } = tasksSlice.actions;
 
-
 export {
   // Thunks
   createTaskBoard,
+  joinTaskBoard,
   addTask,
   deleteTask,
+  changeState,
   sort,
   // fetchTasks,
   // Reducers
