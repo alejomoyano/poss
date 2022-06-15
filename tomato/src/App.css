@@ -11,33 +11,10 @@ body{
   height: 100%;
 }
 
-.App {
-  height: 100%;
+.box-container {
+  margin-top: 80px;
+  width: 650px;
   text-align: center;
-}
-
-.timerFunctionality{
-  text-align: center;
-}
-
-.Buttons > Button{
-  font-size: 2rem;
-  margin: 1rem;
-}
-
-.short-break,
-.study-time,
-.long-break {
-  width: 15rem;
-  text-align: center;
-  letter-spacing: 1px;
-  font-size: 17px;
-  height: 1.25rem;
-}
-
-.short-break,
-.study-time{
-  margin-bottom: 9px;
 }
 
 .general-cycle {
@@ -51,10 +28,28 @@ body{
 }
 
 .msg-text {
-  font-size: 30px;
+  font-size: 50px;
   margin-bottom: 9px;
 }
 
 .timer {
-  font-size: 50px;
+  font-size: 100px;
+}
+
+button{
+  font-family: 'Kameron', serif;
+  font-size: 25px;
+  padding: 8px;
+  width: auto;
+  font-weight: 600;
+  border: none;
+  margin-right: 5px;
+  border-radius: 7px;
+  background-color: #9a9fb1;
+}
+
+.btn-container {
+  position: absolute;
+  top: 15px;
+  left: 100px;
 }

@@ -1,11 +1,12 @@
-import React, { useEffect } from 'react';
-import TimerFunctionality from './components/Timer/TimerFunctionality'
+import React from 'react';
+import './App.css'
+import { TimerView } from './components/Timer/TimerView';
 
 function App() {
 
   return (
     <div>
-      <TimerFunctionality />
+      <TimerView />
     </div>
   );
 }
