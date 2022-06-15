@@ -1,12 +1,13 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-import Auth from '../src/components/Auth';
-
+import './App.css'
+import { TimerView } from './components/Timer/TimerView';
 
 function App() {
+
   return (
-    <Auth />
+    <div>
+      <TimerView />
+    </div>
   );
 }
 
