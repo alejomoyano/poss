@@ -13,6 +13,7 @@ import {
   arrayRemove,
 } from "firebase/firestore";
 import TaskBoard from "../../models/TaskBoard";
+import sortTasks from "../../Strategy/context";
 
 const initialState = {
   value: {
@@ -51,7 +52,7 @@ const createTaskBoard = createAsyncThunk(
           const taskboard = snapshot.data().tasks;
           console.log(taskboard);
           return thunkAPI.dispatch(
-            setTasks({ document:document,tasks:taskboard })
+            setTasks({ document: document, tasks: taskboard })
           );
         },
         (error) => {
@@ -67,8 +68,8 @@ const createTaskBoard = createAsyncThunk(
 
 const addTask = createAsyncThunk("addTask", async (task, thunkAPI) => {
   try {
-    const app = getApp();
-    const db = getFirestore(app);
+    // const app = getApp();
+    // const db = getFirestore(app);
     // TODO -> crear la tarea
     const tasksboard = thunkAPI.getState().task.value.document; // obtenemos el documento
     console.log(tasksboard);
@@ -83,9 +84,9 @@ const addTask = createAsyncThunk("addTask", async (task, thunkAPI) => {
 
 const deleteTask = createAsyncThunk("deleteTask", async (task, thunkAPI) => {
   try {
-    const app = getApp();
-    const db = getFirestore(app);
-    // TODO -> crear la tarea
+    // const app = getApp();
+    // const db = getFirestore(app);
+    
     const tasksboard = thunkAPI.getState().task.value.document; // obtenemos el documento
     console.log(tasksboard);
 
@@ -95,6 +96,21 @@ const deleteTask = createAsyncThunk("deleteTask", async (task, thunkAPI) => {
   } catch (error) {
     console.log(error);
   }
+});
+
+const sort = createAsyncThunk("sort", (type, thunkAPI) => {
+  try{
+  const tasks = thunkAPI.getState().task.value.tasks; // obtenemos las tareas actuales
+  const document = thunkAPI.getState().task.value.document; // obtenemos las tareas actuales
+  const sortedTasks = sortTasks(type,tasks); // las ordenamos 
+  // actualizamos la base de datos con las tareas ordenadas
+   updateDoc(document,{
+    tasks:sortedTasks
+  })
+}
+catch (error){
+  console.log(error);
+}
 });
 
 export const tasksSlice = createSlice({
@@ -107,7 +123,7 @@ export const tasksSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(createTaskBoard.fulfilled, (state, action) => {
-      console.log(action.payload)
+      console.log(action.payload);
       state.value.document = action.payload.document;
       state.error = initialState.error;
     });
@@ -127,44 +143,17 @@ export const tasksSlice = createSlice({
   },
 });
 
+// console.log(tasksSlice.reducer)
+
 const { setTasks } = tasksSlice.actions;
 
-// export const deleteTask = async (task) => {
-//   try {
-//     const app = getApp();
-//     const db = getFirestore(app);
-//     const tasksboard = doc(db, "tasksboards/1");
-//     console.log(task);
-
-//     await updateDoc(tasksboard, {
-//       tasks: arrayRemove(task),
-//     });
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };
-
-// agregamos una task añadiendola directamente de la base de datos
-// export const addTask = async (task) => {
-//   try {
-//     const app = getApp();
-//     const db = getFirestore(app);
-//     const tasksboard = doc(db, "tasksboards/1");
-//     console.log(task);
-
-//     await updateDoc(tasksboard, {
-//       tasks: arrayUnion(task),
-//     });
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };
 
 export {
   // Thunks
   createTaskBoard,
   addTask,
   deleteTask,
+  sort,
   // fetchTasks,
   // Reducers
   // setTasks,
