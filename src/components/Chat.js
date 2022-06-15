@@ -69,9 +69,9 @@ function ChatScreen(){
     return( <div className="chat">
         <Grid item sm={12} direction="column">
         <ChatHeader />
+        <Message />
         
-        
-        {MessageList.map((mensaje) => (
+        {/* {MessageList.map((mensaje) => (
             <React.Fragment key={mensaje.id}>
                 <div>
                     <span>{mensaje.user}:{mensaje.body}</span>
@@ -79,7 +79,7 @@ function ChatScreen(){
                 </div>
             </React.Fragment>
           ))}
-        
+         */}
        
            
         
