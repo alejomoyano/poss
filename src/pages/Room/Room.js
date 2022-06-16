@@ -1,8 +1,8 @@
 import React from "react";
-import ChatScreen from "../../components/Chat";
+import TaskBoard from "../../components/TaskBoard";
 
 export default function Room(){
     return(
-        <ChatScreen/>
+        <TaskBoard/>
     );
 }

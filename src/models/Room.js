@@ -1,16 +1,35 @@
 import BaseDocument from "./BaseDocument";
 
 class Room extends BaseDocument {
-    get admin() {
-        return this.data.admin;
+  get admin() {
+    return this.data.admin;
+  }
+
+  get users() {
+    return this.data.users;
+  }
+
+  get maxUsers() {
+    return this.data.maxUsers;
+  }
+
+    get name() {
+        // The room name is the document id
+        return this.id;
     }
 
-    get users() {
-        return this.data.users;
-    }
-
-    get maxUsers() {
-        return this.data.maxUsers
+    async join(username) {
+        const { users, maxUsers } = this;
+        if (users.length == maxUsers) {
+            throw new Error('There is no space left in this room');
+        }
+        if (users.includes(username)) {
+            throw new Error(`There is a user with username ${username} in this room already`);
+        }
+        users.push(username);
+        await this.updateFields({
+            users,
+        })
     }
 
     static async create(roomData) {
@@ -30,6 +49,7 @@ class Room extends BaseDocument {
         });
         return roomDoc;
     }
-};
+  }
+    
 
 export default Room;
