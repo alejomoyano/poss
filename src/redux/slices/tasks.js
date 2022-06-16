@@ -135,31 +135,24 @@ const deleteTask = createAsyncThunk("deleteTask", async (task, thunkAPI) => {
 
 const changeState = createAsyncThunk(
   "changeState",
-  async ({taskId, state }, thunkAPI) => {
+  async ({ state, taskId }, thunkAPI) => {
     try {
       const tasksboard = thunkAPI.getState().task.value.document; // obtenemos el documento
-      const tasks = thunkAPI.getState().task.value.tasks;
+      //obtenemos un snapshot del contenido del documento
+      const snap = await getDoc(tasksboard);
+      const tasks = snap.data().tasks;
 
-
-      const tasksToMod = tasks.filter((task) => {
+      const temp = tasks.concat();
+      temp.forEach((task) => {
         if (task.date == taskId) {
-          console.log("encontro -> ")
-          console.log(task)
-          return {
-            ...task,
-            state:state
-          }
+          task.state = state;
         }
-        console.log("quedo -> ")
-        console.log(task)
-        return task;
       });
-      console.log(tasksToMod);
+      console.log(temp);
 
       await updateDoc(tasksboard, {
-        tasks: tasksToMod,
+        tasks: temp,
       });
-
     } catch (error) {
       console.log(error);
     }
