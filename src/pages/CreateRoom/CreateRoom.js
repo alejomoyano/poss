@@ -1,18 +1,11 @@
 import React, { useState, useCallback } from "react";
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import { createRoom } from "../../redux/slices/room";
 
-import {
-  TextField,
-  Button,
-} from "../../components";
-import {
-  Container,
-  ErrorMessage,
-  Title,
-} from "./styles";
+import { TextField, Button } from "../../components";
+import { Container, ErrorMessage, Title } from "./styles";
 
 const CreateRoom = () => {
   const [username, setUsername] = useState("");
@@ -21,23 +14,17 @@ const CreateRoom = () => {
 
   const navigate = useNavigate();
 
-  const {
-    error: roomError,
-  } = useSelector((state) => state.room);
+  const { error: roomError } = useSelector((state) => state.room);
   const dispatch = useDispatch();
 
   const newRoom = useCallback(async () => {
-    const dispatchResult = await dispatch(createRoom({ username, roomname, maxUsers }));
-    if (dispatchResult.type === 'createRoom/fulfilled') {
+    const dispatchResult = await dispatch(
+      createRoom({ username, roomname, maxUsers })
+    );
+    if (dispatchResult.type === "createRoom/fulfilled") {
       navigate(`/room/${roomname}`);
     }
-  }, [
-    username,
-    roomname,
-    maxUsers,
-    dispatch,
-    navigate,
-  ]);
+  }, [username, roomname, maxUsers, dispatch, navigate]);
 
   return (
     <Container>
@@ -66,7 +53,7 @@ const CreateRoom = () => {
       >
         Create Room
       </Button>
-      {roomError && (<ErrorMessage>{roomError}</ErrorMessage>)}
+      {roomError && <ErrorMessage>{roomError}</ErrorMessage>}
     </Container>
   );
 };

@@ -1,14 +1,39 @@
 import React from "react";
 import { observer } from "mobx-react";
 
-import { Container } from "./styles";
+import { Grid,Paper} from "@mui/material";
+
+// import { Container } from "./styles";
 import TaskBoard from "../../components/TaskBoard/TaskBoard";
+import ChatScreen from "../../components/Chat/Chat";
+import { TimerView } from "../../components/Timer/TimerView";
 
 const RoomView = () => {
   return (
-    <Container>
-      <TaskBoard />
-    </Container>
+    // <Container>
+
+      <Grid
+        container
+        direction="row"
+        justifyContent="space-evenly"
+        alignItems="flex-start"
+        spacing={2}
+        lg={10}
+        sx={{ width: 100 }}
+      >
+        <Grid item lg={4} direction="column" container  >
+          <Grid item lg={8}>
+            <TimerView />
+          </Grid>
+          <Grid item lg={4}>
+            <ChatScreen />
+          </Grid>
+        </Grid>
+        <Grid item lg={6}>
+          <TaskBoard />
+        </Grid>
+      </Grid>
+    // </Container>
   );
 };
 

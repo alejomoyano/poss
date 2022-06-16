@@ -73,7 +73,6 @@ const joinTaskBoard = createAsyncThunk(
   "joinTaskBoard",
   async (id, thunkAPI) => {
     try {
-      const date = new Date(); // para obtener cuando fue creada
       const app = getApp();
       const db = getFirestore(app);
 
@@ -104,9 +103,6 @@ const joinTaskBoard = createAsyncThunk(
 
 const addTask = createAsyncThunk("addTask", async (task, thunkAPI) => {
   try {
-    // const app = getApp();
-    // const db = getFirestore(app);
-    // TODO -> crear la tarea
     const tasksboard = thunkAPI.getState().task.value.document; // obtenemos el documento
 
     await updateDoc(tasksboard, {
@@ -119,9 +115,6 @@ const addTask = createAsyncThunk("addTask", async (task, thunkAPI) => {
 
 const deleteTask = createAsyncThunk("deleteTask", async (task, thunkAPI) => {
   try {
-    // const app = getApp();
-    // const db = getFirestore(app);
-
     const tasksboard = thunkAPI.getState().task.value.document; // obtenemos el documento
 
     // eliminamos la tarea en concreto
