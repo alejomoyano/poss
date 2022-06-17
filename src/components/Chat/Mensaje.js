@@ -16,11 +16,11 @@ import { getApp } from "firebase/app";
 import { useState } from "react";
 
 export default function Message() {
-  const { value: chatDoc } = useSelector((state) => state.chat);
+  const { value: mensajes } = useSelector((state) => state.chat);
 
   return (
     <>
-      {chatDoc.mensajes?.map((mensaje) => (
+      {mensajes?.map((mensaje) => (
         <React.Fragment key={mensaje.id}>
           <div>
             <span>

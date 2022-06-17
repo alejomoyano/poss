@@ -7,6 +7,7 @@ import { Grid,Paper} from "@mui/material";
 import TaskBoard from "../../components/TaskBoard/TaskBoard";
 import ChatScreen from "../../components/Chat/Chat";
 import { TimerView } from "../../components/Timer/TimerView";
+import Chat from "../../components/Chat/Chat";
 
 const RoomView = () => {
   return (
@@ -26,7 +27,7 @@ const RoomView = () => {
             <TimerView />
           </Grid>
           <Grid item lg={4}>
-            <ChatScreen />
+            <Chat />
           </Grid>
         </Grid>
         <Grid item lg={6}>
