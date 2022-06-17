@@ -24,7 +24,7 @@ const initialState = {
   value: {
     document: {},
     tasks: [],
-    timerState:'study'
+    timerState:'break'
   },
   error: null,
 };
