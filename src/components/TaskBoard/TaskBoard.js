@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import {
   Table,
   TableBody,
@@ -7,8 +7,7 @@ import {
   Paper,
 } from "@mui/material";
 import Tasks from "./Tasks";
-import TaskCreator from "./TaskCreator";
-import { useDispatch } from "react-redux";
+import CreatorSelector from "./CreatorSelector";
 
 
 // Funcion del componente de tareas
@@ -21,7 +20,7 @@ function TaskBoard() {
     >
       <Table>
         <TableHead>
-          <TaskCreator />
+          <CreatorSelector />
         </TableHead>
         <TableBody>
           <Tasks />

@@ -3,7 +3,7 @@ import { ToggleButtonGroup, ToggleButton } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { changeState } from "../../redux/slices/tasks";
 
-export default function TaskStatesController({ taskId }) {
+export default function StateSelector({ taskId }) {
   const dispatch = useDispatch();
   // let value = 'active';
   const [state, setState] = useState("active");

@@ -1,23 +1,29 @@
-import React, { useEffect } from "react";
-import TaskItem from "./TaskItem";
-import { useSelector, useDispatch } from "react-redux";
-// import { fetchTasks } from "../../redux/slices/tasks";
+import React from "react";
+import ItemBreak from "./ItemBreak";
+import ItemStudy from "./ItemStudy";
+
+import { useSelector } from "react-redux";
 
 export default function Tasks() {
-  const { value: taskboardDoc } = useSelector((state) => state.task);
-  // const dispatch = useDispatch();
-
-  // useEffect(() => {
-    // console.log(taskboardDoc.tasks);
-    // dispatch(fetchTasks(taskboardDoc.document));
-  // },[]);
+  // const { value: taskboard } = useSelector((state) => state.task);
+  const { value: {tasks,timerState} } = useSelector((state) => state.task);
 
   return (
     <>
-      {/* {console.log(taskboardDoc.tasks.tasks)} */}
-      {taskboardDoc.tasks.map((task) => (
-        <TaskItem task={task} key={task.date} />
-      ))}
+      {/* {taskboard.tasks.map((task) =>
+        taskboard.timerState == "break" ? (
+          <TaskItemBreak task={task} key={task.date} />
+        ) : (
+          <TaskItemStudy task={task} key={task.date} />
+        )
+      )} */}
+      {tasks.map((task) =>
+        timerState == "break" ? (
+          <ItemBreak task={task} key={task.date} />
+        ) : (
+          <ItemStudy task={task} key={task.date} />
+        )
+      )}
     </>
   );
 }

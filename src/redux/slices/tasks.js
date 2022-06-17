@@ -14,13 +14,17 @@ import {
   query,
   where,
 } from "firebase/firestore";
-// import TaskBoard from "../../models/TaskBoard";
-import sortTasks from "../../Strategy/context";
+import Sorting from "../../Strategy/Sorting";
+import { useDispatch } from "react-redux";
+// objeto que nos permite ejecutar el tipo de sorting que necesitamos
+const sortSelector = new Sorting(); 
+
 
 const initialState = {
   value: {
     document: {},
     tasks: [],
+    timerState:'study'
   },
   error: null,
 };
@@ -87,7 +91,7 @@ const joinTaskBoard = createAsyncThunk(
           const taskboard = snapshot.data().tasks;
 
           return thunkAPI.dispatch(
-            setTasks({ document: document, tasks: taskboard })
+            setTasks({ document: document, tasks: taskboard, timerState:'break' })
           );
         },
         (error) => {
@@ -152,13 +156,19 @@ const changeState = createAsyncThunk(
   }
 );
 
-const sort = createAsyncThunk("sort", (type, thunkAPI) => {
+
+const sortTasks = createAsyncThunk("sort", async (type, thunkAPI) => {
   try {
-    const tasks = thunkAPI.getState().task.value.tasks; // obtenemos las tareas actuales
-    const document = thunkAPI.getState().task.value.document; // obtenemos las tareas actuales
-    const sortedTasks = sortTasks(type, tasks); // las ordenamos
+    
+    const tasksboard = thunkAPI.getState().task.value.document; // obtenemos el documento
+    //obtenemos un snapshot del contenido del documento
+    const snap = await getDoc(tasksboard);
+    const tasks = snap.data().tasks;
+    
+    const sortedTasks = sortSelector.sortS(tasks,type); // las ordenamos
+   
     // actualizamos la base de datos con las tareas ordenadas
-    updateDoc(document, {
+    await updateDoc(tasksboard, {
       tasks: sortedTasks,
     });
   } catch (error) {
@@ -173,6 +183,10 @@ export const tasksSlice = createSlice({
     setTasks: (state, action) => {
       state.value = action.payload;
     },
+    setState: (state,action) => {
+      state.value.timerState = action.payload;
+
+    }
   },
   extraReducers: (builder) => {
     builder.addCase(createTaskBoard.fulfilled, (state, action) => {
@@ -180,37 +194,30 @@ export const tasksSlice = createSlice({
       state.value.document = action.payload.document;
       state.error = initialState.error;
     });
-    // builder.addCase(fetchTaskBoard.fulfilled, (state, action) => {
-    //   state.value.document = action.payload.document;
-    //   state.error = initialState.error;
-    // });
-    // builder.addCase(fetchTasks.rejected, (state, action) => {
-    //   state.error = action.payload.error.message;
-    // });
-    // builder.addCase(addTask.fulfilled, (state, action) => {
-    // //   state.value = action.payload.taskboard;
-    // // });
+
     builder.addCase(createTaskBoard.rejected, (state, action) => {
       state.error = action.payload.error.message;
     });
   },
 });
 
-// console.log(tasksSlice.reducer)
+
+const changeTimerState = (state) => {
+  const dispatch = useDispatch();
+  dispatch(changeTimerState(state));
+}
+
 
 const { setTasks } = tasksSlice.actions;
 
 export {
-  // Thunks
   createTaskBoard,
   joinTaskBoard,
   addTask,
   deleteTask,
   changeState,
-  sort,
-  // fetchTasks,
-  // Reducers
-  // setTasks,
+  sortTasks,
+  changeTimerState
 };
 
 export default tasksSlice.reducer;
