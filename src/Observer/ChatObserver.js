@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import { changeTimerState } from "../redux/slices/ChatSlice";
 
-class chatObserver {
+class ChatObserver {
   /**
    * Metodo para avisar al observador Chat que hubo un cambio de estado en la aplicacion
    */
@@ -18,4 +18,4 @@ class chatObserver {
   }
 }
 
-export default chatObserver;
+export default ChatObserver;

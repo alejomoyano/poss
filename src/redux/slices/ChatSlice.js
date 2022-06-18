@@ -99,7 +99,7 @@ const addMessage = createAsyncThunk("addMessage", async (message, thunkAPI) => {
 
 const changeTimerState = (state) => {
   const dispatch = useDispatch();
-  dispatch(setState(state));
+  dispatch(changeTimerState(state));
 }
 
 export { addMessage, 

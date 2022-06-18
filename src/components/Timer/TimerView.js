@@ -1,7 +1,7 @@
 import React from "react";
 import { TimerController } from "./TimerController";
 //redux
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { setObservers } from "../../redux/slices/timer";
 

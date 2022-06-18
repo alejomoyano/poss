@@ -1,6 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import TaskBoardObserver from "../../Observer/TaskBoardObserver";
+import ChatObserver from "../../Observer/ChatObserver";
 import TimerSubject from "../../Observer/TimerSubject";
+
 // chat observer
 
 const timerSubject = new TimerSubject()
@@ -84,9 +86,11 @@ export const timerSlice = createSlice(
 });
 
 export function setObservers (){
-  const taskBoardObserver = new TaskBoardObserver();
+  //const taskBoardObserver = new TaskBoardObserver();
+  //const chatObserver = new ChatObserver();
   //instanciar chat
-  timerSubject.subscribe(taskBoardObserver);
+  //timerSubject.subscribe(taskBoardObserver);
+  //timerSubject.subscribe(chatObserver);
   //subscribe del chat 
 }
 
