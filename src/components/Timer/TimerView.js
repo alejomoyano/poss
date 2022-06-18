@@ -1,12 +1,24 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { TimerController } from "./TimerController";
 //redux
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setObservers, notify } from "../../redux/slices/timer";
 
 export const TimerView = () => {
   const { msg, minutes, seconds, status, subCycle, generalCycle } = useSelector(
     (state) => state.timer
   );
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    setObservers();
+  }, []);
+
+  // avisamos a los observadores cada vez que cambia el estado
+  useEffect(() => {
+    dispatch(notify());
+  }, [status]);
 
   return (
     <div className="box-container">

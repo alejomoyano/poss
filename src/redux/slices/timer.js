@@ -1,7 +1,11 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { taskUpdate } from "./tasks";
+// import TaskBoardObserver from "../../Observer/TaskBoardObserver";
+// import TimerSubject from "../../Observer/TimerSubject";
 
-export const timerSlice = createSlice(
-  {
+var subsList = [];
+
+export const timerSlice = createSlice({
   name: "timer",
   initialState: {
     minutes: 0,
@@ -34,7 +38,7 @@ export const timerSlice = createSlice(
     setLongBreak: (state, action) => {
       state.longBreak = action.payload;
     },
-    setMsg: (state, action) =>{
+    setMsg: (state, action) => {
       state.msg = action.payload;
     },
     incrementSubCycle: (state) => {
@@ -48,20 +52,20 @@ export const timerSlice = createSlice(
     },
     defaultShortBreak: (state) => {
       state.minutes = state.shortBreak;
-      state.msg = 'Short Break';
+      state.msg = "Short Break";
       state.status = 2;
       state.seconds = 0;
     },
     defaultLongBreak: (state) => {
       state.minutes = state.longBreak;
-      state.msg = 'Long Break';
+      state.msg = "Long Break";
       state.subCycle = 0;
       state.status = 3;
       state.seconds = 0;
     },
     defaultStudyTime: (state) => {
       state.minutes = state.studyTime;
-      state.msg = 'Study Time';
+      state.msg = "Study Time";
       state.status = 1;
       state.seconds = 0;
     },
@@ -70,9 +74,26 @@ export const timerSlice = createSlice(
       state.minutes = state.studyTime;
       state.shortBreak = prompt("Short Break");
       state.longBreak = prompt("Long Break");
-    }
+    },
   },
 });
+
+const subscribe = (sub) => {
+  subsList.push(sub);
+};
+
+export const notify = createAsyncThunk("notify", (_, thunkAPI) => {
+  subsList.forEach((sub) => {
+    thunkAPI.dispatch(sub());
+  });
+});
+
+export const setObservers = () => {
+  console.log("suscribiendo al taskboard");
+  subscribe(taskUpdate);
+  //instanciar chat
+  //subscribe del chat
+};
 
 export const {
   setStatus,
@@ -88,7 +109,7 @@ export const {
   defaultShortBreak,
   defaultLongBreak,
   defaultStudyTime,
-  setTimes
+  setTimes,
 } = timerSlice.actions;
 
 export default timerSlice.reducer;

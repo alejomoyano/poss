@@ -12,12 +12,14 @@ import {getFirestore} from 'firebase/firestore'
 import firebaseConfig from "./firebase";
 import makeWebContext from 'firestorter/web';
 
+
 import { BrowserRouter as Router } from 'react-router-dom';
 
 firebase.initializeApp(firebaseConfig);
 const firebaseApp = firebase.getApp();
 const fireStore = getFirestore(firebaseApp)
 initFirestorter(makeWebContext({ firebase: firebaseApp, firestore: fireStore }));
+
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
