@@ -31,7 +31,7 @@ function ChatCreator() {
   });
 
   const addChat = () => {
-    const chatName = prompt("PLease enter chat name");
+    const chatName = prompt("Please enter chat name");
 
     if (chatName) {
       db.collection("chat").add({

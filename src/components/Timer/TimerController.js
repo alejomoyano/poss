@@ -34,7 +34,7 @@ export const TimerController = () => {
     if (status === 1) {
       dispatch(incrementSubCycle());
     }
-    if (subCycle === 4) {
+    if (subCycle >= 3) {
       dispatch(incrementGeneralCycle());
     }
     clearInterval(interv);
@@ -47,7 +47,7 @@ export const TimerController = () => {
   };
 
   const runStudy = () => {
-    if (subCycle === 4 && minTemp === 0 && secTemp === 0) {
+    if (subCycle >=3 && minTemp === 0 && secTemp === 0) {
       clearInterval(interv);
       dispatch(defaultLongBreak());
     } else if (minTemp === 0 && secTemp === 0) {
@@ -161,39 +161,42 @@ export const TimerController = () => {
   return (
     <Fragment>
       {status !== 0 ? <div className="btn-container">
-        <button className="defaults-btn" onClick={goToStudyTime}>Study Time</button>
-        <button className="defaults-btn" onClick={goToShortBreak}>Short Break</button>
-        <button className="defaults-btn" onClick={goToLongBreak}>Long Break</button>
+        <button onClick={goToStudyTime}>Study Time</button>
+        <button onClick={goToShortBreak}>Short Break</button>
+        <button onClick={goToLongBreak}>Long Break</button>
       </div> : ""}
-      {status === 0 ? <button onClick={configTimes}>Config</button> : ""}
+      <div className="btn-bottom">
+      {status === 0 ? <button className="defaults-btn" onClick={configTimes}>Config</button> : ""}
       <Fragment>
         {status === 1 ? (
-          <button onClick={startStudy}>Start study</button>
+          <button className="defaults-btn" onClick={startStudy}>Start study</button>
         ) : status === 2 ? (
-          <button onClick={startShortBreak}>Start short break</button>
+          <button className="defaults-btn" onClick={startShortBreak}>Start short break</button>
         ) : status === 3 ? (
-          <button onClick={startLongBreak}>Start long break</button>
+          <button className="defaults-btn" onClick={startLongBreak}>Start long break</button>
         ) : (
           ""
         )}
       </Fragment>
       {(status === 4 || status === 6 || status === 7) ? (
         <Fragment>
-          <button onClick={stop}>Stop</button>
-          <button onClick={resume}>Resume</button>
+          <button className="defaults-btn btn-stop" onClick={stop}>Stop</button>
+          <button className="defaults-btn btn-resume" onClick={resume}>Resume</button>
         </Fragment>
       ) : (
         ""
       )}
       {status === 5 ? (
         <Fragment>
-          <button onClick={backToBeginning}>Back to beginning</button>
-          <button onClick={configTimes}>Config</button>
+          <button className="defaults-btn" onClick={backToBeginning}>Back to beginning</button>
+          <button className="defaults-btn" onClick={configTimes}>Config</button>
         </Fragment>
       ) : (
         ""
       )}
+      </div>
     </Fragment>
+
   );
 };
 

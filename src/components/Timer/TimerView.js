@@ -6,26 +6,26 @@ import { useEffect } from "react";
 import { setObservers } from "../../redux/slices/timer";
 
 export const TimerView = () => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const { msg, minutes, seconds, status, subCycle, generalCycle } = useSelector(
     (state) => state.timer
   );
 
-  useEffect ( ()=>{
-    setObservers();
-  }, [])
+  // useEffect ( ()=>{
+  //   setObservers();
+  // }, [])
 
   return (
-    <div className="box-container">
-      <div>
-        <span className="msg-text">{msg}</span>
+    <div className="timer-container">
+      <div className="msg-text">
+        <span>{msg}</span>
       </div>
-      <div>
-        <span className="general-cycle">General cycles: {generalCycle}</span>
+      <div className="general-cycle">
+        <span>General cycles: {generalCycle}</span>
         &nbsp;&nbsp;
       </div>
-      <div>
-        <span className="sub-cycle">Sub cycles: {subCycle}</span>&nbsp;&nbsp;
+      <div className="sub-cycle">
+        <span >Sub cycles: {subCycle}</span>&nbsp;&nbsp;
       </div>
       <div className="timer">
         <span>{minutes < 10 ? "0" + minutes : minutes}:</span>

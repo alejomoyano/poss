@@ -45,8 +45,7 @@ function ChatScreen() {
   }
 
   return (
-    <div className="chat">
-      <Grid item sm={12} direction="column">
+    <div className="chat-container">
         <ChatHeader />
         <Message />
 
@@ -60,7 +59,7 @@ function ChatScreen() {
           ))}
          */}
 
-        <div className="chat__input">
+        <div className="chat-elements-container">
           <form onSubmit={sendMessage}>
             <input
               type="text"
@@ -68,23 +67,19 @@ function ChatScreen() {
               value={inputMensaje}
               onChange={(e) => setInputMensaje(e.target.value)}
               placeholder="Type your message"
+              className="input-chat"
             />
 
             <button
               disabled={false}
               value={inputMensaje}
-              className="chat__inputButton"
+              className="btn-chat"
               type="submit"
             >
               Send Message
             </button>
           </form>
-
-          <div className="chat__inputIcons"></div>
-
-          <link href="Chat.css"></link>
         </div>
-      </Grid>
     </div>
   );
 }

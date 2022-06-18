@@ -1,16 +1,154 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Kameron&display=swap');
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  height: 100vh;
+  font-family: 'Kameron', serif;
+  opacity: 1;
+  background-image:  radial-gradient(#d5a8d7 0.8500000000000001px, transparent 0.8500000000000001px), radial-gradient(#d5a8d7 0.8500000000000001px, #480e41 0.8500000000000001px);
+  background-size: 34px 34px;
+  background-position: 0 0,17px 17px;
+  overflow-y: hidden;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.room-container {
+  height: 90vh;
+  border-radius: 10px;
+  background: linear-gradient(120deg,#6d5474, #3b0d3b);
+  box-shadow: 0px 0px 8px 12px #2e102e;
+  width: 85%;
+  margin: auto;
+  display: grid;
+  margin-top: 3rem;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: max-content;
+  gap: 10px;
 }
+
+.task-container {
+  grid-row: 1 / 3;
+  margin: 10px 10px 10px 0;
+}
+
+.timer-container{
+  border-radius: 10px;
+  display: grid;
+  background: linear-gradient(-120deg,#6d5474, #3b0d3b);
+  text-align: center;
+  align-items: center;
+  margin: 10px 0 0 10px;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 50px 80px 20px 50px 150px 100px; 
+}
+
+.general-cycle {
+  font-size: 25px;
+  text-shadow: 3px 2px 5px #775536;
+  letter-spacing: 3px;
+  grid-row: 3 / 4;
+  grid-column: 1 / 3;
+}
+
+.sub-cycle {
+  font-size: 20px;
+  text-shadow: 3px 2px 5px #775536;
+  letter-spacing: 3px;
+  grid-row: 4 / 5;
+  grid-column: 1 / 3;
+}
+
+.msg-text {
+  font-size: 50px;
+  text-shadow: 3px 2px 5px #775536;
+  letter-spacing: 3px;
+  margin-bottom: 9px;
+  grid-column: 1 / 3;
+  grid-row: 2 / 3;
+}
+
+.timer {
+  font-size: 100px;
+  text-shadow: 3px 2px 5px #775536;
+  grid-column: 1 / 3;
+  grid-row: 5 / 6;
+}
+
+.defaults-btn{
+  grid-row: 6 / 7;
+}
+
+
+button{
+  font-family: 'Kameron', serif;
+  font-size: 25px;
+  padding: 8px;
+  width: auto;
+  font-weight: 600;
+  letter-spacing: 2px;
+  border: none;
+  margin-right: 5px;
+  border-radius: 7px;
+  background: linear-gradient(-120deg,#918479c7, #e0a887a2);
+} 
+
+.btn-container {
+  margin-top: 10px;
+  grid-row: 1;
+  grid-column: 1 / 3;
+}
+
+.chat-container{
+  border-radius: 10px;
+  background: linear-gradient(80deg,#6d5474, #3b0d3b);
+  grid-column: 1 / 2;
+  grid-row: 2 / 3;
+  margin: 0 0 10px 10px;
+  display: grid;
+  grid-template-rows: 50px 1fr 50px;
+}
+
+.chat-elements-container{
+  margin: 8px 0 0 5px;
+}
+
+.input-chat{
+  width: 80%;
+  border: none;
+  outline: none;
+  border-radius: 5px;
+  height: 30px;
+}
+
+.text-area-chat{
+  background-color: white;
+  height: 100%;
+  margin: 0 10px 0 5px
+}
+
+.btn-chat{
+  font-size: 15px;
+  letter-spacing: 1px;
+  margin-left: 5px;
+}
+
+.chat-header{
+  font-size: 25px;
+  text-shadow: 3px 2px 5px #775536;
+  letter-spacing: 3px;
+  font-weight: 600;
+  margin: 2px 0 0 5px;
+}
+
+::placeholder {
+  color: black;
+  letter-spacing: 1px;
+}
+
+.btn-bottom{
+  grid-column: 1 / 3;
+  grid-row: 6;
+}
+
+
+
+

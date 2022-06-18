@@ -6,10 +6,10 @@ const colors = {
     alpha: '#FFFFFF',
   },
   shades: {
-    secondary2: '#990099',
+    secondary2: '#990099'
   }
 }
 
 export {
-  colors,
+  colors
 }
