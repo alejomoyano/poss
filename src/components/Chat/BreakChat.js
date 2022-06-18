@@ -48,16 +48,8 @@ function BreakChat() {
     <div className="chat">
       <Grid item sm={12} direction="column">
         
-        {/* <Message /> */}
+        <Message /> 
 
-         {MessageList.map((mensaje) => (
-            <React.Fragment key={mensaje.id}>
-                <div>
-                    <span>{mensaje.user}:{mensaje.body}</span>
-
-                </div>
-            </React.Fragment>
-          ))}
          
 
         <div className="chat__input">

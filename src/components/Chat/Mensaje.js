@@ -16,11 +16,11 @@ import { getApp } from "firebase/app";
 import { useState } from "react";
 
 export default function Message() {
-  const { value: mensajes } = useSelector((state) => state.chat);
+  const { value: chatDoc } = useSelector((state) => state.chat);
 
   return (
     <>
-      {mensajes?.map((mensaje) => (
+      {chatDoc.mensajes?.map((mensaje) => (
         
           <div>
             <span>
