@@ -24,8 +24,7 @@ function BreakChat() {
   const [inputMensaje, setInputMensaje] = useState(""); //para setear mensajes
   const [MessageList, setMessageList] = useState([]); //array con la collecion de mensajes
   const dispatch = useDispatch();
-  const app = getApp();
-  const db = getFirestore(app);
+  
   //maneja el envio de mensajes guardandolos en MessageList
   const {user} = useSelector((state)=>state.chat.value);
   console.log(user)
@@ -46,7 +45,7 @@ function BreakChat() {
   }
 
   return (
-    <div className="chat">
+    <div className="chat" data-testid="break-chat">
       <Grid item sm={12} direction="column">
         
         <Message /> 
@@ -57,6 +56,7 @@ function BreakChat() {
           <form onSubmit={sendMessage}>
             <input
               type="text"
+              data-testid='send-message-button'
               disabled={false}
               value={inputMensaje}
               onChange={(e) => setInputMensaje(e.target.value)}

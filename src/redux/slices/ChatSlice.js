@@ -109,10 +109,7 @@ export const messagesSlice = createSlice({
       state.timerState = action.payload;
 
     },
-    setUsername: (state,action) =>{
-      state.user = action.payload
-      console.log(state.user)
-    }
+    
   },
   extraReducers: (builder) => {
     builder.addCase(createChat.fulfilled, (state, action) => {
@@ -174,12 +171,11 @@ const changeTimerState = (state) => {
 export { addMessage, 
   createChat,
   changeTimerState,
+  setMessages,
   chatUpdate,
   joinChat
    };
 
-export const {
-  setUsername,
-} = messagesSlice.actions;
+
 
 export default messagesSlice.reducer;

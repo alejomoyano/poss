@@ -23,7 +23,7 @@ import { Grid } from "@mui/material";
 function StudyChat() {
   
   return (
-    <div className="chat">
+    <div className="chat" data-testid="study-chat">
       <Grid item sm={12} direction="column">
         
          <Message /> 

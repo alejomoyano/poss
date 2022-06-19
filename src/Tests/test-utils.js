@@ -6,7 +6,7 @@ import { Provider } from "react-redux";
 import task from "../redux/slices/tasks";
 import room from "../redux/slices/room";
 import timer from "../redux/slices/timer";
-import ChatSlice from "../redux/slices/ChatSlice";
+import chat from "../redux/slices/ChatSlice";
 
 /**
  * Metodo custom de render para poder testear redux toolkit
@@ -16,7 +16,7 @@ function render(
   {
     preloadedState,
     store = configureStore({
-      reducer: { task, room, timer, ChatSlice },
+      reducer: { task, room, timer, chat },
       preloadedState: {
         task:{
             value:{
@@ -29,6 +29,18 @@ function render(
             },
             timerState:'break',
             error:""
+        },
+        ChatSlice:{
+          value:{
+            document:{},
+            mensajes:[{
+              body: "testmsg",
+              date: Date.now(),
+            }],
+            user: 'Ignacio',
+          },
+          timerState:'break',
+          error: ""
         }
       },
     }),
