@@ -5,7 +5,7 @@ import ItemStudy from "./ItemStudy";
 import { useSelector } from "react-redux";
 
 export default function Tasks() {
-  const { value: {tasks,timerState} } = useSelector((state) => state.task);
+  const { value:{tasks},timerState } = useSelector((state) => state.task);
   
   return (
     <>
