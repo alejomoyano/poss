@@ -15,7 +15,7 @@ export default function ItemBreak({ task }) {
   };
 
   return (
-    <TableRow key={task.content}>
+    <TableRow key={task.content} data-testid='task-item-break'>
       <TableCell>
         <Grid container direction="row" justifyContent="space-around">
           <Grid item sm={8}>
