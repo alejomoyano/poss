@@ -1,21 +1,17 @@
-@import url('https://fonts.googleapis.com/css2?family=Kameron&display=swap');
 
 body {
   margin: 0;
   height: 100vh;
-  font-family: 'Kameron', serif;
-  opacity: 1;
-  background-image:  radial-gradient(#d5a8d7 0.8500000000000001px, transparent 0.8500000000000001px), radial-gradient(#d5a8d7 0.8500000000000001px, #480e41 0.8500000000000001px);
-  background-size: 34px 34px;
-  background-position: 0 0,17px 17px;
+  background-color: #424547;
   overflow-y: hidden;
+  color: #f0f8ff;
 }
 
 .room-container {
   height: 90vh;
   border-radius: 10px;
-  background: linear-gradient(120deg,#6d5474, #3b0d3b);
-  box-shadow: 0px 0px 8px 12px #2e102e;
+  background-color: #830f83c4;
+  box-shadow: 0px 0px 5px 8px #1d001d;
   width: 85%;
   margin: auto;
   display: grid;
@@ -27,13 +23,13 @@ body {
 
 .task-container {
   grid-row: 1 / 3;
+  grid-column: 2;
   margin: 10px 10px 10px 0;
 }
 
 .timer-container{
   border-radius: 10px;
   display: grid;
-  background: linear-gradient(-120deg,#6d5474, #3b0d3b);
   text-align: center;
   align-items: center;
   margin: 10px 0 0 10px;
@@ -43,7 +39,7 @@ body {
 
 .general-cycle {
   font-size: 25px;
-  text-shadow: 3px 2px 5px #775536;
+  text-shadow: 4px 3px 5px #004225;
   letter-spacing: 3px;
   grid-row: 3 / 4;
   grid-column: 1 / 3;
@@ -51,7 +47,7 @@ body {
 
 .sub-cycle {
   font-size: 20px;
-  text-shadow: 3px 2px 5px #775536;
+  text-shadow: 4px 3px 5px #004225;
   letter-spacing: 3px;
   grid-row: 4 / 5;
   grid-column: 1 / 3;
@@ -59,7 +55,7 @@ body {
 
 .msg-text {
   font-size: 50px;
-  text-shadow: 3px 2px 5px #775536;
+  text-shadow: 4px 3px 5px #004225;
   letter-spacing: 3px;
   margin-bottom: 9px;
   grid-column: 1 / 3;
@@ -68,7 +64,7 @@ body {
 
 .timer {
   font-size: 100px;
-  text-shadow: 3px 2px 5px #775536;
+  text-shadow: 4px 3px 5px #004225;
   grid-column: 1 / 3;
   grid-row: 5 / 6;
 }
@@ -80,15 +76,18 @@ body {
 
 button{
   font-family: 'Kameron', serif;
+  color: #f0f8ff;
   font-size: 25px;
   padding: 8px;
   width: auto;
   font-weight: 600;
-  letter-spacing: 2px;
+  letter-spacing: 3px;
   border: none;
   margin-right: 5px;
   border-radius: 7px;
-  background: linear-gradient(-120deg,#918479c7, #e0a887a2);
+  text-shadow: 4px 3px 5px #004225;
+  background-color: #8d268dcc;
+  cursor: pointer;
 } 
 
 .btn-container {
@@ -99,7 +98,6 @@ button{
 
 .chat-container{
   border-radius: 10px;
-  background: linear-gradient(80deg,#6d5474, #3b0d3b);
   grid-column: 1 / 2;
   grid-row: 2 / 3;
   margin: 0 0 10px 10px;
@@ -112,17 +110,25 @@ button{
 }
 
 .input-chat{
-  width: 80%;
-  border: none;
-  outline: none;
+  width: 82%;
+  background-color: #D2CFD3;
+  border: 1px solid #9b019b;
+  box-shadow: 0px 0px 1px 1px #9b019b;
   border-radius: 5px;
+  outline: none;
   height: 30px;
 }
 
 .text-area-chat{
-  background-color: white;
+  color: black;
+  border-radius: 5px;
+  background-color: #D2CFD3;
   height: 100%;
   margin: 0 10px 0 5px
+}
+
+.text-area-chat>span {
+  padding: 10px;
 }
 
 .btn-chat{
@@ -133,22 +139,28 @@ button{
 
 .chat-header{
   font-size: 25px;
-  text-shadow: 3px 2px 5px #775536;
+  text-shadow: 4px 3px 5px #004225;
+  color: #f0f8ff;
   letter-spacing: 3px;
   font-weight: 600;
   margin: 2px 0 0 5px;
 }
 
-::placeholder {
+.input-chat::placeholder {
   color: black;
+  font-weight: 600;
+  padding: 5px;
   letter-spacing: 1px;
+}
+
+.input-chat:focus::placeholder{
+    color:transparent;
 }
 
 .btn-bottom{
   grid-column: 1 / 3;
   grid-row: 6;
 }
-
 
 
 

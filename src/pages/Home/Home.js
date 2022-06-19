@@ -10,14 +10,16 @@ const Home = () => {
 
     return (
         <Container>
-            <Title variant="h2">Tomato</Title>
+            <Title variant="h1" sx={{color: 'black'}}>Tomato</Title>
             <Button
                 onClick={() => navigate('/create')}
+                sx={{background: '#800080', fontSize: '23px'}}
             >
                 Create Room
             </Button>
             <Button
                 onClick={() => navigate('/join')}
+                sx={{background: '#800080', fontSize: '20px'}}
             >
                 Join Room
             </Button>

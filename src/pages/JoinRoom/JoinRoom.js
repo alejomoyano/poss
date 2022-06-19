@@ -45,7 +45,7 @@ const JoinRoom = () => {
 
     return (
         <Container>
-            <Title variant="h3">Join a Room</Title>
+            <Title variant="h3" sx={{color: 'black'}}>Join a Room</Title>
             <TextField 
                 label= 'username'
                 onChange={(event) => setUsername(event.target.value)}
@@ -59,6 +59,7 @@ const JoinRoom = () => {
             <Button
                 onClick={()=>{navigate('/room')}}
                 onClick={join}
+                sx={{background: '#800080', fontSize: '20px'}}
             >
                 Join Room
             </Button>

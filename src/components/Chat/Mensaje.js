@@ -19,7 +19,7 @@ export default function Message() {
   const { value: chatDoc } = useSelector((state) => state.chat);
 
   return (
-      <div className="text-area-chat">Ejemplo del campo del chat (Solo un div es)
+      <div className="text-area-chat">
       {chatDoc.mensajes?.map((mensaje) => (
         <Fragment key={mensaje.id}>
           <div>

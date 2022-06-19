@@ -16,11 +16,10 @@ function TaskBoard() {
   return (
     <div className="task-container">
     <TableContainer
-      sx={{height: '100%', borderRadius: '10px'}}
-      component={Paper}
+      sx={{height: '100%', borderRadius: '10px', background: '#D2CFD3', border: 'none'}}
     >
       <Table>
-        <TableHead sx={{background: '#cfbfd3'}}>
+        <TableHead sx={{border: 'none', outline: 'none'}}>
           <CreatorSelector/>
         </TableHead>
         <TableBody>
