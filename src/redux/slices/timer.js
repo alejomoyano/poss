@@ -1,14 +1,11 @@
-import { createSlice } from "@reduxjs/toolkit";
-import TaskBoardObserver from "../../Observer/TaskBoardObserver";
-import ChatObserver from "../../Observer/ChatObserver";
-import TimerSubject from "../../Observer/TimerSubject";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { taskUpdate } from "./tasks";
+// import TaskBoardObserver from "../../Observer/TaskBoardObserver";
+// import TimerSubject from "../../Observer/TimerSubject";
 
-// chat observer
+var subsList = [];
 
-const timerSubject = new TimerSubject()
-
-export const timerSlice = createSlice(
-  {
+export const timerSlice = createSlice({
   name: "timer",
   initialState: {
     minutes: 0,
@@ -42,7 +39,7 @@ export const timerSlice = createSlice(
     setLongBreak: (state, action) => {
       state.longBreak = action.payload;
     },
-    setMsg: (state, action) =>{
+    setMsg: (state, action) => {
       state.msg = action.payload;
     },
     incrementSubCycle: (state) => {
@@ -63,7 +60,7 @@ export const timerSlice = createSlice(
     },
     defaultLongBreak: (state) => {
       state.minutes = state.longBreak;
-      state.msg = 'Long Break';
+      state.msg = "Long Break";
       state.subCycle = 0;
       setStatus(3);
       //state.status = 3;
@@ -81,18 +78,26 @@ export const timerSlice = createSlice(
       state.minutes = state.studyTime;
       state.shortBreak = prompt("Short Break");
       state.longBreak = prompt("Long Break");
-    }
+    },
   },
 });
 
-export function setObservers (){
-  //const taskBoardObserver = new TaskBoardObserver();
-  //const chatObserver = new ChatObserver();
+const subscribe = (sub) => {
+  subsList.push(sub);
+};
+
+export const notify = createAsyncThunk("notify", (_, thunkAPI) => {
+  subsList.forEach((sub) => {
+    thunkAPI.dispatch(sub());
+  });
+});
+
+export const setObservers = () => {
+  console.log("suscribiendo al taskboard");
+  subscribe(taskUpdate);
   //instanciar chat
-  //timerSubject.subscribe(taskBoardObserver);
-  //timerSubject.subscribe(chatObserver);
-  //subscribe del chat 
-}
+  //subscribe del chat
+};
 
 export const {
   setStatus,
@@ -108,7 +113,7 @@ export const {
   defaultShortBreak,
   defaultLongBreak,
   defaultStudyTime,
-  setTimes
+  setTimes,
 } = timerSlice.actions;
 
 
