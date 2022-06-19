@@ -21,7 +21,6 @@ export const timerSlice = createSlice({
   reducers: {
     setStatus: (state, action) => {
       state.status = action.payload;
-      //timerSubject.notify();
     },
     setMinutes: (state, action) => {
       state.minutes = action.payload;

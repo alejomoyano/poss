@@ -46,7 +46,7 @@ const CreateRoom = () => {
         type="number"
       />
       <Button
-      sx={{background: '#800080', fontSize: '20px'}}
+      sx={{fontSize: '20px'}}
         onClick={() => {
           newRoom();
           navigate("/create");

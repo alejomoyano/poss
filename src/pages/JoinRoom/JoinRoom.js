@@ -59,7 +59,7 @@ const JoinRoom = () => {
             <Button
                 onClick={()=>{navigate('/room')}}
                 onClick={join}
-                sx={{background: '#800080', fontSize: '20px'}}
+                sx={{fontSize: '20px'}}
             >
                 Join Room
             </Button>
