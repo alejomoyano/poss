@@ -17,46 +17,85 @@ const initialState = {
   value: {
     document: {},
     mensajes: [],
-    timerState: "break"
   },
+  timerState: "break",
+  user:"Ignacio",
   error: null,
 };
 
-const createChat = createAsyncThunk("createChat", async (id, thunkAPI) => {
-  try {
-    const app = getApp();
-    const db = getFirestore(app);
+const createChat = createAsyncThunk(
+  "createChat", 
+  async (id, thunkAPI) => {
+    try {
+      const app = getApp();
+      const db = getFirestore(app);
+      
+      // creamos el documento
+      const document = doc(db, "chat", id);
+      await setDoc(document, {
+        mensajes: [
+          {
+            content: "Add messages",
+            date: Date.now(),
+          },
+        ],
+        },{user:null});
 
-    // creamos el documento
-    const document = doc(db, "chat", id);
-    await setDoc(document, {
-      mensajes: [
-        {
-          content: "Add messages",
-          date: Date.now(),
+      // nos suscribimos al documento
+      onSnapshot(
+        document,
+        (snapshot) => {
+          const chat = snapshot.data().mensajes;
+          
+          return thunkAPI.dispatch(
+            setMessages({ document: document, mensajes: chat })
+          );
         },
-      ],
-    });
-
-    // nos suscribimos al documento
-    onSnapshot(
-      document,
-      (snapshot) => {
-        const chat = snapshot.data().mensajes;
-        
-        return thunkAPI.dispatch(
-          setMessages({ document: document, mensajes: chat })
-        );
-      },
-      (error) => {
-        return thunkAPI.rejectWithValue({ error });
-      }
-    );
-    return thunkAPI.fulfillWithValue({ document });
-  } catch (error) {
-    return thunkAPI.rejectWithValue({ error });
-  }
+        (error) => {
+          return thunkAPI.rejectWithValue({ error });
+        }
+      );
+      return thunkAPI.fulfillWithValue({ document });
+    } catch (error) {
+      return thunkAPI.rejectWithValue({ error });
+    }
 });
+
+const joinChat = createAsyncThunk(
+  "joinChat",
+  async (id, thunkAPI) => {
+    try {
+      const app = getApp();
+      const db = getFirestore(app);
+
+      // creamos el documento
+      const document = doc(db, "chat", id);
+      //await getDoc(document);
+
+      // nos suscribimos al documento
+      onSnapshot(
+        document,
+        (snapshot) => {
+          const chat = snapshot.data().mensajes;
+
+          return thunkAPI.dispatch(
+            setMessages({
+              document: document,
+              mensajes: chat,
+              timerState: "break",
+            })
+          );
+        },
+        (error) => {
+          return thunkAPI.rejectWithValue({ error });
+        }
+      );
+      return thunkAPI.fulfillWithValue({ document });
+    } catch (error) {
+      return thunkAPI.rejectWithValue({ error });
+    }
+  }
+);
 
 export const messagesSlice = createSlice({
   name: "mensajes",
@@ -68,6 +107,9 @@ export const messagesSlice = createSlice({
     setState: (state,action) => {
       state.value.timerState = action.payload;
 
+    },
+    setUsername: (state,action) =>{
+      state.value.username = action.payload
     }
   },
   extraReducers: (builder) => {
@@ -97,6 +139,31 @@ const addMessage = createAsyncThunk("addMessage", async (message, thunkAPI) => {
   }
 });
 
+const chatUpdate = createAsyncThunk("taskUpdate", (_, thunkAPI) => {
+  console.log("estamos en el update");
+  const {
+    chat: {
+      value: { timerState },
+    },
+    timer: { status },
+  } = thunkAPI.getState()
+  // console.log(timerState)
+  // console.log(status)
+
+  if (status === 4) {
+    // si esta en study
+    console.log("cambiando a study");
+    thunkAPI.dispatch(setState("study"));
+  } else if (timerState === "study") {
+    console.log("cambiando a break");
+
+    // para entrar aca debe haber estado antes en study
+    // porque puede haber estado en break antes y no es
+    // necesario cambiar de estado de nuevo
+    thunkAPI.dispatch(setState("break"));
+  }
+});
+
 const changeTimerState = (state) => {
   const dispatch = useDispatch();
   dispatch(changeTimerState(state));
@@ -104,6 +171,13 @@ const changeTimerState = (state) => {
 
 export { addMessage, 
   createChat,
-  changeTimerState };
+  changeTimerState,
+  chatUpdate,
+  joinChat
+   };
+
+export const {
+  setUsername,
+} = messagesSlice.actions;
 
 export default messagesSlice.reducer;

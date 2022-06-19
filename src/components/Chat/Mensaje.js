@@ -24,7 +24,7 @@ export default function Message() {
         
           <div>
             <span>
-              {mensaje.user}:{mensaje.body}
+              {mensaje.username}:{mensaje.body}
             </span>
           </div>
         
