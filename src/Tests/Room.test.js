@@ -11,16 +11,6 @@ import JoinRoom from "../pages/JoinRoom/JoinRoom";
 // Home test
 describe("Home test", () => {
 
-//   let history;
-//   // componente
-//   let item;
-
-//   let button = jest.fn()
-
-//   beforeEach(() => {
-   
-
-//   });
 
   // estando en break debe reenderizar el brek item
   test("it renders the create room button", () => {
