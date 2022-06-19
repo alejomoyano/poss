@@ -11,7 +11,6 @@ import {
   arrayRemove,
 } from "firebase/firestore";
 import Sorting from "../../Strategy/Sorting";
-import { useDispatch } from "react-redux";
 // objeto que nos permite ejecutar el tipo de sorting que necesitamos
 const sortSelector = new Sorting();
 
@@ -19,8 +18,8 @@ const initialState = {
   value: {
     document: {},
     tasks: [],
-    timerState: "break",
   },
+  timerState: "break",
   error: null,
 };
 
@@ -46,6 +45,8 @@ const createTaskBoard = createAsyncThunk(
           },
         ],
       });
+
+      thunkAPI.dispatch(setState("break"));
 
       // nos suscribimos al documento
       onSnapshot(
@@ -78,7 +79,7 @@ const joinTaskBoard = createAsyncThunk(
       // creamos el documento
       const document = doc(db, "tasksboards", id);
       //await getDoc(document);
-
+      thunkAPI.dispatch(setState("break"));
       // nos suscribimos al documento
       onSnapshot(
         document,
@@ -89,7 +90,6 @@ const joinTaskBoard = createAsyncThunk(
             setTasks({
               document: document,
               tasks: taskboard,
-              timerState: "break",
             })
           );
         },
@@ -182,7 +182,7 @@ export const tasksSlice = createSlice({
     },
     setState: (state, action) => {
       console.log(action.payload);
-      state.value.timerState = action.payload;
+      state.timerState = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -198,26 +198,20 @@ export const tasksSlice = createSlice({
   },
 });
 
-
 // funcion que recibe la notificacion del subject y reacciona cambiando
 // el estado del taskboard
 const taskUpdate = createAsyncThunk("taskUpdate", (_, thunkAPI) => {
-  console.log("estamos en el update");
   const {
-    task: {
-      value: { timerState },
-    },
+    task: { timerState },
     timer: { status },
-  } = thunkAPI.getState()
+  } = thunkAPI.getState();
   // console.log(timerState)
   // console.log(status)
 
   if (status === 4) {
     // si esta en study
-    console.log("cambiando a study");
     thunkAPI.dispatch(setState("study"));
   } else if (timerState === "study") {
-    console.log("cambiando a break");
 
     // para entrar aca debe haber estado antes en study
     // porque puede haber estado en break antes y no es
