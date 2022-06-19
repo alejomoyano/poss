@@ -27,7 +27,7 @@ function BreakChat() {
   const app = getApp();
   const db = getFirestore(app);
   //maneja el envio de mensajes guardandolos en MessageList
-  const {user} = useSelector((state)=>state.chat);
+  const {user} = useSelector((state)=>state.chat.value);
   console.log(user)
   function sendMessage(e) {
     e.preventDefault();

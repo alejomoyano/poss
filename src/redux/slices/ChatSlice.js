@@ -17,21 +17,21 @@ const initialState = {
   value: {
     document: {},
     mensajes: [],
+    user:null,
   },
   timerState: "break",
-  user:"Ignacio",
+  
   error: null,
 };
 
 const createChat = createAsyncThunk(
   "createChat", 
-  async (id, thunkAPI) => {
+  async (arg, thunkAPI) => {
     try {
       const app = getApp();
       const db = getFirestore(app);
-      
       // creamos el documento
-      const document = doc(db, "chat", id);
+      const document = doc(db, "chat", arg.id);
       await setDoc(document, {
         mensajes: [
           {
@@ -39,7 +39,8 @@ const createChat = createAsyncThunk(
             date: Date.now(),
           },
         ],
-        },{user:null});
+
+        });
 
       // nos suscribimos al documento
       onSnapshot(
@@ -48,7 +49,7 @@ const createChat = createAsyncThunk(
           const chat = snapshot.data().mensajes;
           
           return thunkAPI.dispatch(
-            setMessages({ document: document, mensajes: chat })
+            setMessages({ document: document, mensajes: chat, user:arg.username })
           );
         },
         (error) => {
@@ -63,13 +64,13 @@ const createChat = createAsyncThunk(
 
 const joinChat = createAsyncThunk(
   "joinChat",
-  async (id, thunkAPI) => {
+  async (arg, thunkAPI) => {
     try {
       const app = getApp();
       const db = getFirestore(app);
 
       // creamos el documento
-      const document = doc(db, "chat", id);
+      const document = doc(db, "chat", arg.id);
       //await getDoc(document);
 
       // nos suscribimos al documento
@@ -82,7 +83,7 @@ const joinChat = createAsyncThunk(
             setMessages({
               document: document,
               mensajes: chat,
-              timerState: "break",
+              user: arg.username
             })
           );
         },
@@ -105,11 +106,12 @@ export const messagesSlice = createSlice({
       state.value = action.payload;
     },
     setState: (state,action) => {
-      state.value.timerState = action.payload;
+      state.timerState = action.payload;
 
     },
     setUsername: (state,action) =>{
-      state.value.username = action.payload
+      state.user = action.payload
+      console.log(state.user)
     }
   },
   extraReducers: (builder) => {
