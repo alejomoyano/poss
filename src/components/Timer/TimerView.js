@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setObservers, notify } from "../../redux/slices/timer";
 
 export const TimerView = () => {
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const { msg, minutes, seconds, status, subCycle, generalCycle } = useSelector(
     (state) => state.timer
   );

@@ -25,6 +25,7 @@ export default function Creator() {
         <Grid container spacing={1}>
           <Grid item xs={8}>
             <TextField
+              className="task-field-creator"
               name="task-field-creator"
               variant="outlined"
               size="small"

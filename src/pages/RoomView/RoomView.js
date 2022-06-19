@@ -18,7 +18,7 @@ const RoomView = () => {
 
       <ChatScreen />
 
-      <TaskBoard />
+      <TaskBoard /> 
     </div>
     // </Container>
   );

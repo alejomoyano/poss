@@ -16,7 +16,7 @@ function TaskBoard() {
   return (
     <div className="task-container">
     <TableContainer
-      sx={{height: '100%', borderRadius: '10px', background: '#D2CFD3', border: 'none'}}
+      sx={{height: '100%', borderRadius: '10px', background: '#fff', border: 'none'}}
     >
       <Table>
         <TableHead sx={{border: 'none', outline: 'none'}}>

@@ -1,8 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap');
+
+*{
+  font-family: 'Montserrat', sans-serif;
+}
 
 body {
   margin: 0;
   height: 100vh;
-  background-color: #424547;
+  background-color: #D15555;
   overflow-y: hidden;
   color: #f0f8ff;
 }
@@ -10,21 +15,20 @@ body {
 .room-container {
   height: 90vh;
   border-radius: 10px;
-  background-color: #830f83c4;
-  box-shadow: 0px 0px 5px 8px #1d001d;
-  width: 85%;
+  background-color: #e68686;
+  width: 90%;
   margin: auto;
   display: grid;
   margin-top: 3rem;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: max-content;
+  grid-template-rows: 1fr 1fr;
   gap: 10px;
 }
 
 .task-container {
   grid-row: 1 / 3;
   grid-column: 2;
-  margin: 10px 10px 10px 0;
+  margin: 20px 20px 20px 0;
 }
 
 .timer-container{
@@ -39,7 +43,6 @@ body {
 
 .general-cycle {
   font-size: 25px;
-  text-shadow: 4px 3px 5px #004225;
   letter-spacing: 3px;
   grid-row: 3 / 4;
   grid-column: 1 / 3;
@@ -47,7 +50,6 @@ body {
 
 .sub-cycle {
   font-size: 20px;
-  text-shadow: 4px 3px 5px #004225;
   letter-spacing: 3px;
   grid-row: 4 / 5;
   grid-column: 1 / 3;
@@ -55,7 +57,7 @@ body {
 
 .msg-text {
   font-size: 50px;
-  text-shadow: 4px 3px 5px #004225;
+  font-weight: 600;
   letter-spacing: 3px;
   margin-bottom: 9px;
   grid-column: 1 / 3;
@@ -63,8 +65,8 @@ body {
 }
 
 .timer {
-  font-size: 100px;
-  text-shadow: 4px 3px 5px #004225;
+  font-size: 135px;
+  font-weight: 600;
   grid-column: 1 / 3;
   grid-row: 5 / 6;
 }
@@ -75,8 +77,7 @@ body {
 
 
 button{
-  font-family: 'Kameron', serif;
-  color: #f0f8ff;
+  color: #d15555;
   font-size: 25px;
   padding: 8px;
   width: auto;
@@ -85,8 +86,7 @@ button{
   border: none;
   margin-right: 5px;
   border-radius: 7px;
-  text-shadow: 4px 3px 5px #004225;
-  background-color: #8d268dcc;
+  background-color: #ebcfcf;
   cursor: pointer;
 } 
 
@@ -102,7 +102,7 @@ button{
   grid-row: 2 / 3;
   margin: 0 0 10px 10px;
   display: grid;
-  grid-template-rows: 50px 1fr 50px;
+  grid-template-rows: 40px 1fr 50px;
 }
 
 .chat-elements-container{
@@ -111,9 +111,7 @@ button{
 
 .input-chat{
   width: 82%;
-  background-color: #D2CFD3;
-  border: 1px solid #9b019b;
-  box-shadow: 0px 0px 1px 1px #9b019b;
+  border: none;
   border-radius: 5px;
   outline: none;
   height: 30px;
@@ -122,25 +120,25 @@ button{
 .text-area-chat{
   color: black;
   border-radius: 5px;
-  background-color: #D2CFD3;
-  height: 100%;
-  margin: 0 10px 0 5px
+  background-color: #fff;
+  overflow-y: auto;
+  height: 270px;
+  margin: 0 10px 0 5px;
 }
 
-.text-area-chat>span {
-  padding: 10px;
+.msg-container>span {
+  padding: 5px;
 }
 
 .btn-chat{
-  font-size: 15px;
+  font-size: 13px;
   letter-spacing: 1px;
   margin-left: 5px;
 }
 
 .chat-header{
   font-size: 25px;
-  text-shadow: 4px 3px 5px #004225;
-  color: #f0f8ff;
+  color: #fff;
   letter-spacing: 3px;
   font-weight: 600;
   margin: 2px 0 0 5px;
@@ -153,13 +151,22 @@ button{
   letter-spacing: 1px;
 }
 
-.input-chat:focus::placeholder{
-    color:transparent;
-}
 
 .btn-bottom{
   grid-column: 1 / 3;
   grid-row: 6;
+}
+
+::-webkit-scrollbar {
+  width: 12px;
+}
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
 }
 
 

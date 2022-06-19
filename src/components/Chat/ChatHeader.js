@@ -9,14 +9,3 @@ function ChatHeader(){
 }
 
 export default ChatHeader;
-
-/* <div className="chatHeader">
-
-<div className="chat-header">
-
-</div>
-
-<div className="chatHeaderRight">
-    {/* Poner iconos */
-
-

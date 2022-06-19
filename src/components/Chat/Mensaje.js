@@ -1,4 +1,4 @@
-import React, { forwardRef } from "react";
+import React, { Fragment } from "react";
 import { useSelector } from "react-redux";
 import {
   getFirestore,
@@ -22,7 +22,7 @@ export default function Message() {
       <div className="text-area-chat">
       {chatDoc.mensajes?.map((mensaje) => (
         <Fragment key={mensaje.id}>
-          <div>
+          <div className="msg-container">
             <span>
               {mensaje.user}:{mensaje.body}
             </span>

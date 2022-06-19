@@ -13,7 +13,7 @@ export default function SortSelector() {
     setSort(event.target.value);
   };
   return (
-    <FormControl sx={{ width: 100 }} size="small">
+    <FormControl sx={{ width: 100}} size="small">
       <InputLabel>Sort</InputLabel>
       <Select value={sort} onChange={handleChange} label="sort">
         <MenuItem value={"increase"}>Increase Time</MenuItem>
