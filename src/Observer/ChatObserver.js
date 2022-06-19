@@ -1,9 +1,9 @@
 import { useSelector } from "react-redux";
-import { changeTimerState } from "../redux/slices/tasks";
+import { changeTimerState } from "../redux/slices/ChatSlice";
 
-class TaskBoardObserver {
+class ChatObserver {
   /**
-   * Metodo para avisar al observador TaskBoard que hubo un cambio de estado en la aplicacion
+   * Metodo para avisar al observador Chat que hubo un cambio de estado en la aplicacion
    */
   update() {
     // vemos en que estado esta el timer
@@ -18,4 +18,4 @@ class TaskBoardObserver {
   }
 }
 
-export default TaskBoardObserver;
+export default ChatObserver;

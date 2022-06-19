@@ -11,17 +11,17 @@ import {
   defaultShortBreak,
   defaultLongBreak,
   defaultStudyTime,
-  setTimes
+  setTimes,
+  notify,
 } from "../../redux/slices/timer";
 
 export const TimerController = () => {
   const dispatch = useDispatch();
-  const {
-    minutes,
-    seconds,
-    status,
-    subCycle
-  } = useSelector((state) => state.timer);
+  const { minutes, seconds, status, subCycle } = useSelector(
+    (state) => state.timer
+  );
+
+
 
   //Variables necesarias para actualizar el timer en tiempo real
 
@@ -42,6 +42,7 @@ export const TimerController = () => {
       alert("Configure the timer");
     }
     dispatch(setStatus(4));
+    // debemos notificar a los
     runStudy();
     setInterv(setInterval(runStudy, 5));
   };
@@ -115,15 +116,15 @@ export const TimerController = () => {
   };
 
   const resume = () => {
-    if(status === 4){
+    if (status === 4) {
       clearInterval(interv);
       dispatch(setStatus(1));
       startStudy();
-    } else if (status === 6){
+    } else if (status === 6) {
       clearInterval(interv);
       dispatch(setStatus(2));
       startShortBreak();
-    } else if (status === 7){
+    } else if (status === 7) {
       clearInterval(interv);
       dispatch(setStatus(3));
       startLongBreak();
@@ -143,20 +144,20 @@ export const TimerController = () => {
 
   const goToShortBreak = () => {
     clearInterval(interv);
-    if(subCycle === 4){
+    if (subCycle === 4) {
       dispatch(resetSubCycles());
     }
     dispatch(defaultShortBreak());
-  }
+  };
 
   const goToLongBreak = () => {
     clearInterval(interv);
     dispatch(defaultLongBreak());
-  }
+  };
   const goToStudyTime = () => {
     clearInterval(interv);
     dispatch(defaultStudyTime());
-  }
+  };
 
   return (
     <Fragment>
@@ -178,7 +179,7 @@ export const TimerController = () => {
           ""
         )}
       </Fragment>
-      {(status === 4 || status === 6 || status === 7) ? (
+      {status === 4 || status === 6 || status === 7 ? (
         <Fragment>
           <button className="defaults-btn btn-stop" onClick={stop}>Stop</button>
           <button className="defaults-btn btn-resume" onClick={resume}>Resume</button>
