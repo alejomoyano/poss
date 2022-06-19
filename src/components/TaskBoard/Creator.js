@@ -28,7 +28,7 @@ export default function Creator() {
               name="task-field-creator"
               variant="outlined"
               size="small"
-              placeholder="Ingrese el contenido de la tarea"
+              placeholder="Tasks"
               onChange={(event) => {
                 setContent(event.target.value);
               }}

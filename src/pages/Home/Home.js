@@ -12,11 +12,13 @@ const Home = () => {
         <Container>
             <Title variant="h2">Tomato</Title>
             <Button
+                data-testid="create-button"
                 onClick={() => navigate('/create')}
             >
                 Create Room
             </Button>
             <Button
+                data-testid="join-button"
                 onClick={() => navigate('/join')}
             >
                 Join Room

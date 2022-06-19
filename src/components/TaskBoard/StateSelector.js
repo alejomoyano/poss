@@ -1,24 +1,24 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ToggleButtonGroup, ToggleButton } from "@mui/material";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { changeState } from "../../redux/slices/tasks";
 
 export default function StateSelector({ taskId }) {
   const dispatch = useDispatch();
-  // let value = 'active';
   const [state, setState] = useState("active");
-  // const handleChangeState = (s) => {
-  //   setState(s);
-  //   console.log(state);
-  //   console.log(taskId);
-  //   const pack = {
-  //     taskId,
-  //     state,
-  //   };
-  //   dispatch(changeState(pack));
-  // };
 
-  // const dispatch = useDispatch();
+  const {
+    value:{tasks}, timerState 
+ } = useSelector((state) => state.task);
+
+ useEffect(() => {
+  tasks.forEach((task) => {
+    if(task.date === taskId){
+      setState(task.state)
+    }
+  })
+},[timerState])
+
 
   const stateSuspended = () => {
     setState("suspended");
