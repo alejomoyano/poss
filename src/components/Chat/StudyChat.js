@@ -1,22 +1,5 @@
-import React, { useState, useEffect, useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { FirebaseError, getApp } from "firebase/app";
-import {
-  getFirestore,
-  collection,
-  onSnapshot,
-  deleteField,
-  updateDoc,
-  doc,
-  setDoc,
-  getDoc,
-  arrayUnion,
-  arrayRemove,
-} from "firebase/firestore";
+import React from "react";
 import Message from "./Mensaje";
-
-
-import { Grid } from "@mui/material";
 import ChatHeader from "./ChatHeader";
 
 function StudyChat() {

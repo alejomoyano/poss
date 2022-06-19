@@ -1,18 +1,7 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { FirebaseError, getApp } from "firebase/app";
-import {
-  getFirestore,
-  collection,
-  onSnapshot,
-  deleteField,
-  updateDoc,
-  doc,
-  setDoc,
-  getDoc,
-  arrayUnion,
-  arrayRemove,
-} from "firebase/firestore";
+import { getApp } from "firebase/app";
+import { getFirestore } from "firebase/firestore";
 import Message from "./Mensaje";
 import { addMessage } from "../../redux/slices/ChatSlice";
 
@@ -44,7 +33,7 @@ function BreakChat() {
 
   return (
     <div className="chat-container">
-      <ChatHeader/>
+      <ChatHeader />
       <Message />
 
       <div className="chat-elements-container">

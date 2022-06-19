@@ -12,7 +12,6 @@ import {
   defaultLongBreak,
   defaultStudyTime,
   setTimes,
-  notify,
 } from "../../redux/slices/timer";
 
 export const TimerController = () => {
@@ -20,8 +19,6 @@ export const TimerController = () => {
   const { minutes, seconds, status, subCycle } = useSelector(
     (state) => state.timer
   );
-
-
 
   //Variables necesarias para actualizar el timer en tiempo real
 
@@ -44,7 +41,7 @@ export const TimerController = () => {
     dispatch(setStatus(4));
     // debemos notificar a los
     runStudy();
-    setInterv(setInterval(runStudy, 5));
+    setInterv(setInterval(runStudy, 1000));
   };
 
   const runStudy = () => {
@@ -64,7 +61,7 @@ export const TimerController = () => {
     clearInterval(interv);
     dispatch(setStatus(6));
     runShortBreak();
-    setInterv(setInterval(runShortBreak, 5));
+    setInterv(setInterval(runShortBreak, 1000));
   };
 
   const runShortBreak = () => {
@@ -81,7 +78,7 @@ export const TimerController = () => {
     clearInterval(interv);
     dispatch(setStatus(7));
     runLongBreak();
-    setInterv(setInterval(runLongBreak, 5));
+    setInterv(setInterval(runLongBreak, 1000));
   };
 
   const runLongBreak = () => {
@@ -201,12 +198,3 @@ export const TimerController = () => {
   );
 };
 
-/*
-Estados: 
-0- Configurar el timer
-1- Start study time
-2- Start short break
-3- Start long break
-4, 6, 7 - Stop, Resume
-5- Volver, Config
-*/

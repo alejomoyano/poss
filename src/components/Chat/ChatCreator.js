@@ -1,18 +1,6 @@
-import React, { useState, useEffect, useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { FirebaseError, getApp } from "firebase/app";
-import {
-  getFirestore,
-  collection,
-  onSnapshot,
-  deleteField,
-  updateDoc,
-  doc,
-  setDoc,
-  getDoc,
-  arrayUnion,
-  arrayRemove,
-} from "firebase/firestore";
+import React, { useState, useEffect} from "react";
+import { getApp } from "firebase/app";
+import { getFirestore } from "firebase/firestore";
 
 function ChatCreator() {
   const app = getApp();
