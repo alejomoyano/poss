@@ -14,7 +14,11 @@ import {
 } from "firebase/firestore";
 
 const initialState = {
-  value: {},
+  value: {
+    document: {},
+    mensajes: [],
+    timerState: "break"
+  },
   error: null,
 };
 
@@ -39,7 +43,7 @@ const createChat = createAsyncThunk("createChat", async (id, thunkAPI) => {
       document,
       (snapshot) => {
         const chat = snapshot.data().mensajes;
-        console.log(chat);
+        
         return thunkAPI.dispatch(
           setMessages({ document: document, mensajes: chat })
         );
@@ -61,6 +65,10 @@ export const messagesSlice = createSlice({
     setMessages: (state, action) => {
       state.value = action.payload;
     },
+    setState: (state,action) => {
+      state.value.timerState = action.payload;
+
+    }
   },
   extraReducers: (builder) => {
     builder.addCase(createChat.fulfilled, (state, action) => {
@@ -74,7 +82,7 @@ export const messagesSlice = createSlice({
   },
 });
 
-const { setMensajes } = messagesSlice.actions;
+const { setMessages } = messagesSlice.actions;
 
 const addMessage = createAsyncThunk("addMessage", async (message, thunkAPI) => {
   try {
@@ -89,6 +97,13 @@ const addMessage = createAsyncThunk("addMessage", async (message, thunkAPI) => {
   }
 });
 
-export { addMessage, createChat };
+const changeTimerState = (state) => {
+  const dispatch = useDispatch();
+  dispatch(changeTimerState(state));
+}
+
+export { addMessage, 
+  createChat,
+  changeTimerState };
 
 export default messagesSlice.reducer;

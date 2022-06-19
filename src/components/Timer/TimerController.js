@@ -203,6 +203,6 @@ Estados:
 1- Start study time
 2- Start short break
 3- Start long break
-4- Stop, Resume
+4, 6, 7 - Stop, Resume
 5- Volver, Config
 */

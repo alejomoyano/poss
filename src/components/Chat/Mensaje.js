@@ -21,13 +21,13 @@ export default function Message() {
   return (
     <>
       {chatDoc.mensajes?.map((mensaje) => (
-        <React.Fragment key={mensaje.id}>
+        
           <div>
             <span>
               {mensaje.user}:{mensaje.body}
             </span>
           </div>
-        </React.Fragment>
+        
       ))}
     </>
   );

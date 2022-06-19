@@ -1,4 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
+import TaskBoardObserver from "../../Observer/TaskBoardObserver";
+import ChatObserver from "../../Observer/ChatObserver";
+import TimerSubject from "../../Observer/TimerSubject";
+
+// chat observer
+
+const timerSubject = new TimerSubject()
 
 export const timerSlice = createSlice(
   {
@@ -17,6 +24,7 @@ export const timerSlice = createSlice(
   reducers: {
     setStatus: (state, action) => {
       state.status = action.payload;
+      timerSubject.notify();
     },
     setMinutes: (state, action) => {
       state.minutes = action.payload;
@@ -49,20 +57,23 @@ export const timerSlice = createSlice(
     defaultShortBreak: (state) => {
       state.minutes = state.shortBreak;
       state.msg = 'Short Break';
-      state.status = 2;
+      setStatus(2);
+      //state.status = 2;
       state.seconds = 0;
     },
     defaultLongBreak: (state) => {
       state.minutes = state.longBreak;
       state.msg = 'Long Break';
       state.subCycle = 0;
-      state.status = 3;
+      setStatus(3);
+      //state.status = 3;
       state.seconds = 0;
     },
     defaultStudyTime: (state) => {
       state.minutes = state.studyTime;
       state.msg = 'Study Time';
-      state.status = 1;
+      setStatus(1);
+      //state.status = 1;
       state.seconds = 0;
     },
     setTimes: (state) => {
@@ -73,6 +84,15 @@ export const timerSlice = createSlice(
     }
   },
 });
+
+export function setObservers (){
+  //const taskBoardObserver = new TaskBoardObserver();
+  //const chatObserver = new ChatObserver();
+  //instanciar chat
+  //timerSubject.subscribe(taskBoardObserver);
+  //timerSubject.subscribe(chatObserver);
+  //subscribe del chat 
+}
 
 export const {
   setStatus,
@@ -90,5 +110,6 @@ export const {
   defaultStudyTime,
   setTimes
 } = timerSlice.actions;
+
 
 export default timerSlice.reducer;
