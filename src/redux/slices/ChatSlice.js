@@ -119,7 +119,7 @@ export const messagesSlice = createSlice({
   },
 });
 
-const { setMessages } = messagesSlice.actions;
+const { setMessages, setState } = messagesSlice.actions;
 
 const addMessage = createAsyncThunk("addMessage", async (message, thunkAPI) => {
   try {
