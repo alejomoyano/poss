@@ -5,16 +5,14 @@ export default function Message() {
   const { value: chatDoc } = useSelector((state) => state.chat);
 
   return (
-      <div className="text-area-chat">
+    <>
       {chatDoc.mensajes?.map((mensaje) => (
-        <Fragment key={mensaje.id}>
-          <div className="msg-container">
-            <span>
-            {mensaje.user}: {mensaje.body}
-            </span>
-          </div>
-        </Fragment>
+        <div data-testid="body">
+          <span>
+            {mensaje.username}:{mensaje.body}
+          </span>
+        </div>
       ))}
-      </div>
+    </>
   );
 }

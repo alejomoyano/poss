@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300&display=swap');
 *{
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Nunito', sans-serif;
 }
 
 body {
@@ -77,7 +77,7 @@ body {
 
 
 button{
-  color: #d15555;
+  color: #fcfcfc;
   font-size: 25px;
   padding: 8px;
   width: auto;
@@ -86,7 +86,7 @@ button{
   border: none;
   margin-right: 5px;
   border-radius: 7px;
-  background-color: #ebcfcf;
+  background-color: #D15555;
   cursor: pointer;
 } 
 
