@@ -93,7 +93,7 @@ export const timerSlice = createSlice({
       input = parseInt(prompt("Long Break"));
       while(isNaN(input) || input > 60 || input < 1){
         alert('Only times between 1 and 60');
-        input = parseInt(prompt("Short Break"));
+        input = parseInt(prompt("Long Break"));
       }
       state.longBreak = input;
 
