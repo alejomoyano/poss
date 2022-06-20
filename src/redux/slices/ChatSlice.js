@@ -119,7 +119,7 @@ export const messagesSlice = createSlice({
   },
 });
 
-const { setMessages } = messagesSlice.actions;
+const { setMessages, setState } = messagesSlice.actions;
 
 const addMessage = createAsyncThunk("addMessage", async (message, thunkAPI) => {
   try {
@@ -142,8 +142,8 @@ const chatUpdate = createAsyncThunk("taskUpdate", (_, thunkAPI) => {
       timer: {status},
     
   } = thunkAPI.getState()
-  // console.log(timerState)
-  // console.log(status)
+   console.log(timerState)
+   console.log(status)
 
   if (status === 4) {
     // si esta en study
@@ -159,14 +159,10 @@ const chatUpdate = createAsyncThunk("taskUpdate", (_, thunkAPI) => {
   }
 });
 
-const changeTimerState = (state) => {
-  const dispatch = useDispatch();
-  dispatch(changeTimerState(state));
-}
+
 
 export { addMessage, 
   createChat,
-  changeTimerState,
   setMessages,
   chatUpdate,
   joinChat
