@@ -1,17 +1,17 @@
 import BaseDocument from "./BaseDocument";
 
 class Room extends BaseDocument {
-    get admin() {
-        return this.data.admin;
-    }
+  get admin() {
+    return this.data.admin;
+  }
 
-    get users() {
-        return this.data.users;
-    }
+  get users() {
+    return this.data.users;
+  }
 
-    get maxUsers() {
-        return this.data.maxUsers
-    }
+  get maxUsers() {
+    return this.data.maxUsers;
+  }
 
     get name() {
         // The room name is the document id
@@ -49,6 +49,7 @@ class Room extends BaseDocument {
         });
         return roomDoc;
     }
-};
+  }
+    
 
 export default Room;

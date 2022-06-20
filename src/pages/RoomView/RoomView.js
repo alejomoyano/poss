@@ -1,11 +1,26 @@
 import React from "react";
-import { observer } from 'mobx-react';
+import { observer } from "mobx-react";
 
-import { Container } from './styles';
+import { Grid, Paper } from "@mui/material";
+
+// import { Container } from "./styles";
+import TaskBoard from "../../components/TaskBoard/TaskBoard";
+import ChatScreen from "../../components/Chat/Chat";
+import { TimerView } from "../../components/Timer/TimerView";
+import Chat from "../../components/Chat/Chat";
 
 const RoomView = () => {
   return (
-    <Container></Container>
+    // <Container>
+
+    <div className="room-container">
+      <TimerView />
+
+      <ChatScreen />
+
+      <TaskBoard /> 
+    </div>
+    // </Container>
   );
 };
 

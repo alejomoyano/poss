@@ -17,6 +17,7 @@ const Container = styled.div`
 const ErrorMessage = styled.div`
     font-family: 'Roboto', sans-serif;
     text-align: center;
+    color: black;
 `;
 
 const Title = styled(Typography)`
