@@ -14,19 +14,20 @@ import CreatorSelector from "./CreatorSelector";
 function TaskBoard() {
 
   return (
+    <div className="task-container">
     <TableContainer
-      sx={{ minWidth: 700, maxHeight: 840, maxWidth: "100%" }}
-      component={Paper}
+      sx={{height: '100%', borderRadius: '10px', background: '#fff', border: 'none'}}
     >
       <Table>
-        <TableHead>
-          <CreatorSelector />
+        <TableHead sx={{border: 'none', outline: 'none'}}>
+          <CreatorSelector/>
         </TableHead>
         <TableBody>
           <Tasks />
         </TableBody>
       </Table>
     </TableContainer>
+    </div>
   );
 }
 

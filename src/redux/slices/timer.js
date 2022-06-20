@@ -22,7 +22,6 @@ export const timerSlice = createSlice({
   reducers: {
     setStatus: (state, action) => {
       state.status = action.payload;
-      timerSubject.notify();
     },
     setMinutes: (state, action) => {
       state.minutes = action.payload;
@@ -55,23 +54,20 @@ export const timerSlice = createSlice({
     defaultShortBreak: (state) => {
       state.minutes = state.shortBreak;
       state.msg = 'Short Break';
-      setStatus(2);
-      //state.status = 2;
+      state.status = 2;
       state.seconds = 0;
     },
     defaultLongBreak: (state) => {
       state.minutes = state.longBreak;
       state.msg = "Long Break";
       state.subCycle = 0;
-      setStatus(3);
-      //state.status = 3;
+      state.status = 3;
       state.seconds = 0;
     },
     defaultStudyTime: (state) => {
       state.minutes = state.studyTime;
       state.msg = 'Study Time';
-      setStatus(1);
-      //state.status = 1;
+      state.status = 1;
       state.seconds = 0;
     },
     setTimes: (state) => {

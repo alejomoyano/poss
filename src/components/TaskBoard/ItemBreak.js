@@ -26,6 +26,7 @@ export default function ItemBreak({ task }) {
           <Grid item sm={1}>
             <IconButton
               data-testid="delete-button"
+              sx={{color: 'black', background: 'transparent', border: 'none', boxShadow: 'none'}}
               variant="text"
               onClick={handleDeleteTask}
             >

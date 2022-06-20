@@ -12,7 +12,6 @@ import {
   defaultLongBreak,
   defaultStudyTime,
   setTimes,
-  notify,
 } from "../../redux/slices/timer";
 
 export const TimerController = () => {
@@ -20,8 +19,6 @@ export const TimerController = () => {
   const { minutes, seconds, status, subCycle } = useSelector(
     (state) => state.timer
   );
-
-
 
   //Variables necesarias para actualizar el timer en tiempo real
 
@@ -34,7 +31,7 @@ export const TimerController = () => {
     if (status === 1) {
       dispatch(incrementSubCycle());
     }
-    if (subCycle === 4) {
+    if (subCycle >= 3) {
       dispatch(incrementGeneralCycle());
     }
     clearInterval(interv);
@@ -44,11 +41,11 @@ export const TimerController = () => {
     dispatch(setStatus(4));
     // debemos notificar a los
     runStudy();
-    setInterv(setInterval(runStudy, 5));
+    setInterv(setInterval(runStudy, 1000));
   };
 
   const runStudy = () => {
-    if (subCycle === 4 && minTemp === 0 && secTemp === 0) {
+    if (subCycle >=3 && minTemp === 0 && secTemp === 0) {
       clearInterval(interv);
       dispatch(defaultLongBreak());
     } else if (minTemp === 0 && secTemp === 0) {
@@ -64,7 +61,7 @@ export const TimerController = () => {
     clearInterval(interv);
     dispatch(setStatus(6));
     runShortBreak();
-    setInterv(setInterval(runShortBreak, 5));
+    setInterv(setInterval(runShortBreak, 1000));
   };
 
   const runShortBreak = () => {
@@ -81,7 +78,7 @@ export const TimerController = () => {
     clearInterval(interv);
     dispatch(setStatus(7));
     runLongBreak();
-    setInterv(setInterval(runLongBreak, 5));
+    setInterv(setInterval(runLongBreak, 1000));
   };
 
   const runLongBreak = () => {
@@ -161,59 +158,43 @@ export const TimerController = () => {
 
   return (
     <Fragment>
-      {status !== 0 ? (
-        <div className="btn-container">
-          <button className="defaults-btn" onClick={goToStudyTime}>
-            Study Time
-          </button>
-          <button className="defaults-btn" onClick={goToShortBreak}>
-            Short Break
-          </button>
-          <button className="defaults-btn" onClick={goToLongBreak}>
-            Long Break
-          </button>
-        </div>
-      ) : (
-        ""
-      )}
-      {status === 0 ? <button onClick={configTimes}>Config</button> : ""}
+      {status !== 0 ? <div className="btn-container">
+        <button onClick={goToStudyTime}>Study Time</button>
+        <button onClick={goToShortBreak}>Short Break</button>
+        <button onClick={goToLongBreak}>Long Break</button>
+      </div> : ""}
+      <div className="btn-bottom">
+      {status === 0 ? <button className="defaults-btn" onClick={configTimes}>Config</button> : ""}
       <Fragment>
         {status === 1 ? (
-          <button onClick={startStudy}>Start study</button>
+          <button className="defaults-btn" onClick={startStudy}>Start study</button>
         ) : status === 2 ? (
-          <button onClick={startShortBreak}>Start short break</button>
+          <button className="defaults-btn" onClick={startShortBreak}>Start short break</button>
         ) : status === 3 ? (
-          <button onClick={startLongBreak}>Start long break</button>
+          <button className="defaults-btn" onClick={startLongBreak}>Start long break</button>
         ) : (
           ""
         )}
       </Fragment>
       {status === 4 || status === 6 || status === 7 ? (
         <Fragment>
-          <button onClick={stop}>Stop</button>
-          <button onClick={resume}>Resume</button>
+          <button className="defaults-btn btn-stop" onClick={stop}>Stop</button>
+          <button className="defaults-btn btn-resume" onClick={resume}>Resume</button>
         </Fragment>
       ) : (
         ""
       )}
       {status === 5 ? (
         <Fragment>
-          <button onClick={backToBeginning}>Back to beginning</button>
-          <button onClick={configTimes}>Config</button>
+          <button className="defaults-btn" onClick={backToBeginning}>Back to beginning</button>
+          <button className="defaults-btn" onClick={configTimes}>Config</button>
         </Fragment>
       ) : (
         ""
       )}
+      </div>
     </Fragment>
+
   );
 };
 
-/*
-Estados: 
-0- Configurar el timer
-1- Start study time
-2- Start short break
-3- Start long break
-4, 6, 7 - Stop, Resume
-5- Volver, Config
-*/

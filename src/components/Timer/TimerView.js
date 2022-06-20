@@ -21,21 +21,22 @@ export const TimerView = () => {
 
 
   return (
-    <div className="box-container">
-      <div>
-        <span className="msg-text">{msg}</span>
-      <div>
-        <span className="general-cycle">General cycles: {generalCycle}</span>
+    <div className="timer-container">
+      <div className="msg-text">
+        <span>{msg}</span>
+      </div>
+      <div className="general-cycle">
+        <span>General cycles: {generalCycle}</span>
         &nbsp;&nbsp;
       </div>
-      <div>
+      <div className="sub-cycle">
+        <span >Sub cycles: {subCycle}</span>&nbsp;&nbsp;
       </div>
       <div className="timer">
         <span>{minutes < 10 ? "0" + minutes : minutes}:</span>
         <span>{seconds < 10 ? "0" + seconds : seconds}</span>
       </div>
       <TimerController />
-    </div>
     </div>
   );
 };
