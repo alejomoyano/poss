@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { taskUpdate } from "./tasks";
+import {chatUpdate} from "./ChatSlice";
 // import TaskBoardObserver from "../../Observer/TaskBoardObserver";
 // import TimerSubject from "../../Observer/TimerSubject";
 
@@ -91,6 +92,7 @@ export const notify = createAsyncThunk("notify", (_, thunkAPI) => {
 export const setObservers = () => {
   console.log("suscribiendo al taskboard");
   subscribe(taskUpdate);
+  subscribe(chatUpdate);
   //instanciar chat
   //subscribe del chat
 };

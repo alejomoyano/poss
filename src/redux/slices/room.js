@@ -1,8 +1,9 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { createTaskBoard, joinTaskBoard } from "./tasks";
-
+import { setUsername } from "./ChatSlice";
 import Room from "../../models/Room";
-import { createChat } from "./ChatSlice";
+import { createChat, joinChat } from "./ChatSlice";
+import { useSelector } from "react-redux";
 
 const initialState = {
   value: {},
@@ -15,12 +16,14 @@ const createRoom = createAsyncThunk(
   async ({ username, roomname, maxUsers }, thunkAPI) => {
     try {
       const roomDoc = await Room.create({ username, roomname, maxUsers });
-
+      const chatDoc = thunkAPI.getState().chat;
       // creamos un taskboard
       await thunkAPI.dispatch(createTaskBoard(roomname));
 
       // creamos un chat
-      await thunkAPI.dispatch(createChat(roomname));
+      await thunkAPI.dispatch(createChat({id:roomname,username:username}));
+     
+      
       return thunkAPI.fulfillWithValue({ room: roomDoc });
     } catch (error) {
       return thunkAPI.rejectWithValue({ error });
@@ -40,7 +43,10 @@ const joinRoom = createAsyncThunk(
       await roomDoc.join(username);
       // si existe la room entoncs debe suscribirse a la taaskboard de la room
       await thunkAPI.dispatch(joinTaskBoard(roomname));
-      // TODO -> suscribirse a el chat
+      
+      await thunkAPI.dispatch(joinChat({id:roomname,username:username}))
+      setUsername(username);
+
       return thunkAPI.fulfillWithValue({ room: roomDoc });
     } catch (error) {
       return thunkAPI.rejectWithValue({ error });
@@ -79,6 +85,8 @@ export const roomSlice = createSlice({
     });
   },
 });
+
+
 
 const { setRoom } = roomSlice.actions;
 

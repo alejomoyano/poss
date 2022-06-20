@@ -11,20 +11,20 @@ function BreakChat() {
   const [inputMensaje, setInputMensaje] = useState(""); //para setear mensajes
   const [MessageList, setMessageList] = useState([]); //array con la collecion de mensajes
   const dispatch = useDispatch();
-  const app = getApp();
-  const db = getFirestore(app);
+  
   //maneja el envio de mensajes guardandolos en MessageList
-  const { value: chatDoc } = useSelector((state) => state.chat);
-
+  const {user} = useSelector((state)=>state.chat.value);
+  console.log(user)
   function sendMessage(e) {
     e.preventDefault();
     let message = {
       id: new Date().getTime(),
       body: inputMensaje,
-      user: "Ignacio",
+      username: user,
     };
-    setInputMensaje(" ");
     if (message !== "") dispatch(addMessage(message));
+    setInputMensaje(" ");
+    
 
     setMessageList([...MessageList, message]);
 
