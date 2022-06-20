@@ -30,10 +30,10 @@ describe("Chat test", () => {
         expect(breakChat).toBeInTheDocument();
       });
 
-    // test("Chat does not render study chat in Break State", () => {
-    //     const studyChat = item.getByTestId("study-chat");
-    //     expect(studyChat).not.toBeInTheDocument();
-    // });
+     test("Chat does not render study chat in Break State", () => {
+         const studyChat = item.queryByTestId("study-chat");
+         expect(studyChat).not.toBeInTheDocument();
+     });
 
     // test("it renders the message content", () => {
     //     const body = item.getByText("testmsg");
