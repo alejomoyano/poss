@@ -1,9 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { createTaskBoard, joinTaskBoard } from "./tasks";
-import { setUsername } from "./ChatSlice";
 import Room from "../../models/Room";
 import { createChat, joinChat } from "./ChatSlice";
-import { useSelector } from "react-redux";
 
 const initialState = {
   value: {},
@@ -45,7 +43,6 @@ const joinRoom = createAsyncThunk(
       await thunkAPI.dispatch(joinTaskBoard(roomname));
       
       await thunkAPI.dispatch(joinChat({id:roomname,username:username}))
-      setUsername(username);
 
       return thunkAPI.fulfillWithValue({ room: roomDoc });
     } catch (error) {
