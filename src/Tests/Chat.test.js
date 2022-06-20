@@ -32,7 +32,7 @@ describe("Chat test", () => {
       });
 
     test("Chat does not render study chat in Break State", () => {
-        const studyChat = item.getByTestId("study-chat");
+        const studyChat = item.queryByTestId("study-chat");
         expect(studyChat).not.toBeInTheDocument();
     });
 
@@ -42,7 +42,7 @@ describe("Chat test", () => {
       });
 
       test("it renders the send message button", () => {
-        const sendMsg = item.getByTestId("send-message-button");
+        const sendMsg = item.queryByTestId("send-message-button");
         expect(sendMsg).toBeInTheDocument();
       });
 
