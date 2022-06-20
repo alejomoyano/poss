@@ -106,7 +106,7 @@ describe("Reducer",()=>{
         mensajes: [],
         user:null,
         },
-        timerState: "break",
+        timerState: "study",
         error: null, });
      });
  

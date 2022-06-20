@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { createTaskBoard, joinTaskBoard } from "./tasks";
-import { setUsername } from "./ChatSlice";
+
 import Room from "../../models/Room";
 import { createChat, joinChat } from "./ChatSlice";
 import { useSelector } from "react-redux";

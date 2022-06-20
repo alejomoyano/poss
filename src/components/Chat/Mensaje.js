@@ -22,7 +22,7 @@ export default function Message() {
     <>
       {chatDoc.mensajes?.map((mensaje) => (
         
-          <div data-testid="body">
+          <div data-testid="">
             <span>
               {mensaje.username}:{mensaje.body}
             </span>

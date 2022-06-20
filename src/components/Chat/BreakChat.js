@@ -35,7 +35,7 @@ function BreakChat() {
       body: inputMensaje,
       username: user,
     };
-    if (message !== "") dispatch(addMessage(message));
+    if (message.body.length !==0){ dispatch(addMessage(message))};
     setInputMensaje(" ");
     
 
