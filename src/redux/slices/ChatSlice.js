@@ -137,10 +137,8 @@ const addMessage = createAsyncThunk("addMessage", async (message, thunkAPI) => {
 const chatUpdate = createAsyncThunk("taskUpdate", (_, thunkAPI) => {
   console.log("estamos en el update");
   const {
-    
-      chat: { timerState },
-      timer: {status},
-    
+    chat: { timerState },
+    timer: { status },
   } = thunkAPI.getState()
    console.log(timerState)
    console.log(status)
