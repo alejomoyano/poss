@@ -28,12 +28,13 @@ const CreateRoom = () => {
 
   return (
     <Container>
-      <Title variant="h3" sx={{color: 'black'}}>Create a Room</Title>
+      <Title variant="h3" sx={{color:'black'}} >Create a Room</Title>
       <TextField
         data-testid="username"
         label="username"
         onChange={(event) => setUsername(event.target.value)}
         value={username}
+        
       />
       <TextField
         data-testid="roomname"
@@ -49,7 +50,7 @@ const CreateRoom = () => {
         type="number"
       />
       <Button
-      sx={{fontSize: '20px'}}
+        data-testid="create-room-button"
         onClick={() => {
           newRoom();
           navigate("/create");
