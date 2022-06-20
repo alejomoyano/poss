@@ -83,20 +83,4 @@ describe("Timer tests", () => {
       })
   })
 
-  //Da undefined dado que usa prompt para recibir los valores.
-  test("should configure times", () => {
-    expect(reducer(initialState, setTimes())).toEqual({
-        minutes: undefined,
-        seconds: 0,
-        studyTime: undefined,
-        shortBreak: undefined,
-        longBreak: undefined,
-        subCycle: 0,
-        generalCycle: 0,
-        status: 0,
-        msg: "Configure the timer",
-      })
-  })
-
-
 });
