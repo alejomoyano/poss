@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { taskUpdate } from "./tasks";
-import {chatUpdate} from "./ChatSlice";
+import { chatUpdate } from "./ChatSlice";
+import Swal from "sweetalert2";
 // import TaskBoardObserver from "../../Observer/TaskBoardObserver";
 // import TimerSubject from "../../Observer/TimerSubject";
 
@@ -53,7 +54,7 @@ export const timerSlice = createSlice({
     },
     defaultShortBreak: (state) => {
       state.minutes = state.shortBreak;
-      state.msg = 'Short Break';
+      state.msg = "Short Break";
       state.status = 2;
       state.seconds = 0;
     },
@@ -66,7 +67,7 @@ export const timerSlice = createSlice({
     },
     defaultStudyTime: (state) => {
       state.minutes = state.studyTime;
-      state.msg = 'Study Time';
+      state.msg = "Study Time";
       state.status = 1;
       state.seconds = 0;
     },
@@ -113,6 +114,5 @@ export const {
   defaultStudyTime,
   setTimes,
 } = timerSlice.actions;
-
 
 export default timerSlice.reducer;

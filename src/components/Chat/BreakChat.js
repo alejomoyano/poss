@@ -1,12 +1,9 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
 import Message from "./Mensaje";
 import { addMessage } from "../../redux/slices/ChatSlice";
 
 import ChatHeader from "./ChatHeader";
-import { Grid } from "@mui/material";
 
 function BreakChat() {
   const [inputMensaje, setInputMensaje] = useState(""); //para setear mensajes
@@ -32,32 +29,30 @@ function BreakChat() {
   }
 
   return (
-    <div className="chat" data-testid="break-chat">
-      <Grid item sm={12} direction="column">
-        <Message />
-        <div className="chat__input">
-          <form onSubmit={sendMessage}>
-            <input
-              type="text"
-              data-testid="send-message-button"
-              disabled={false}
-              value={inputMensaje}
-              onChange={(e) => setInputMensaje(e.target.value)}
-              placeholder="Type your message"
-            />
-            <button
-              disabled={false}
-              value={inputMensaje}
-              className="chat__inputButton"
-              type="submit"
-            >
-              Send Message
-            </button>
-          </form>
-          <div className="chat__inputIcons"></div>
-          <link href="Chat.css"></link>
-        </div>
-      </Grid>
+    <div className="chat-container" data-testid="break-chat">
+      <ChatHeader />
+      <Message />
+      <div className="chat-elements-container">
+        <form onSubmit={sendMessage}>
+          <input
+            className="input-chat"
+            type="text"
+            data-testid="send-message-button"
+            disabled={false}
+            value={inputMensaje}
+            onChange={(e) => setInputMensaje(e.target.value)}
+            placeholder="Type your message"
+          />
+          <button
+            disabled={false}
+            value={inputMensaje}
+            className="btn-chat"
+            type="submit"
+          >
+            Send Message
+          </button>
+        </form>
+      </div>
     </div>
   );
 }

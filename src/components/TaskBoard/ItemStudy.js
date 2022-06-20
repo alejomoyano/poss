@@ -5,7 +5,7 @@ import StateSelector from "./StateSelector";
 export default function ItemStudy({ task }) {
 
   return (
-    <TableRow data-testid="task-item-study">
+    <TableRow className="task-item-study" data-testid="task-item-study">
       <TableCell>
         <Grid container direction="row" justifyContent="space-around">
           <Grid item sm={9}>
