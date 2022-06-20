@@ -17,10 +17,10 @@ const StyledTextField = styled(TextField)`
         font-family: 'Roboto', sans-serif;
     }
     & label.Mui-focused {
-        color: ${colors.base.secondary};
+        color: ${colors.base.redBtn};
     }
     & .MuiInput-underline:after {
-        border-bottom-color: ${colors.base.secondary};
+        border-bottom-color: ${colors.shades.redBtn2};
     }
 `;
 

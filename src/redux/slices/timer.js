@@ -72,29 +72,31 @@ export const timerSlice = createSlice({
       state.seconds = 0;
     },
     setTimes: (state) => {
-      let valor;
-      valor = parseInt(prompt("Study Time"));
-      if(isNaN(valor) || valor > 60 || valor < 0){
-        state.studyTime = 5;
-        alert('Only times between 0 and 60, default: 5 minutes');
-      }else {
-        state.studyTime = valor;
+      let input;
+      
+      //Inputs validate
+      input = parseInt(prompt("Study Time"));
+      while(isNaN(input) || input > 60 || input < 1){
+        alert('Only times between 1 and 60');
+        input = parseInt(prompt("Study Time"));
       }
+      state.studyTime = input;
       state.minutes = state.studyTime;
-      valor = parseInt(prompt("Short Break"));
-      if(isNaN(valor) || valor > 60 || valor < 0){
-        state.shortBreak = 5;
-        alert('Only times between 0 and 60, default: 5 minutes');
-      }else {
-        state.shortBreak = valor;
+
+      input = parseInt(prompt("Short Break"));
+      while(isNaN(input) || input > 60 || input < 1){
+        alert('Only times between 1 and 60');
+        input = parseInt(prompt("Short Break"));
       }
-      valor = parseInt(prompt("Long Break"));
-      if(isNaN(valor) || valor > 60 || valor < 0){
-        state.longBreak = 5;
-        alert('Only times between 0 and 60, default: 5 minutes');
-      }else {
-        state.longBreak = valor;
+      state.shortBreak = input;
+
+      input = parseInt(prompt("Long Break"));
+      while(isNaN(input) || input > 60 || input < 1){
+        alert('Only times between 1 and 60');
+        input = parseInt(prompt("Short Break"));
       }
+      state.longBreak = input;
+
     },
   },
 });

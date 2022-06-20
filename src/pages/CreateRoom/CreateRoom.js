@@ -48,6 +48,7 @@ const CreateRoom = () => {
         onChange={(event) => setMaxUsers(event.target.value)}
         value={maxUsers}
         type="number"
+        inputProps={{min: '1'}}
       />
       <Button
         data-testid="create-room-button"
