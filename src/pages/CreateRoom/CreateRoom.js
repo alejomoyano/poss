@@ -30,16 +30,19 @@ const CreateRoom = () => {
     <Container>
       <Title variant="h3" sx={{color: 'black'}}>Create a Room</Title>
       <TextField
+        data-testid="username"
         label="username"
         onChange={(event) => setUsername(event.target.value)}
         value={username}
       />
       <TextField
+        data-testid="roomname"
         label="room name"
         onChange={(event) => setRoomname(event.target.value)}
         value={roomname}
       />
       <TextField
+        data-testid="maxusers"
         label="max users"
         onChange={(event) => setMaxUsers(event.target.value)}
         value={maxUsers}
