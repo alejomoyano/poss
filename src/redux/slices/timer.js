@@ -72,10 +72,29 @@ export const timerSlice = createSlice({
       state.seconds = 0;
     },
     setTimes: (state) => {
-      state.studyTime = prompt("Study Time");
+      let valor;
+      valor = parseInt(prompt("Study Time"));
+      if(isNaN(valor) || valor > 60 || valor < 0){
+        state.studyTime = 5;
+        alert('Only times between 0 and 60, default: 5 minutes');
+      }else {
+        state.studyTime = valor;
+      }
       state.minutes = state.studyTime;
-      state.shortBreak = prompt("Short Break");
-      state.longBreak = prompt("Long Break");
+      valor = parseInt(prompt("Short Break"));
+      if(isNaN(valor) || valor > 60 || valor < 0){
+        state.shortBreak = 5;
+        alert('Only times between 0 and 60, default: 5 minutes');
+      }else {
+        state.shortBreak = valor;
+      }
+      valor = parseInt(prompt("Long Break"));
+      if(isNaN(valor) || valor > 60 || valor < 0){
+        state.longBreak = 5;
+        alert('Only times between 0 and 60, default: 5 minutes');
+      }else {
+        state.longBreak = valor;
+      }
     },
   },
 });
