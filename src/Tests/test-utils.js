@@ -18,30 +18,34 @@ function render(
     store = configureStore({
       reducer: { task, room, timer, chat },
       preloadedState: {
-        task:{
-            value:{
-                document:{},
-                tasks:[{
-                    content:'testing',
-                    state:'active',
-                    date:123
-                }]
-            },
-            timerState:'break',
-            error:""
-        },
-        ChatSlice:{
-          value:{
-            document:{},
-            mensajes:[{
-              body: "testmsg",
-              date: Date.now(),
-            }],
-            user: 'Ignacio',
+        task: {
+          value: {
+            document: {},
+            tasks: [
+              {
+                content: "testing",
+                state: "active",
+                date: 123,
+              },
+            ],
           },
-          timerState:'break',
-          error: ""
-        }
+          timerState: "break",
+          error: "",
+        },
+        ChatSlice: {
+          value: {
+            document: {},
+            mensajes: [
+              {
+                body: "testmsg",
+                date: Date.now(),
+              },
+            ],
+            user: "Ignacio",
+          },
+          timerState: "break",
+          error: "",
+        },
       },
     }),
     ...renderOptions

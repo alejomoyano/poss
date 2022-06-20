@@ -39,7 +39,7 @@ export default function Creator() {
           <Grid item xs={2}>
             <IconButton
               data-testId="submit-button"
-              sx={{color: 'black', background: 'transparent', border: 'none', boxShadow: 'none'}}
+              sx={{color: '#D15555', background: 'transparent', border: 'none', boxShadow: 'none'}}
               type="submit"
               variant="text"
               onClick={handleSubmitTask}

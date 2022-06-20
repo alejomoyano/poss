@@ -28,26 +28,30 @@ const JoinRoom = () => {
 
     return (
         <Container>
-            <Title variant="h3" sx={{color: 'black'}}>Join a Room</Title>
-            <TextField 
-                label= 'username'
-                onChange={(event) => setUsername(event.target.value)}
-                value= {username}
-            />
-            <TextField 
-                label= 'room name'
-                onChange={(event) => setRoomname(event.target.value)}
-                value= {roomname}
-            />
-            <Button
-                onClick={()=>{navigate('/room')}}
-                onClick={join}
-                sx={{fontSize: '20px'}}
-            >
-                Join Room
-            </Button>
-            {roomError && (<ErrorMessage>{roomError}</ErrorMessage>)}
-        </Container>
+        <Title variant="h3" sx={{color:'black'}}  >Join a Room</Title>
+        <TextField
+          data-testid="username"
+          label="username"
+          onChange={(event) => setUsername(event.target.value)}
+          value={username}
+        />
+        <TextField
+          data-testid="roomname"
+          label="room name"
+          onChange={(event) => setRoomname(event.target.value)}
+          value={roomname}
+        />
+        <Button
+          data-testid="join-room-button"
+          onClick={() => {
+            navigate("/room");
+            join();
+          }}
+        >
+          Join Room
+        </Button>
+        {roomError && <ErrorMessage>{roomError}</ErrorMessage>}
+      </Container>
     )
 }
 
