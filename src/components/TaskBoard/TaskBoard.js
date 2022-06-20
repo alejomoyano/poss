@@ -19,11 +19,11 @@ function TaskBoard() {
       sx={{height: '100%', borderRadius: '10px', background: '#fff', border: 'none'}}
     >
       <Table>
-        <TableHead sx={{border: 'none', outline: 'none'}}>
+        <TableHead>
           <CreatorSelector/>
         </TableHead>
-        <TableBody>
-          <Tasks />
+        <TableBody >
+          <Tasks/>
         </TableBody>
       </Table>
     </TableContainer>

@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { taskUpdate } from "./tasks";
-import {chatUpdate} from "./ChatSlice";
+import { chatUpdate } from "./ChatSlice";
+import Swal from "sweetalert2";
 // import TaskBoardObserver from "../../Observer/TaskBoardObserver";
 // import TimerSubject from "../../Observer/TimerSubject";
 
@@ -53,7 +54,7 @@ export const timerSlice = createSlice({
     },
     defaultShortBreak: (state) => {
       state.minutes = state.shortBreak;
-      state.msg = 'Short Break';
+      state.msg = "Short Break";
       state.status = 2;
       state.seconds = 0;
     },
@@ -66,15 +67,36 @@ export const timerSlice = createSlice({
     },
     defaultStudyTime: (state) => {
       state.minutes = state.studyTime;
-      state.msg = 'Study Time';
+      state.msg = "Study Time";
       state.status = 1;
       state.seconds = 0;
     },
     setTimes: (state) => {
-      state.studyTime = prompt("Study Time");
+      let input;
+      
+      //Inputs validate
+      input = parseInt(prompt("Study Time"));
+      while(isNaN(input) || input > 60 || input < 1){
+        alert('Only times between 1 and 60');
+        input = parseInt(prompt("Study Time"));
+      }
+      state.studyTime = input;
       state.minutes = state.studyTime;
-      state.shortBreak = prompt("Short Break");
-      state.longBreak = prompt("Long Break");
+
+      input = parseInt(prompt("Short Break"));
+      while(isNaN(input) || input > 60 || input < 1){
+        alert('Only times between 1 and 60');
+        input = parseInt(prompt("Short Break"));
+      }
+      state.shortBreak = input;
+
+      input = parseInt(prompt("Long Break"));
+      while(isNaN(input) || input > 60 || input < 1){
+        alert('Only times between 1 and 60');
+        input = parseInt(prompt("Long Break"));
+      }
+      state.longBreak = input;
+
     },
   },
 });
@@ -113,6 +135,5 @@ export const {
   defaultStudyTime,
   setTimes,
 } = timerSlice.actions;
-
 
 export default timerSlice.reducer;
