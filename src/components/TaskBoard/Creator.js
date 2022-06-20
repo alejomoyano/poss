@@ -20,11 +20,12 @@ export default function Creator() {
       console.log("add task");
     };
   return (
-    <TableRow>
-      <TableCell align="left" colSpan={5}>
+    <TableRow >
+      <TableCell align="left" colSpan={5}> 
         <Grid container spacing={1}>
           <Grid item xs={8}>
             <TextField
+              className="task-field-creator"
               name="task-field-creator"
               variant="outlined"
               size="small"
@@ -38,6 +39,7 @@ export default function Creator() {
           <Grid item xs={2}>
             <IconButton
               data-testId="submit-button"
+              sx={{color: 'black', background: 'transparent', border: 'none', boxShadow: 'none'}}
               type="submit"
               variant="text"
               onClick={handleSubmitTask}

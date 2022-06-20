@@ -2,15 +2,11 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { getApp } from "firebase/app";
 import {
   getFirestore,
-  collection,
   onSnapshot,
-  deleteField,
   updateDoc,
   doc,
   setDoc,
-  getDoc,
   arrayUnion,
-  arrayRemove,
 } from "firebase/firestore";
 
 const initialState = {
