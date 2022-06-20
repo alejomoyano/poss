@@ -34,5 +34,5 @@ jobs:
         run: npm run build --if-present
       # aca correriamos los test, segun el video los pone despues
       # del build pero me hace ruido
-      # - name: Test
-      #   run: npm run test
+       - name: Test
+         run: npm run test
